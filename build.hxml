@@ -1,0 +1,7 @@
+-cp %GENGINE%/deps/common/Ash-Haxe/src/
+-cp %GENGINE%/src/haxe/
+-cp ./src/
+-main gengine.Main
+-js ./generated/main.js
+-lib jquery-uipages
+-lib Pathfinder
