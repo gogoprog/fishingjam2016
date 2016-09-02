@@ -39,6 +39,7 @@ class MenuSystem extends System
     {
         Application.changeState("ingame");
         Application.pages.showPage(".hud");
+        MapGenerator.generate();
     }
 
     private function onQuitClick(event)

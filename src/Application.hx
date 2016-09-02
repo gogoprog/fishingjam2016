@@ -30,10 +30,11 @@ class Application
 
         Gengine.getRenderer().getDefaultZone().setFogColor(new Color(0.8,0.9,0.8,1));
 
-        var cameraEntity = new Entity();
-        cameraEntity.add(new Camera());
-        cameraEntity.get(Camera).setOrthoSize(new Vector2(1024, 768));
-        cameraEntity.get(Camera).setOrthographic(true);
+        Factory.init();
+        MapGenerator.init(_engine);
+
+        var cameraEntity = Factory.createCamera();
+
         engine.addEntity(cameraEntity);
 
         esm = new EngineStateMachine(engine);
@@ -41,7 +42,6 @@ class Application
         state = new EngineState();
         state.addInstance(new MenuSystem());
         esm.addState("menu", state);
-
 
         state = new EngineState();
         state.addInstance(new InputSystem(cameraEntity));
