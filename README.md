@@ -1,3 +1,3 @@
-# Labyr
+Entry for the Fishing Jam 2 (2016)
 
-Game using gengine
+https://itch.io/jam/fishing-jam-2/topic/30205/rules-faq
