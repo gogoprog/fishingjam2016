@@ -5,3 +5,4 @@
 -js ./generated/main.js
 -lib jquery-uipages
 -lib Pathfinder
+-lib hxNoise

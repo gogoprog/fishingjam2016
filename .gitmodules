@@ -1,0 +1,3 @@
+[submodule "deps/hxNoise"]
+	path = deps/hxNoise
+	url = https://github.com/whuop/hxNoise.git

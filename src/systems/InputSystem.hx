@@ -40,13 +40,13 @@ class InputSystem extends System
             Gengine.exit();
         }
 
-        if(input.getMouseButtonPress(1 << 2))
+        if(input.getMouseButtonPress(1 << 1))
         {
             startMousePosition = new Vector2(mousePosition.x, mousePosition.y);
             startCameraPosition = cameraEntity.position;
         }
 
-        if(input.getMouseButtonDown(1 << 2))
+        if(input.getMouseButtonDown(1 << 1))
         {
             var delta = new Vector2(mousePosition.x - startMousePosition.x, mousePosition.y - startMousePosition.y);
 
