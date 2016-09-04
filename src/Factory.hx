@@ -4,7 +4,6 @@ import ash.systems.*;
 import ash.fsm.*;
 import components.*;
 import gengine.math.*;
-import components.Tile.TileType;
 
 class Factory
 {
@@ -43,6 +42,7 @@ class Factory
     {
         var e = new Entity();
         e.add(new StaticSprite2D());
+        e.add(new Tile());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
         var sprite = Gengine.getResourceCache().getSprite2D("mapTile_005.png", true);
         e.get(StaticSprite2D).setSprite(sprite);

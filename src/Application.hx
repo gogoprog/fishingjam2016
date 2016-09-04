@@ -45,6 +45,7 @@ class Application
 
         state = new EngineState();
         state.addInstance(new InputSystem(cameraEntity));
+        state.addInstance(new HudSystem());
         esm.addState("ingame", state);
 
         engine.addSystem(new AudioSystem(), 1);

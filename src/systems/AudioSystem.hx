@@ -6,7 +6,6 @@ import ash.systems.*;
 import ash.fsm.*;
 import components.*;
 import gengine.math.*;
-import components.Tile.TileType;
 import haxe.ds.Vector;
 
 class AudioSystem extends System
