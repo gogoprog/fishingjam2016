@@ -57,7 +57,7 @@ class MapGenerator
             {
                 if(level.getTile(x, y) == TileType.Water)
                 {
-                    var e = Factory.createTileSprite();
+                    var e = Factory.createWaterTile(WaterPart.Full);
                     e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
                     engine.addEntity(e);
                 }

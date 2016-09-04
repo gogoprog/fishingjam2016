@@ -4,14 +4,24 @@ import ash.systems.*;
 import ash.fsm.*;
 import components.*;
 import gengine.math.*;
+import haxe.ds.Vector;
 
 class Factory
 {
     static private var pool:Array<Entity> = new Array<Entity>();
+    static private var waterSprites = new Map<WaterPart, Dynamic>();
 
     static public function init()
     {
-
+        waterSprites[WaterPart.Full] = Gengine.getResourceCache().getSprite2D("mapTile_017.png", true);
+        waterSprites[WaterPart.S] = Gengine.getResourceCache().getSprite2D("mapTile_032.png", true);
+        waterSprites[WaterPart.SW] = Gengine.getResourceCache().getSprite2D("mapTile_031.png", true);
+        waterSprites[WaterPart.W] = Gengine.getResourceCache().getSprite2D("mapTile_016.png", true);
+        waterSprites[WaterPart.NW] = Gengine.getResourceCache().getSprite2D("mapTile_001.png", true);
+        waterSprites[WaterPart.N] = Gengine.getResourceCache().getSprite2D("mapTile_002.png", true);
+        waterSprites[WaterPart.NE] = Gengine.getResourceCache().getSprite2D("mapTile_003.png", true);
+        waterSprites[WaterPart.E] = Gengine.getResourceCache().getSprite2D("mapTile_018.png", true);
+        waterSprites[WaterPart.SE] = Gengine.getResourceCache().getSprite2D("mapTile_033.png", true);
     }
 
     static public function createBackground(size:Vector2)
@@ -38,14 +48,13 @@ class Factory
         return cameraEntity;
     }
 
-    static public function createTileSprite()
+    static public function createWaterTile(type:WaterPart)
     {
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.add(new Tile());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
-        var sprite = Gengine.getResourceCache().getSprite2D("mapTile_017.png", true);
-        e.get(StaticSprite2D).setSprite(sprite);
+        e.get(StaticSprite2D).setSprite(waterSprites[type]);
         e.get(StaticSprite2D).setLayer(1);
         return e;
     }
