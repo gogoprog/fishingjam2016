@@ -1,0 +1,7 @@
+
+
+enum TileType
+{
+    Ground;
+    Water;
+}

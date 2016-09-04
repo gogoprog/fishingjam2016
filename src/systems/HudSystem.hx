@@ -18,7 +18,6 @@ class HudSystem extends System
         engine = _engine;
 
         new JQuery("input").change(onChange);
-
     }
 
     override public function update(dt:Float):Void

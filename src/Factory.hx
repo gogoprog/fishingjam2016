@@ -44,7 +44,7 @@ class Factory
         e.add(new StaticSprite2D());
         e.add(new Tile());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
-        var sprite = Gengine.getResourceCache().getSprite2D("mapTile_005.png", true);
+        var sprite = Gengine.getResourceCache().getSprite2D("mapTile_017.png", true);
         e.get(StaticSprite2D).setSprite(sprite);
         e.get(StaticSprite2D).setLayer(1);
         return e;

@@ -31,22 +31,31 @@ class MapGenerator
         var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
         engine.addEntity(background);
 
-        var data = new Vector<Int>(size);
+        var level = new Level();
+        level.init(size);
+
         var perlin = new Perlin();
 
-        var min = 1000.0;
-        var max = -1000.0;
+        var offset = new IntVector2(Std.random(100), Std.random(100));
 
         for(x in 0...size)
         {
             for(y in 0...size)
             {
-                var c = perlin.OctavePerlin(x, y, 0.1, octaves, persistence, frequency);
-
-                if(c < min) min = c;
-                if(c > max) max = c;
+                var c = perlin.OctavePerlin(x + offset.x, y + offset.y, 0.1, octaves, persistence, frequency);
 
                 if(c < threshold)
+                {
+                    level.setTile(x, y, TileType.Water);
+                }
+            }
+        }
+
+        for(x in 0...size)
+        {
+            for(y in 0...size)
+            {
+                if(level.getTile(x, y) == TileType.Water)
                 {
                     var e = Factory.createTileSprite();
                     e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
@@ -54,9 +63,6 @@ class MapGenerator
                 }
             }
         }
-
-        trace("min " + min);
-        trace("max " + max);
     }
 
     static private function randFunc():Float
