@@ -13,6 +13,9 @@ class InputSystem extends System
 {
     private var engine:Engine;
     private var cameraEntity:Entity;
+    private var startMousePosition:Vector2;
+    private var startCameraPosition:Vector3;
+    private var zoom = 1.0;
 
     public function new(cameraEntity_:Entity)
     {
@@ -35,6 +38,29 @@ class InputSystem extends System
         if(input.getScancodePress(41))
         {
             Gengine.exit();
+        }
+
+        if(input.getMouseButtonPress(1 << 2))
+        {
+            startMousePosition = new Vector2(mousePosition.x, mousePosition.y);
+            startCameraPosition = cameraEntity.position;
+        }
+
+        if(input.getMouseButtonDown(1 << 2))
+        {
+            var delta = new Vector2(mousePosition.x - startMousePosition.x, mousePosition.y - startMousePosition.y);
+
+            cameraEntity.position = new Vector3(startCameraPosition.x - delta.x / zoom, startCameraPosition.y + delta.y / zoom, 0);
+        }
+
+        var deltaWheel = input.getMouseMoveWheel();
+
+        if(deltaWheel != 0)
+        {
+            zoom += deltaWheel * 0.1;
+            zoom = Math.max(zoom, 0.2);
+            zoom = Math.min(zoom, 1.8);
+            cameraEntity.get(Camera).setZoom(zoom);
         }
     }
 }

@@ -50,6 +50,11 @@ class Application
         engine.addSystem(new AudioSystem(), 1);
 
         esm.changeState("menu");
+
+        var viewport:Viewport = new Viewport(Gengine.getContext());
+        viewport.setScene(Gengine.getScene());
+        viewport.setCamera(cameraEntity.get(Camera));
+        Gengine.getRenderer().setViewport(0, viewport);
     }
 
     public static function onGuiLoaded()

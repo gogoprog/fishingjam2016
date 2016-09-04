@@ -38,4 +38,15 @@ class Factory
 
         return cameraEntity;
     }
+
+    static public function createTileSprite()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        var sprite = Gengine.getResourceCache().getSprite2D("mapTile_005.png", true);
+        e.get(StaticSprite2D).setSprite(sprite);
+        e.get(StaticSprite2D).setLayer(1);
+        return e;
+    }
 }
