@@ -15,6 +15,7 @@ class MapGenerator
     static public var frequency = 0.25;
     static public var persistence = 0.5;
     static public var octaves = 1;
+    static public var threshold = 0.5;
 
     static public function init(_engine:Engine)
     {
@@ -25,9 +26,9 @@ class MapGenerator
     {
         engine.removeAllEntities();
 
-        var size = 32;
-        var background = Factory.createBackground(new Vector2(size * 64, size * 64));
-        var halfSize = new Vector2(size * 64 * 0.5, size * 64 * 0.5);
+        var size = Config.mapSize;
+        var background = Factory.createBackground(new Vector2(size * Config.tileSize, size * Config.tileSize));
+        var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
         engine.addEntity(background);
 
         var data = new Vector<Int>(size);
@@ -45,10 +46,10 @@ class MapGenerator
                 if(c < min) min = c;
                 if(c > max) max = c;
 
-                if(c < 0.5)
+                if(c < threshold)
                 {
                     var e = Factory.createTileSprite();
-                    e.position = new Vector3(x * 64 - halfSize.x + 32, y * 64 - halfSize.y + 32, 0);
+                    e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
                     engine.addEntity(e);
                 }
             }

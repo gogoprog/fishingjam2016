@@ -40,8 +40,10 @@ class HudSystem extends System
     {
         var freq = new JQuery(".freq").val();
         var octaves = new JQuery(".octaves").val();
+        var threshold = new JQuery(".threshold").val();
 
         MapGenerator.frequency = freq;
         MapGenerator.octaves = octaves;
+        MapGenerator.threshold = threshold;
     }
 }
