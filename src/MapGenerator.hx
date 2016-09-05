@@ -38,15 +38,18 @@ class MapGenerator
 
         var offset = new IntVector2(Std.random(10000), Std.random(10000));
 
-        for(x in 0...size)
+        for(x in 0...Std.int(size/2))
         {
-            for(y in 0...size)
+            for(y in 0...Std.int(size/2))
             {
                 var c = perlin.OctavePerlin(x + offset.x, y + offset.y, 0.1, octaves, persistence, frequency);
 
                 if(c < threshold)
                 {
-                    level.setTile(x, y, TileType.Water);
+                    level.setTile(x*2, y*2, TileType.Water);
+                    level.setTile(x*2+1, y*2, TileType.Water);
+                    level.setTile(x*2+1, y*2+1, TileType.Water);
+                    level.setTile(x*2, y*2+1, TileType.Water);
                 }
             }
         }
