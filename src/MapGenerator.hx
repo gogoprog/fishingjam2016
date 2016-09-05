@@ -12,10 +12,10 @@ import nodes.*;
 class MapGenerator
 {
     static private var engine:Engine;
-    static public var frequency = 0.25;
+    static public var frequency = 0.06;
     static public var persistence = 0.5;
     static public var octaves = 1;
-    static public var threshold = 0.5;
+    static public var threshold = 0.4;
 
     static public function init(_engine:Engine)
     {
@@ -36,7 +36,7 @@ class MapGenerator
 
         var perlin = new Perlin();
 
-        var offset = new IntVector2(Std.random(100), Std.random(100));
+        var offset = new IntVector2(Std.random(10000), Std.random(10000));
 
         for(x in 0...size)
         {
@@ -55,9 +55,54 @@ class MapGenerator
         {
             for(y in 0...size)
             {
-                if(level.getTile(x, y) == TileType.Water)
+                if(level.isWater(x, y))
                 {
-                    var e = Factory.createWaterTile(WaterPart.Full);
+                    var part:WaterPart = WaterPart.Full;
+                    var s, w, n, e, sw, se, ne, nw;
+
+                    s = level.isWater(x, y-1);
+                    w = level.isWater(x-1, y);
+                    n = level.isWater(x, y+1);
+                    e = level.isWater(x+1, y);
+                    sw = level.isWater(x-1, y-1);
+                    se = level.isWater(x+1, y-1);
+                    ne = level.isWater(x+1, y+1);
+                    nw = level.isWater(x-1, y+1);
+
+                    if(!n && !ne && !nw && e && w)
+                    {
+                        part = WaterPart.N;
+                    }
+                    else if(!s && !se && !sw && e && w)
+                    {
+                        part = WaterPart.S;
+                    }
+                    else if(!e && !se && !ne && n && s)
+                    {
+                        part = WaterPart.E;
+                    }
+                    else if(!w && !sw && !nw && n && s)
+                    {
+                        part = WaterPart.W;
+                    }
+                    else if(!s && !se && !sw && e && !w)
+                    {
+                        part = WaterPart.SW;
+                    }
+                    else if(!s && !se && !sw && !e && w)
+                    {
+                        part = WaterPart.SE;
+                    }
+                    else if(!n && !ne && !nw && e && !w)
+                    {
+                        part = WaterPart.NW;
+                    }
+                    else if(!n && !ne && !nw && !e && w)
+                    {
+                        part = WaterPart.NE;
+                    }
+
+                    var e = Factory.createWaterTile(part);
                     e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
                     engine.addEntity(e);
                 }

@@ -58,7 +58,7 @@ class InputSystem extends System
         if(deltaWheel != 0)
         {
             zoom += deltaWheel * 0.1;
-            zoom = Math.max(zoom, 0.2);
+            zoom = Math.max(zoom, 0.1);
             zoom = Math.min(zoom, 1.8);
             cameraEntity.get(Camera).setZoom(zoom);
         }

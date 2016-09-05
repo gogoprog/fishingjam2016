@@ -29,4 +29,14 @@ class Level
     {
         return data[y * size + x];
     }
+
+    public function isWater(x, y)
+    {
+        if(x >= 0 && x < size && y >= 0 && y < size)
+        {
+            return data[y * size + x] == TileType.Water;
+        }
+
+        return false;
+    }
 }
