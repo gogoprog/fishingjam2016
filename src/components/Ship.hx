@@ -7,4 +7,9 @@ import ash.fsm.*;
 class Ship
 {
     public var sm:EntityStateMachine;
+
+    public function new()
+    {
+        
+    }
 }

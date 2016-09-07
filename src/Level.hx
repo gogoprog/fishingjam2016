@@ -1,5 +1,6 @@
 import haxe.ds.Vector;
 import pathfinder.*;
+import gengine.math.*;
 
 class Level implements IMap
 {
@@ -8,6 +9,7 @@ class Level implements IMap
     public var cols:Int;
     public var rows:Int;
     public var pathfinder:Pathfinder;
+    public var offset:Vector2;
 
     public function new()
     {
@@ -24,6 +26,9 @@ class Level implements IMap
         {
             data[i] = TileType.Ground;
         }
+
+        var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
+        offset = new Vector2(halfSize.x + Config.tileSize / 2, halfSize.y + Config.tileSize / 2);
     }
 
     public function setTile(x, y, value:TileType)
@@ -59,5 +64,19 @@ class Level implements IMap
         }
 
         return true;
+    }
+
+    public function getRandomWaterPosition():Vector3
+    {
+        while(true)
+        {
+            var x = Std.random(size);
+            var y = Std.random(size);
+
+            if(isWater(x, y))
+            {
+                return new Vector3(x * Config.tileSize - offset.x, y * Config.tileSize - offset.y, 0);
+            }
+        }
     }
 }

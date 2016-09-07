@@ -62,4 +62,14 @@ class Factory
         e.get(StaticSprite2D).setLayer(1);
         return e;
     }
+
+    static public function createShip()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.add(new Ship());
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("ship.png", true));
+        e.get(StaticSprite2D).setLayer(2);
+        return e;
+    }
 }

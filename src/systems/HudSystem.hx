@@ -31,7 +31,7 @@ class HudSystem extends System
 
         if(input.getScancodePress(44))
         {
-            MapGenerator.generate();
+            Session.start();
         }
     }
 

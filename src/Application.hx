@@ -32,6 +32,7 @@ class Application
 
         Factory.init();
         MapGenerator.init(_engine);
+        Session.init(_engine);
 
         var cameraEntity = Factory.createCamera();
 
