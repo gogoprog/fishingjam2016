@@ -9,4 +9,5 @@ class ShipMoveNode extends Node<ShipMoveNode>
     public var ship:Ship;
     public var move:ShipMove;
     public var sprite:StaticSprite2D;
+    public var body:RigidBody2D;
 }

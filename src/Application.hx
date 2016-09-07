@@ -58,6 +58,12 @@ class Application
         viewport.setScene(Gengine.getScene());
         viewport.setCamera(cameraEntity.get(Camera));
         Gengine.getRenderer().setViewport(0, viewport);
+
+        var sceneEntity = Gengine.getScene().getAsEntity();
+        sceneEntity.add(new PhysicsWorld2D());
+        sceneEntity.get(PhysicsWorld2D).setGravity(new Vector2(0, 0));
+        sceneEntity.get(PhysicsWorld2D).setSubStepping(false);
+        sceneEntity.get(PhysicsWorld2D).setContinuousPhysics(false);
     }
 
     public static function onGuiLoaded()

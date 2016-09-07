@@ -1,5 +1,6 @@
 import gengine.math.*;
 import gengine.Engine;
+import components.*;
 
 class Session
 {
@@ -21,8 +22,8 @@ class Session
             e.position = level.getRandomWaterPosition();
             e.setRotation2D(Std.random(360));
             engine.addEntity(e);
+
+            e.get(Ship).sm.changeState("moving");
         }
-
-
     }
 }

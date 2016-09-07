@@ -6,4 +6,9 @@ import pathfinder.Coordinate;
 class ShipMove
 {
     public var currentPath:Array<Coordinate>;
+
+    public function new()
+    {
+
+    }
 }

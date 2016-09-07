@@ -66,10 +66,29 @@ class Factory
     static public function createShip()
     {
         var e = new Entity();
+        var sm = new EntityStateMachine(e);
+
         e.add(new StaticSprite2D());
-        e.add(new Ship());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("ship.png", true));
         e.get(StaticSprite2D).setLayer(2);
+        e.add(new Ship());
+        e.get(Ship).sm = sm;
+        e.add(new RigidBody2D());
+        e.add(new CollisionBox2D());
+        e.get(CollisionBox2D).setSize(new Vector2(260, 120));
+        e.get(RigidBody2D).setBodyType(2);
+        e.get(RigidBody2D).setMass(1);
+        e.get(CollisionBox2D).setDensity(1);
+        e.get(CollisionBox2D).setFriction(0.5);
+        e.get(CollisionBox2D).setRestitution(0.1);
+
+        sm.createState("idle");
+        sm.changeState("idle");
+
+        sm.createState("moving")
+            .add(ShipMove).withInstance(new ShipMove());
+
+
         return e;
     }
 }
