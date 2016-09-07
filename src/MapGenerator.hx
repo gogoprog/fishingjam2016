@@ -32,6 +32,9 @@ class MapGenerator
         engine.addEntity(background);
 
         var level = new Level();
+
+        Session.level = level;
+
         level.init(size);
 
         var perlin = new Perlin();
