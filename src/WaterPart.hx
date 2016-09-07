@@ -10,4 +10,8 @@ enum WaterPart
     NE;
     E;
     SE;
+    HoleSE;
+    HoleSW;
+    HoleNE;
+    HoleNW;
 }

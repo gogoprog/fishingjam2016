@@ -22,6 +22,10 @@ class Factory
         waterSprites[WaterPart.NE] = Gengine.getResourceCache().getSprite2D("mapTile_003.png", true);
         waterSprites[WaterPart.E] = Gengine.getResourceCache().getSprite2D("mapTile_018.png", true);
         waterSprites[WaterPart.SE] = Gengine.getResourceCache().getSprite2D("mapTile_033.png", true);
+        waterSprites[WaterPart.HoleSE] = Gengine.getResourceCache().getSprite2D("mapTile_004.png", true);
+        waterSprites[WaterPart.HoleSW] = Gengine.getResourceCache().getSprite2D("mapTile_005.png", true);
+        waterSprites[WaterPart.HoleNE] = Gengine.getResourceCache().getSprite2D("mapTile_019.png", true);
+        waterSprites[WaterPart.HoleNW] = Gengine.getResourceCache().getSprite2D("mapTile_020.png", true);
     }
 
     static public function createBackground(size:Vector2)

@@ -37,6 +37,6 @@ class Level
             return data[y * size + x] == TileType.Water;
         }
 
-        return false;
+        return true;
     }
 }

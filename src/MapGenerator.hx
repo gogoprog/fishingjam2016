@@ -72,19 +72,19 @@ class MapGenerator
                     ne = level.isWater(x+1, y+1);
                     nw = level.isWater(x-1, y+1);
 
-                    if(!n && !ne && !nw && e && w)
+                    if(!n && e && w)
                     {
                         part = WaterPart.N;
                     }
-                    else if(!s && !se && !sw && e && w)
+                    else if(!s && e && w)
                     {
                         part = WaterPart.S;
                     }
-                    else if(!e && !se && !ne && n && s)
+                    else if(!e && n && s)
                     {
                         part = WaterPart.E;
                     }
-                    else if(!w && !sw && !nw && n && s)
+                    else if(!w && n && s)
                     {
                         part = WaterPart.W;
                     }
@@ -103,6 +103,22 @@ class MapGenerator
                     else if(!n && !ne && !nw && !e && w)
                     {
                         part = WaterPart.NE;
+                    }
+                    else if(w && n && s && e && !sw)
+                    {
+                        part = WaterPart.HoleSW;
+                    }
+                    else if(w && n && s && e && !se)
+                    {
+                        part = WaterPart.HoleSE;
+                    }
+                    else if(w && n && s && e && !nw)
+                    {
+                        part = WaterPart.HoleNW;
+                    }
+                    else if(w && n && s && e && !ne)
+                    {
+                        part = WaterPart.HoleNE;
                     }
 
                     var e = Factory.createWaterTile(part);
