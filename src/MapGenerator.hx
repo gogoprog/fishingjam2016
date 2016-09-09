@@ -57,76 +57,98 @@ class MapGenerator
             }
         }
 
-        for(x in 0...size)
+        for(x in -1...size+1)
         {
-            for(y in 0...size)
+            for(y in -1...size+1)
             {
-                if(level.isWater(x, y))
+                var tileType = level.getTileType(x ,y);
+                var s, w, n, e, sw, se, ne, nw;
+
+                s = level.isWater(x, y-1);
+                w = level.isWater(x-1, y);
+                n = level.isWater(x, y+1);
+                e = level.isWater(x+1, y);
+                sw = level.isWater(x-1, y-1);
+                se = level.isWater(x+1, y-1);
+                ne = level.isWater(x+1, y+1);
+                nw = level.isWater(x-1, y+1);
+
+                switch(tileType)
                 {
-                    var part:WaterPart = WaterPart.Full;
-                    var s, w, n, e, sw, se, ne, nw;
+                    case TileType.Water:
+                    {
+                        var part:WaterPart = WaterPart.Full;
 
-                    s = level.isWater(x, y-1);
-                    w = level.isWater(x-1, y);
-                    n = level.isWater(x, y+1);
-                    e = level.isWater(x+1, y);
-                    sw = level.isWater(x-1, y-1);
-                    se = level.isWater(x+1, y-1);
-                    ne = level.isWater(x+1, y+1);
-                    nw = level.isWater(x-1, y+1);
+                        if(!n && e && w)
+                        {
+                            part = WaterPart.N;
+                        }
+                        else if(!s && e && w)
+                        {
+                            part = WaterPart.S;
+                        }
+                        else if(!e && n && s)
+                        {
+                            part = WaterPart.E;
+                        }
+                        else if(!w && n && s)
+                        {
+                            part = WaterPart.W;
+                        }
+                        else if(!s && !se && !sw && e && !w)
+                        {
+                            part = WaterPart.SW;
+                        }
+                        else if(!s && !se && !sw && !e && w)
+                        {
+                            part = WaterPart.SE;
+                        }
+                        else if(!n && !ne && !nw && e && !w)
+                        {
+                            part = WaterPart.NW;
+                        }
+                        else if(!n && !ne && !nw && !e && w)
+                        {
+                            part = WaterPart.NE;
+                        }
+                        else if(w && n && s && e && !sw)
+                        {
+                            part = WaterPart.HoleSW;
+                        }
+                        else if(w && n && s && e && !se)
+                        {
+                            part = WaterPart.HoleSE;
+                        }
+                        else if(w && n && s && e && !nw)
+                        {
+                            part = WaterPart.HoleNW;
+                        }
+                        else if(w && n && s && e && !ne)
+                        {
+                            part = WaterPart.HoleNE;
+                        }
 
-                    if(!n && e && w)
-                    {
-                        part = WaterPart.N;
-                    }
-                    else if(!s && e && w)
-                    {
-                        part = WaterPart.S;
-                    }
-                    else if(!e && n && s)
-                    {
-                        part = WaterPart.E;
-                    }
-                    else if(!w && n && s)
-                    {
-                        part = WaterPart.W;
-                    }
-                    else if(!s && !se && !sw && e && !w)
-                    {
-                        part = WaterPart.SW;
-                    }
-                    else if(!s && !se && !sw && !e && w)
-                    {
-                        part = WaterPart.SE;
-                    }
-                    else if(!n && !ne && !nw && e && !w)
-                    {
-                        part = WaterPart.NW;
-                    }
-                    else if(!n && !ne && !nw && !e && w)
-                    {
-                        part = WaterPart.NE;
-                    }
-                    else if(w && n && s && e && !sw)
-                    {
-                        part = WaterPart.HoleSW;
-                    }
-                    else if(w && n && s && e && !se)
-                    {
-                        part = WaterPart.HoleSE;
-                    }
-                    else if(w && n && s && e && !nw)
-                    {
-                        part = WaterPart.HoleNW;
-                    }
-                    else if(w && n && s && e && !ne)
-                    {
-                        part = WaterPart.HoleNE;
+                        var e = Factory.createWaterTile(part);
+                        e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
+                        engine.addEntity(e);
                     }
 
-                    var e = Factory.createWaterTile(part);
-                    e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
-                    engine.addEntity(e);
+                    case TileType.Ground:
+                    {
+                        if(n || s || w || e)
+                        {
+                            var e = Factory.createInvisibleObstacle();
+                            e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
+                            engine.addEntity(e);
+                        }
+                    }
+
+                    case TileType.None:
+                    {
+                        var e = Factory.createInvisibleObstacle();
+                        e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
+                        engine.addEntity(e);
+                    }
                 }
             }
         }

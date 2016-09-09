@@ -17,8 +17,9 @@ class Level implements IMap
 
     public function init(size_:Int)
     {
-        data = new Vector<TileType>(size);
         size = size_;
+
+        data = new Vector<TileType>(size * size);
         cols = size;
         rows = size;
 
@@ -63,8 +64,19 @@ class Level implements IMap
             return data[y * size + x] == TileType.Water;
         }
 
-        return true;
+        return false;
     }
+
+    public function getTileType(x:Int, y:Int):TileType
+    {
+        if(x >= 0 && x < size && y >= 0 && y < size)
+        {
+            return data[y * size + x];
+        }
+
+        return TileType.None;
+    }
+
 
     public function getRandomWaterPosition():Vector3
     {
