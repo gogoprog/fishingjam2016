@@ -37,6 +37,12 @@ class Application
         var cameraEntity = Factory.createCamera();
 
         engine.addEntity(cameraEntity);
+        
+        var sceneEntity = Gengine.getScene().getAsEntity();
+        sceneEntity.add(new PhysicsWorld2D());
+        sceneEntity.get(PhysicsWorld2D).setGravity(new Vector2(0, 0));
+        sceneEntity.get(PhysicsWorld2D).setSubStepping(false);
+        sceneEntity.get(PhysicsWorld2D).setContinuousPhysics(false);
 
         esm = new EngineStateMachine(engine);
 
@@ -45,7 +51,7 @@ class Application
         esm.addState("menu", state);
 
         state = new EngineState();
-        state.addInstance(new InputSystem(cameraEntity));
+        state.addInstance(new InputSystem(cameraEntity, sceneEntity));
         state.addInstance(new HudSystem());
         state.addInstance(new ShipMoveSystem());
         esm.addState("ingame", state);
@@ -58,12 +64,6 @@ class Application
         viewport.setScene(Gengine.getScene());
         viewport.setCamera(cameraEntity.get(Camera));
         Gengine.getRenderer().setViewport(0, viewport);
-
-        var sceneEntity = Gengine.getScene().getAsEntity();
-        sceneEntity.add(new PhysicsWorld2D());
-        sceneEntity.get(PhysicsWorld2D).setGravity(new Vector2(0, 0));
-        sceneEntity.get(PhysicsWorld2D).setSubStepping(false);
-        sceneEntity.get(PhysicsWorld2D).setContinuousPhysics(false);
     }
 
     public static function onGuiLoaded()

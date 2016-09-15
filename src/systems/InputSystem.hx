@@ -2,6 +2,7 @@ package systems;
 
 import gengine.*;
 import gengine.components.*;
+import gengine.physics.*;
 import ash.systems.*;
 import ash.fsm.*;
 import components.*;
@@ -13,14 +14,16 @@ class InputSystem extends System
 {
     private var engine:Engine;
     private var cameraEntity:Entity;
+    private var sceneEntity:Entity;
     private var startMousePosition:Vector2;
     private var startCameraPosition:Vector3;
     private var zoom = 1.0;
 
-    public function new(cameraEntity_:Entity)
+    public function new(cameraEntity_:Entity, sceneEntity_:Entity)
     {
         super();
         cameraEntity = cameraEntity_;
+        sceneEntity = sceneEntity_;
     }
 
     override public function addToEngine(_engine:Engine)
@@ -32,8 +35,6 @@ class InputSystem extends System
     {
         var input = Gengine.getInput();
         var mousePosition = input.getMousePosition();
-        var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
-        var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
         if(input.getScancodePress(41))
         {
@@ -61,6 +62,19 @@ class InputSystem extends System
             zoom = Math.max(zoom, 0.1);
             zoom = Math.min(zoom, 1.8);
             cameraEntity.get(Camera).setZoom(zoom);
+        }
+        
+        if(input.getMouseButtonDown(1))
+        {
+            var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
+            var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
+            
+            var result:Dynamic = sceneEntity.get(PhysicsWorld2D).getRigidBody(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+
+            if(result)
+            {
+                result.setAngularVelocity(1000);
+            }
         }
     }
 }
