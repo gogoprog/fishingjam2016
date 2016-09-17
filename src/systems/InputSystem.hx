@@ -70,11 +70,11 @@ class InputSystem extends System
             var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
             var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
-            var result:Dynamic = sceneEntity.get(PhysicsWorld2D).getRigidBody(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+            var result = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
-            if(result)
+            if(result != null)
             {
-                result.setAngularVelocity(1000);
+                result.get(StaticSprite2D).setColor(new Color(1,0 ,0,1));
             }
         }
     }
