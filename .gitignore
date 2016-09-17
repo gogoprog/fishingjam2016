@@ -3,3 +3,4 @@ generated
 callgrind*
 packed-*
 vgcore*
+gengine

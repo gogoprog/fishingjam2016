@@ -18,6 +18,7 @@ class InputSystem extends System
     private var startMousePosition:Vector2;
     private var startCameraPosition:Vector3;
     private var zoom = 1.0;
+    private var selectedShip:Entity;
 
     public function new(cameraEntity_:Entity, sceneEntity_:Entity)
     {
@@ -63,12 +64,12 @@ class InputSystem extends System
             zoom = Math.min(zoom, 1.8);
             cameraEntity.get(Camera).setZoom(zoom);
         }
-        
+
         if(input.getMouseButtonDown(1))
         {
             var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
             var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
-            
+
             var result:Dynamic = sceneEntity.get(PhysicsWorld2D).getRigidBody(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
             if(result)
