@@ -70,12 +70,13 @@ class Factory
 
         e.add(new StaticSprite2D());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("ship.png", true));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -32), new Vector2(64, 32)));
         e.get(StaticSprite2D).setLayer(2);
         e.add(new Ship());
         e.get(Ship).sm = sm;
         e.add(new RigidBody2D());
         e.add(new CollisionBox2D());
-        e.get(CollisionBox2D).setSize(new Vector2(266, 120));
+        e.get(CollisionBox2D).setSize(new Vector2(128, 64));
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
         e.get(CollisionBox2D).setDensity(1);
@@ -111,6 +112,16 @@ class Factory
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
 
+        return e;
+    }
+    
+    static public function createSelectCursor()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
+        e.get(StaticSprite2D).setLayer(10);
         return e;
     }
 }

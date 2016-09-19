@@ -19,17 +19,20 @@ class InputSystem extends System
     private var startCameraPosition:Vector3;
     private var zoom = 1.0;
     private var selectedShip:Entity;
+    private var selectCursor:Entity;
 
     public function new(cameraEntity_:Entity, sceneEntity_:Entity)
     {
         super();
         cameraEntity = cameraEntity_;
         sceneEntity = sceneEntity_;
+        
+        selectCursor = Factory.createSelectCursor();
     }
 
     override public function addToEngine(_engine:Engine)
     {
-
+        engine = _engine;
     }
 
     override public function update(dt:Float):Void
@@ -65,17 +68,35 @@ class InputSystem extends System
             cameraEntity.get(Camera).setZoom(zoom);
         }
 
-        if(input.getMouseButtonDown(1))
+        if(input.getMouseButtonPress(1))
         {
             var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
             var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
-            var result = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+            var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
-            if(result != null)
+            if(result != null && result.has(Ship))
             {
-                result.get(StaticSprite2D).setColor(new Color(1,0 ,0,1));
+                if(selectedShip == null)
+                {
+                    engine.addEntity(selectCursor);
+                }
+                
+                selectedShip = result;
             }
+            else
+            {
+                if(selectedShip != null)
+                {
+                    engine.removeEntity(selectCursor);
+                    selectedShip = null;
+                }
+            }
+        }
+        
+        if(selectedShip != null)
+        {
+            selectCursor.position = selectedShip.position;
         }
     }
 }
