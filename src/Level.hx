@@ -25,7 +25,7 @@ class Level implements IMap
 
         for(i in 0...data.length)
         {
-            data[i] = TileType.Ground;
+            data[i] = TileType.Water;
         }
 
         var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
@@ -62,6 +62,16 @@ class Level implements IMap
         if(x >= 0 && x < size && y >= 0 && y < size)
         {
             return data[y * size + x] == TileType.Water;
+        }
+
+        return false;
+    }
+    
+    public function isGround(x, y)
+    {
+        if(x >= 0 && x < size && y >= 0 && y < size)
+        {
+            return data[y * size + x] == TileType.Ground;
         }
 
         return false;

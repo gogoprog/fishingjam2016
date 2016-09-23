@@ -49,10 +49,10 @@ class MapGenerator
 
                 if(c < threshold)
                 {
-                    level.setTile(x*2, y*2, TileType.Water);
-                    level.setTile(x*2+1, y*2, TileType.Water);
-                    level.setTile(x*2+1, y*2+1, TileType.Water);
-                    level.setTile(x*2, y*2+1, TileType.Water);
+                    level.setTile(x*2, y*2, TileType.Ground);
+                    level.setTile(x*2+1, y*2, TileType.Ground);
+                    level.setTile(x*2+1, y*2+1, TileType.Ground);
+                    level.setTile(x*2, y*2+1, TileType.Ground);
                 }
             }
         }
@@ -64,18 +64,18 @@ class MapGenerator
                 var tileType = level.getTileType(x ,y);
                 var s, w, n, e, sw, se, ne, nw;
 
-                s = level.isWater(x, y-1);
-                w = level.isWater(x-1, y);
-                n = level.isWater(x, y+1);
-                e = level.isWater(x+1, y);
-                sw = level.isWater(x-1, y-1);
-                se = level.isWater(x+1, y-1);
-                ne = level.isWater(x+1, y+1);
-                nw = level.isWater(x-1, y+1);
+                s = level.isGround(x, y-1);
+                w = level.isGround(x-1, y);
+                n = level.isGround(x, y+1);
+                e = level.isGround(x+1, y);
+                sw = level.isGround(x-1, y-1);
+                se = level.isGround(x+1, y-1);
+                ne = level.isGround(x+1, y+1);
+                nw = level.isGround(x-1, y+1);
 
                 switch(tileType)
                 {
-                    case TileType.Water:
+                    case TileType.Ground:
                     {
                         var part:WaterPart = WaterPart.Full;
 
@@ -127,20 +127,21 @@ class MapGenerator
                         {
                             part = WaterPart.HoleNE;
                         }
+                        
+                        if(part != WaterPart.Full)
+                        {
+                            var e = Factory.createInvisibleObstacle();
+                            e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
+                            engine.addEntity(e);
+                        }
 
                         var e = Factory.createWaterTile(part);
                         e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
                         engine.addEntity(e);
                     }
 
-                    case TileType.Ground:
+                    case TileType.Water:
                     {
-                        if(n || s || w || e)
-                        {
-                            var e = Factory.createInvisibleObstacle();
-                            e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
-                            engine.addEntity(e);
-                        }
                     }
 
                     case TileType.None:
