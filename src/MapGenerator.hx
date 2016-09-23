@@ -64,14 +64,14 @@ class MapGenerator
                 var tileType = level.getTileType(x ,y);
                 var s, w, n, e, sw, se, ne, nw;
 
-                s = level.isGround(x, y-1);
-                w = level.isGround(x-1, y);
-                n = level.isGround(x, y+1);
-                e = level.isGround(x+1, y);
-                sw = level.isGround(x-1, y-1);
-                se = level.isGround(x+1, y-1);
-                ne = level.isGround(x+1, y+1);
-                nw = level.isGround(x-1, y+1);
+                s = level.isGroundTile(x, y-1);
+                w = level.isGroundTile(x-1, y);
+                n = level.isGroundTile(x, y+1);
+                e = level.isGroundTile(x+1, y);
+                sw = level.isGroundTile(x-1, y-1);
+                se = level.isGroundTile(x+1, y-1);
+                ne = level.isGroundTile(x+1, y+1);
+                nw = level.isGroundTile(x-1, y+1);
 
                 switch(tileType)
                 {

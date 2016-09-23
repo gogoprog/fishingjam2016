@@ -39,6 +39,8 @@ class InputSystem extends System
     {
         var input = Gengine.getInput();
         var mousePosition = input.getMousePosition();
+        var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
+        var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
         if(input.getScancodePress(41))
         {
@@ -70,9 +72,6 @@ class InputSystem extends System
 
         if(input.getMouseButtonPress(1))
         {
-            var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
-            var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
-
             var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
             if(result != null && result.has(Ship))
@@ -93,9 +92,20 @@ class InputSystem extends System
                 }
             }
         }
-        
+
         if(selectedShip != null)
         {
+            if(input.getMouseButtonPress(1 << 2))
+            {
+                if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
+                {
+                    selectedShip.get(Ship).sm.changeState("idling");
+                    
+                    selectedShip.get(Ship).targetPosition = mouseWorldPosition;
+                    selectedShip.get(Ship).sm.changeState("moving");
+                }
+            }
+
             selectCursor.position = selectedShip.position;
         }
     }

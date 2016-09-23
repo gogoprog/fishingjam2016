@@ -1,14 +1,12 @@
 package components;
 
 import gengine.math.*;
-import pathfinder.Coordinate;
 
 class ShipMove
 {
-    public var currentPath:Array<Coordinate>;
+    public var currentPath:Array<Vector3>;
 
     public function new()
     {
-
     }
 }

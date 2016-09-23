@@ -8,6 +8,8 @@ class Ship
 {
     public var sm:EntityStateMachine;
     public var controllable:Bool = true;
+    public var movingState:EntityState;
+    public var targetPosition:Vector3;
 
     public function new()
     {

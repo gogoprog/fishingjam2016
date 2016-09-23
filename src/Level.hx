@@ -57,7 +57,7 @@ class Level implements IMap
         return false;
     }
 
-    public function isWater(x, y)
+    public function isWaterTile(x, y)
     {
         if(x >= 0 && x < size && y >= 0 && y < size)
         {
@@ -67,7 +67,12 @@ class Level implements IMap
         return false;
     }
     
-    public function isGround(x, y)
+    public function isWaterPosition(x:Float, y:Float)
+    {
+        return isWaterTile(Std.int((x + offset.x - Config.tileSize * 0.5) / Config.tileSize), Std.int((y + offset.y - Config.tileSize * 0.5) / Config.tileSize));
+    }
+    
+    public function isGroundTile(x, y)
     {
         if(x >= 0 && x < size && y >= 0 && y < size)
         {
@@ -87,7 +92,6 @@ class Level implements IMap
         return TileType.None;
     }
 
-
     public function getRandomWaterPosition():Vector3
     {
         while(true)
@@ -95,10 +99,23 @@ class Level implements IMap
             var x = Std.random(size);
             var y = Std.random(size);
 
-            if(isWater(x, y))
+            if(isWaterTile(x, y))
             {
                 return new Vector3(x * Config.tileSize - offset.x, y * Config.tileSize - offset.y, 0);
             }
         }
+    }
+    
+    public function createPath(from:Vector3, to:Vector3):Array<Vector3>
+    {
+        /*var path = pathFinder.createPath(
+            new Coordinate(x+1, y+1),
+            new Coordinate(0, 0),
+            EHeuristic.PRODUCT,
+            false,
+            false
+        );*/
+            
+        return null;
     }
 }

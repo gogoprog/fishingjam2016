@@ -83,12 +83,11 @@ class Factory
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
 
-        sm.createState("idle");
-        sm.changeState("idle");
+        sm.createState("idling");
+        sm.changeState("idling");
 
-        sm.createState("moving")
+        e.get(Ship).movingState = sm.createState("moving")
             .add(ShipMove).withInstance(new ShipMove());
-
 
         return e;
     }
