@@ -66,12 +66,12 @@ class Level implements IMap
 
         return false;
     }
-    
+
     public function isWaterPosition(x:Float, y:Float)
     {
         return isWaterTile(Std.int((x + offset.x - Config.tileSize * 0.5) / Config.tileSize), Std.int((y + offset.y - Config.tileSize * 0.5) / Config.tileSize));
     }
-    
+
     public function isGroundTile(x, y)
     {
         if(x >= 0 && x < size && y >= 0 && y < size)
@@ -92,6 +92,11 @@ class Level implements IMap
         return TileType.None;
     }
 
+    public function getCoordinate(x:Float, y:Float)
+    {
+        return new Coordinate(Std.int((x + offset.x - Config.tileSize * 0.5) / Config.tileSize), Std.int((y + offset.y - Config.tileSize * 0.5) / Config.tileSize));
+    }
+
     public function getRandomWaterPosition():Vector3
     {
         while(true)
@@ -105,17 +110,35 @@ class Level implements IMap
             }
         }
     }
-    
+
     public function createPath(from:Vector3, to:Vector3):Array<Vector3>
     {
-        /*var path = pathFinder.createPath(
-            new Coordinate(x+1, y+1),
-            new Coordinate(0, 0),
+        var path = pathfinder.createPath(
+            getCoordinate(from.x, from.y),
+            getCoordinate(to.x, to.y),
             EHeuristic.PRODUCT,
             false,
             false
-        );*/
-            
+        );
+
+        trace("from",from.x, from.y);
+
+        if(path != null && path.length > 1)
+        {
+            var result = new Array<Vector3>();
+
+            for(i in 1...path.length - 1)
+            {
+                var c = path[i];
+                result.push(new Vector3(c.x * Config.tileSize - offset.x, c.y * Config.tileSize - offset.y, 0));
+                trace("point",result[i - 1].x, result[i - 1].y);
+            }
+
+            trace("to",to.x, to.y);
+
+            return result;
+        }
+
         return null;
     }
 }

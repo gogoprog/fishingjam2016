@@ -17,21 +17,30 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
     {
         //node.body.applyForceToCenter(new Vector2(10000, 10000), true);
 
-        
+        var currentPath = Session.level.createPath(node.entity.position, node.ship.targetPosition);
+
+        node.move.currentPath = currentPath;
+
+        if(currentPath != null)
+        {
+            var currentPos = node.entity.position;
+            var nextPos = currentPath[0];
+
+            trace(nextPos.x, nextPos.y);
+            var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
+
+            node.body.setLinearVelocity(velo);
+        }
     }
 
     private function onNodeAdded(node:ShipMoveNode)
     {
-        //node.body.applyLinearImpulse(new Vector2(Std.random(10) * 10000, Std.random(10) * 10000), new Vector2(0, 0), true);
-        //node.body.setLinearVelocity(new Vector2(Std.random(100) - 50, Std.random(100) - 50));
-        
-        trace(node.ship.targetPosition);
-        
-        node.move.currentPath = Session.level.createPath(node.entity.position, node.ship.targetPosition);
+
+        trace("target",node.ship.targetPosition.x, node.ship.targetPosition.y);
+
     }
 
     private function onNodeRemoved(node:ShipMoveNode)
     {
-
     }
 }

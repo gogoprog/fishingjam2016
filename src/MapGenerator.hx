@@ -127,7 +127,7 @@ class MapGenerator
                         {
                             part = WaterPart.HoleNE;
                         }
-                        
+
                         if(part != WaterPart.Full)
                         {
                             var e = Factory.createInvisibleObstacle();
@@ -153,6 +153,8 @@ class MapGenerator
                 }
             }
         }
+
+        level.init2();
     }
 
     static private function randFunc():Float
