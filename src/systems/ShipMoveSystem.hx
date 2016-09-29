@@ -5,31 +5,54 @@ import ash.tools.ListIteratingSystem;
 import components.*;
 import nodes.*;
 import gengine.math.*;
+import gengine.*;
 
 class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 {
+    private var points = new Array<Entity>();
+
     public function new()
     {
         super(ShipMoveNode, updateNode, onNodeAdded, onNodeRemoved);
+
+        for(i in 0...100)
+        {
+            points.push(Factory.createPoint());
+        }
+    }
+    
+    public override function addToEngine(engine:Engine)
+    {
+        super.addToEngine(engine);
+        
+        for(i in 0...100)
+        {
+            engine.addEntity(points[i]);
+        }
     }
 
     private function updateNode(node:ShipMoveNode, dt:Float):Void
     {
-        //node.body.applyForceToCenter(new Vector2(10000, 10000), true);
-
         var currentPath = Session.level.createPath(node.entity.position, node.ship.targetPosition);
 
         node.move.currentPath = currentPath;
 
         if(currentPath != null)
         {
+            trace(currentPath);
+            
             var currentPos = node.entity.position;
             var nextPos = currentPath[0];
 
-            trace(nextPos.x, nextPos.y);
             var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
 
             node.body.setLinearVelocity(velo);
+            
+            for(i in 0...currentPath.length)
+            {
+                if(i>=100) break;
+                points[i].position = currentPath[i];
+            }
         }
     }
 

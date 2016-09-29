@@ -123,4 +123,15 @@ class Factory
         e.get(StaticSprite2D).setLayer(10);
         return e;
     }
+    
+    static public function createPoint()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
+        e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(StaticSprite2D).setLayer(10);
+        return e;
+    }
 }

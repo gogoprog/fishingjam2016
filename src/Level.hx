@@ -121,8 +121,6 @@ class Level implements IMap
             false
         );
 
-        trace("from",from.x, from.y);
-
         if(path != null && path.length > 1)
         {
             var result = new Array<Vector3>();
@@ -130,11 +128,8 @@ class Level implements IMap
             for(i in 1...path.length - 1)
             {
                 var c = path[i];
-                result.push(new Vector3(c.x * Config.tileSize - offset.x, c.y * Config.tileSize - offset.y, 0));
-                trace("point",result[i - 1].x, result[i - 1].y);
+                result.push(new Vector3(c.x * Config.tileSize - offset.x + Config.tileSize * 0.5, c.y * Config.tileSize - offset.y + Config.tileSize * 0.5, 0));
             }
-
-            trace("to",to.x, to.y);
 
             return result;
         }
