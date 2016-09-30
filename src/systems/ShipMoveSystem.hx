@@ -39,19 +39,26 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
         if(currentPath != null)
         {
-            trace(currentPath);
-            
             var currentPos = node.entity.position;
-            var nextPos = currentPath[0];
-
-            var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
-
-            node.body.setLinearVelocity(velo);
+            var nextPos:Vector3 = null;
             
             for(i in 0...currentPath.length)
             {
-                if(i>=100) break;
-                points[i].position = currentPath[i];
+                nextPos = currentPath[i];
+                break;
+            }
+
+            if(nextPos != null)
+            {
+                var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
+
+                node.body.setLinearVelocity(velo);
+                
+                for(i in 0...currentPath.length)
+                {
+                    if(i>=100) break;
+                    points[i].position = currentPath[i];
+                }
             }
         }
     }
