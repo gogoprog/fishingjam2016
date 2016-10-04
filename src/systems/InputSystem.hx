@@ -26,7 +26,7 @@ class InputSystem extends System
         super();
         cameraEntity = cameraEntity_;
         sceneEntity = sceneEntity_;
-        
+
         selectCursor = Factory.createSelectCursor();
     }
 
@@ -72,6 +72,13 @@ class InputSystem extends System
 
         if(input.getMouseButtonPress(1))
         {
+            trace(Session.level.getCoordinate(mouseWorldPosition.x, mouseWorldPosition.y));
+
+            if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
+            {
+                trace("water!");
+            }
+
             var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
             if(result != null && result.has(Ship))
@@ -80,7 +87,7 @@ class InputSystem extends System
                 {
                     engine.addEntity(selectCursor);
                 }
-                
+
                 selectedShip = result;
             }
             else
@@ -99,8 +106,9 @@ class InputSystem extends System
             {
                 if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
                 {
+                    trace("water!");
                     selectedShip.get(Ship).sm.changeState("idling");
-                    
+
                     selectedShip.get(Ship).targetPosition = mouseWorldPosition;
                     selectedShip.get(Ship).sm.changeState("moving");
                 }

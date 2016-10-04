@@ -29,7 +29,7 @@ class Level implements IMap
         }
 
         var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
-        offset = new Vector2(halfSize.x + Config.tileSize / 2, halfSize.y + Config.tileSize / 2);
+        offset = new Vector2(halfSize.x - Config.tileSize / 2, halfSize.y - Config.tileSize / 2);
     }
 
     public function setTile(x, y, value:TileType)
@@ -125,11 +125,13 @@ class Level implements IMap
         {
             var result = new Array<Vector3>();
 
-            for(i in 1...path.length - 1)
+            for(i in 1...path.length - 2)
             {
                 var c = path[i];
                 result.push(new Vector3(c.x * Config.tileSize - offset.x + Config.tileSize * 0.5, c.y * Config.tileSize - offset.y + Config.tileSize * 0.5, 0));
             }
+
+            result.push(to);
 
             return result;
         }
