@@ -10,6 +10,7 @@ class Level implements IMap
     public var rows:Int;
     public var pathfinder:Pathfinder;
     public var offset:Vector2;
+    public var halfSize:Vector2;
 
     public function new()
     {
@@ -28,7 +29,7 @@ class Level implements IMap
             data[i] = TileType.Water;
         }
 
-        var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
+        halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
         offset = new Vector2(halfSize.x - Config.tileSize / 2, halfSize.y - Config.tileSize / 2);
     }
 
@@ -69,7 +70,8 @@ class Level implements IMap
 
     public function isWaterPosition(x:Float, y:Float)
     {
-        return isWaterTile(Std.int((x + offset.x - Config.tileSize * 0.5) / Config.tileSize), Std.int((y + offset.y - Config.tileSize * 0.5) / Config.tileSize));
+        var c = getCoordinate(x,y);
+        return isWaterTile(c.x, c.y);
     }
 
     public function isGroundTile(x, y)
@@ -94,7 +96,7 @@ class Level implements IMap
 
     public function getCoordinate(x:Float, y:Float)
     {
-        return new Coordinate(Std.int((x + offset.x - Config.tileSize * 0.5) / Config.tileSize), Std.int((y + offset.y - Config.tileSize * 0.5) / Config.tileSize));
+        return new Coordinate(Math.floor((x + halfSize.x) / Config.tileSize), Math.floor((y + halfSize.y) / Config.tileSize));
     }
 
     public function getRandomWaterPosition():Vector3
@@ -128,7 +130,7 @@ class Level implements IMap
             for(i in 1...path.length - 2)
             {
                 var c = path[i];
-                result.push(new Vector3(c.x * Config.tileSize - offset.x + Config.tileSize * 0.5, c.y * Config.tileSize - offset.y + Config.tileSize * 0.5, 0));
+                result.push(new Vector3(c.x * Config.tileSize - halfSize.x + Config.tileSize * 0.5, c.y * Config.tileSize - halfSize.y + Config.tileSize * 0.5, 0));
             }
 
             result.push(to);
