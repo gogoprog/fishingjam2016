@@ -2,13 +2,12 @@ import haxe.ds.Vector;
 import pathfinder.*;
 import gengine.math.*;
 
-class Level implements IMap
+class Level
 {
     public var data:Vector<TileType>;
     public var size:Int;
-    public var cols:Int;
-    public var rows:Int;
     public var pathfinder:Pathfinder;
+    public var pathfinderMap:PathfinderMap;
     public var offset:Vector2;
     public var halfSize:Vector2;
 
@@ -21,8 +20,6 @@ class Level implements IMap
         size = size_;
 
         data = new Vector<TileType>(size * size);
-        cols = size;
-        rows = size;
 
         for(i in 0...data.length)
         {
@@ -31,6 +28,8 @@ class Level implements IMap
 
         halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
         offset = new Vector2(halfSize.x - Config.tileSize / 2, halfSize.y - Config.tileSize / 2);
+
+        pathfinderMap = new PathfinderMap(this, 2);
     }
 
     public function setTile(x, y, value:TileType)
@@ -45,17 +44,7 @@ class Level implements IMap
 
     public function init2()
     {
-        pathfinder = new Pathfinder(this);
-    }
-
-    public function isWalkable(x:Int, y:Int):Bool
-    {
-        if(x >= 0 && x < size && y >= 0 && y < size)
-        {
-            return data[y * size + x] == TileType.Water;
-        }
-
-        return false;
+        pathfinder = new Pathfinder(pathfinderMap);
     }
 
     public function isWaterTile(x, y)
@@ -70,8 +59,7 @@ class Level implements IMap
 
     public function isWaterPosition(x:Float, y:Float)
     {
-        var c = getCoordinate(x,y);
-        return isWaterTile(c.x, c.y);
+        return isWaterTile(Math.floor((x + halfSize.x) / Config.tileSize), Math.floor((y + halfSize.y) / Config.tileSize));
     }
 
     public function isGroundTile(x, y)
@@ -94,11 +82,6 @@ class Level implements IMap
         return TileType.None;
     }
 
-    public function getCoordinate(x:Float, y:Float)
-    {
-        return new Coordinate(Math.floor((x + halfSize.x) / Config.tileSize), Math.floor((y + halfSize.y) / Config.tileSize));
-    }
-
     public function getRandomWaterPosition():Vector3
     {
         while(true)
@@ -116,8 +99,8 @@ class Level implements IMap
     public function createPath(from:Vector3, to:Vector3):Array<Vector3>
     {
         var path = pathfinder.createPath(
-            getCoordinate(from.x, from.y),
-            getCoordinate(to.x, to.y),
+            pathfinderMap.getCoordinate(from.x, from.y),
+            pathfinderMap.getCoordinate(to.x, to.y),
             EHeuristic.PRODUCT,
             false,
             false
@@ -127,10 +110,9 @@ class Level implements IMap
         {
             var result = new Array<Vector3>();
 
-            for(i in 1...path.length - 2)
+            for(i in 1...path.length - 1)
             {
-                var c = path[i];
-                result.push(new Vector3(c.x * Config.tileSize - halfSize.x + Config.tileSize * 0.5, c.y * Config.tileSize - halfSize.y + Config.tileSize * 0.5, 0));
+                result.push(pathfinderMap.convertCoord(path[i]));
             }
 
             result.push(to);
