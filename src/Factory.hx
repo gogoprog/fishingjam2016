@@ -71,7 +71,7 @@ class Factory
         e.add(new StaticSprite2D());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("ship.png", true));
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -32), new Vector2(64, 32)));
-        e.get(StaticSprite2D).setLayer(2);
+        e.get(StaticSprite2D).setLayer(20);
         e.add(new Ship());
         e.get(Ship).sm = sm;
         e.add(new RigidBody2D());
@@ -113,7 +113,7 @@ class Factory
 
         return e;
     }
-    
+
     static public function createSelectCursor()
     {
         var e = new Entity();
@@ -123,7 +123,7 @@ class Factory
         e.get(StaticSprite2D).setLayer(10);
         return e;
     }
-    
+
     static public function createPoint()
     {
         var e = new Entity();
@@ -132,6 +132,17 @@ class Factory
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
         e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         e.get(StaticSprite2D).setLayer(10);
+        return e;
+    }
+
+    static public function createFishes()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("fishes.png", true));
+        e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 0.5));
+        e.get(StaticSprite2D).setLayer(2);
         return e;
     }
 }

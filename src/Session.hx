@@ -23,5 +23,12 @@ class Session
             e.setRotation2D(Std.random(360));
             engine.addEntity(e);
         }
+
+        for(i in 0...10)
+        {
+            var e = Factory.createFishes();
+            e.position = level.getRandomWaterPosition();
+            engine.addEntity(e);
+        }
     }
 }
