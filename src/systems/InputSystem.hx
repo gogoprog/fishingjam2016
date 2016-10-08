@@ -40,7 +40,7 @@ class InputSystem extends System
         var input = Gengine.getInput();
         var mousePosition = input.getMousePosition();
         var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
-        var mouseWorldPosition = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
+        var mouseWorldPosition:Vector3 = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
         if(input.getScancodePress(41))
         {
@@ -103,6 +103,8 @@ class InputSystem extends System
 
                     selectedShip.get(Ship).targetPosition = mouseWorldPosition;
                     selectedShip.get(Ship).sm.changeState("moving");
+
+                    engine.addEntity(Factory.createTarget(mouseWorldPosition));
                 }
             }
 

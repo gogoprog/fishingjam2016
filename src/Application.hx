@@ -37,7 +37,7 @@ class Application
         var cameraEntity = Factory.createCamera();
 
         engine.addEntity(cameraEntity);
-        
+
         var sceneEntity = Gengine.getScene().getAsEntity();
         sceneEntity.add(new PhysicsWorld2D());
         sceneEntity.get(PhysicsWorld2D).setGravity(new Vector2(0, 0));
@@ -54,6 +54,7 @@ class Application
         state.addInstance(new InputSystem(cameraEntity, sceneEntity));
         state.addInstance(new HudSystem());
         state.addInstance(new ShipMoveSystem());
+        state.addInstance(new TargetSystem());
         esm.addState("ingame", state);
 
         engine.addSystem(new AudioSystem(), 1);

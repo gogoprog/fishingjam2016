@@ -79,6 +79,7 @@ class Factory
         e.get(CollisionBox2D).setSize(new Vector2(128, 64));
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
+        e.get(RigidBody2D).setLinearDamping(0.5);
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
@@ -132,6 +133,19 @@ class Factory
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
         e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         e.get(StaticSprite2D).setLayer(10);
+        return e;
+    }
+
+    static public function createTarget(position:Vector3)
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.add(new Target());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
+        e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(StaticSprite2D).setLayer(10);
+        e.position = position;
         return e;
     }
 

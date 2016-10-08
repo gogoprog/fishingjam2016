@@ -14,21 +14,17 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
     public function new()
     {
         super(ShipMoveNode, updateNode, onNodeAdded, onNodeRemoved);
-
-        for(i in 0...100)
-        {
-            points.push(Factory.createPoint());
-        }
     }
 
     public override function addToEngine(engine:Engine)
     {
         super.addToEngine(engine);
 
-        for(i in 0...100)
+        /*for(i in 0...100)
         {
+            points.push(Factory.createPoint());
             engine.addEntity(points[i]);
-        }
+        }*/
     }
 
     private function updateNode(node:ShipMoveNode, dt:Float):Void
@@ -72,11 +68,11 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
                 node.body.applyForceToCenter(velo, true);
                 node.body.setFixedRotation(true);
 
-                for(i in 0...currentPath.length)
+                /*for(i in 0...currentPath.length)
                 {
                     if(i>=100) break;
                     points[i].position = currentPath[i];
-                }
+                }*/
 
                 return;
             }
