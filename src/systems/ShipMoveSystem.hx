@@ -61,7 +61,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
                 velo = Maths.getNormalizedVector2(velo) * v;
 
                 var a = Math.atan2(velo.y, velo.x);
-                node.entity.setRotation2D(a*180/3.1415);
+                node.entity.setRotation2D(a*180/3.1415 - 90);
 
                 node.body.setLinearVelocity(velo);
 

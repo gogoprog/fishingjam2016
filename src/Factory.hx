@@ -69,8 +69,8 @@ class Factory
         var sm = new EntityStateMachine(e);
 
         e.add(new StaticSprite2D());
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("ship.png", true));
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -32), new Vector2(64, 32)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -64), new Vector2(32, 64)));
         e.get(StaticSprite2D).setLayer(20);
         e.add(new Ship());
         e.get(Ship).sm = sm;

@@ -28,7 +28,7 @@ class Application
         var state:EngineState;
         engine = _engine;
 
-        Gengine.getRenderer().getDefaultZone().setFogColor(new Color(0.8,0.9,0.8,1));
+        Gengine.getRenderer().getDefaultZone().setFogColor(new Color(0.1,0.1,0.1,1));
 
         Factory.init();
         MapGenerator.init(_engine);

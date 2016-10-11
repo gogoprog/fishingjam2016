@@ -6,6 +6,7 @@ body {
     width:1024px;
     overflow:hidden;
     background:transparent;
+    color:white;
 }
 
 @font-face {
