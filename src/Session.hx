@@ -16,9 +16,17 @@ class Session
     {
         MapGenerator.generate();
 
-        for(i in 0...10)
+        for(i in 0...5)
         {
-            var e = Factory.createShip();
+            var e = Factory.createFighter(0);
+            e.position = level.getRandomWaterPosition();
+            e.setRotation2D(Std.random(360));
+            engine.addEntity(e);
+        }
+
+        for(i in 0...5)
+        {
+            var e = Factory.createFisher(0);
             e.position = level.getRandomWaterPosition();
             e.setRotation2D(Std.random(360));
             engine.addEntity(e);

@@ -63,7 +63,7 @@ class Factory
         return e;
     }
 
-    static public function createShip()
+    static public function createShip(teamIndex:Int)
     {
         var e = new Entity();
         var sm = new EntityStateMachine(e);
@@ -74,12 +74,14 @@ class Factory
         e.get(StaticSprite2D).setLayer(20);
         e.add(new Ship());
         e.get(Ship).sm = sm;
+        e.get(Ship).teamIndex = teamIndex;
         e.add(new RigidBody2D());
         e.add(new CollisionBox2D());
-        e.get(CollisionBox2D).setSize(new Vector2(128, 64));
+        e.get(CollisionBox2D).setSize(new Vector2(64, 128));
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
         e.get(RigidBody2D).setLinearDamping(0.5);
+        e.get(RigidBody2D).setAngularDamping(0.5);
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
@@ -90,6 +92,20 @@ class Factory
         e.get(Ship).movingState = sm.createState("moving")
             .add(ShipMove).withInstance(new ShipMove());
 
+        return e;
+    }
+
+    static public function createFisher(teamIndex:Int)
+    {
+        var e = createShip(teamIndex);
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
+        return e;
+    }
+
+    static public function createFighter(teamIndex:Int)
+    {
+        var e = createShip(teamIndex);
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
         return e;
     }
 
