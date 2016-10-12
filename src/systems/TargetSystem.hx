@@ -9,7 +9,6 @@ import gengine.*;
 
 class TargetSystem extends ListIteratingSystem<TargetNode>
 {
-    private var points = new Array<Entity>();
     private var engine:Engine;
 
     public function new()

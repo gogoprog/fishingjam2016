@@ -7,19 +7,22 @@ import components.*;
 import nodes.*;
 import gengine.math.*;
 import gengine.*;
+import gengine.components.*;
 
 class FishingSystem extends ListIteratingSystem<FisherNode>
 {
     private var points = new Array<Entity>();
     private var fishesList:NodeList<FishesNode>;
+    private var engine:Engine;
 
     public function new()
     {
         super(FisherNode, updateNode, onNodeAdded, onNodeRemoved);
     }
 
-    public override function addToEngine(engine:Engine)
+    public override function addToEngine(engine_:Engine)
     {
+        engine = engine_;
         super.addToEngine(engine);
         fishesList = engine.getNodeList(FishesNode);
     }
@@ -28,6 +31,8 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
     {
         var closest:FishesNode = null;
         var closestDistance = Math.POSITIVE_INFINITY;
+
+        node.ship.icon.get(StaticSprite2D).setAlpha(0);
 
         if(node.ship.targetPosition == null)
         {
@@ -41,11 +46,18 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
                 }
             }
 
-            if(closest != null && closestDistance < 128 * 128)
+            if(closest != null && closestDistance < 192 * 192)
             {
-                node.ship.sm.changeState("idling");
-                node.ship.targetPosition = closest.entity.position;
-                node.ship.sm.changeState("moving");
+                if(closestDistance > 96 * 96)
+                {
+                    node.ship.sm.changeState("idling");
+                    node.ship.targetPosition = closest.entity.position;
+                    node.ship.sm.changeState("moving");
+                }
+                else
+                {
+                    node.ship.icon.get(StaticSprite2D).setAlpha(1);
+                }
             }
         }
     }

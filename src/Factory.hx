@@ -100,6 +100,10 @@ class Factory
         var e = createShip(teamIndex);
         e.add(new Fisher());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
+
+        e.get(Ship).icon = createIcon("iconFishing.png");
+        e.get(Ship).icon.setParent(e);
+
         return e;
     }
 
@@ -108,6 +112,7 @@ class Factory
         var e = createShip(teamIndex);
         e.add(new Fighter());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
+
         return e;
     }
 
@@ -129,6 +134,21 @@ class Factory
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
+
+        return e;
+    }
+
+    static public function createIcon(icon:String)
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.add(new Icon());
+
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D(icon, true));
+        e.get(StaticSprite2D).setLayer(32);
+
+        e.position = new Vector3(64 - 16, 64 - 16, 0);
 
         return e;
     }

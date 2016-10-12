@@ -3,6 +3,7 @@ package components;
 import gengine.math.*;
 import pathfinder.Coordinate;
 import ash.fsm.*;
+import gengine.*;
 
 class Ship
 {
@@ -11,6 +12,8 @@ class Ship
     public var movingState:EntityState;
     public var targetPosition:Vector3;
     public var teamIndex = 0;
+
+    public var icon:Entity;
 
     public function new()
     {
