@@ -116,6 +116,9 @@ class Factory
     {
         var e = createShip(teamIndex);
         e.add(new Fighter());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-48, -64), new Vector2(48, 64)));
+        e.get(CollisionBox2D).setSize(new Vector2(96, 128));
+
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
 
         return e;
