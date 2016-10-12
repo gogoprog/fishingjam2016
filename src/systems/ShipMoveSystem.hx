@@ -82,6 +82,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
         node.body.setFixedRotation(false);
 
         node.ship.sm.changeState("idling");
+        node.ship.targetPosition = null;
     }
 
     private function onNodeAdded(node:ShipMoveNode)

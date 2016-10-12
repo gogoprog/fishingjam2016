@@ -29,21 +29,24 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
         var closest:FishesNode = null;
         var closestDistance = Math.POSITIVE_INFINITY;
 
-        for(fishes in fishesList)
+        if(node.ship.targetPosition == null)
         {
-            var distance = Maths.getVector3DistanceSquared(fishes.entity.position, node.entity.position);
-            if(distance < closestDistance)
+            for(fishes in fishesList)
             {
-                closestDistance = distance;
-                closest = fishes;
+                var distance = Maths.getVector3DistanceSquared(fishes.entity.position, node.entity.position);
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closest = fishes;
+                }
             }
-        }
 
-        if(closest != null)
-        {
-            node.ship.sm.changeState("idling");
-            node.ship.targetPosition = closest.entity.position;
-            node.ship.sm.changeState("moving");
+            if(closest != null && closestDistance < 128 * 128)
+            {
+                node.ship.sm.changeState("idling");
+                node.ship.targetPosition = closest.entity.position;
+                node.ship.sm.changeState("moving");
+            }
         }
     }
 
