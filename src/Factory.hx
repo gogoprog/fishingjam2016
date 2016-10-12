@@ -98,6 +98,7 @@ class Factory
     static public function createFisher(teamIndex:Int)
     {
         var e = createShip(teamIndex);
+        e.add(new Fisher());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
         return e;
     }
@@ -105,6 +106,7 @@ class Factory
     static public function createFighter(teamIndex:Int)
     {
         var e = createShip(teamIndex);
+        e.add(new Fighter());
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
         return e;
     }
@@ -169,6 +171,7 @@ class Factory
     {
         var e = new Entity();
         e.add(new StaticSprite2D());
+        e.add(new Fishes());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("fishes.png", true));
         e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 0.5));
