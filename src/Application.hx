@@ -55,6 +55,7 @@ class Application
         state.addInstance(new HudSystem());
         state.addInstance(new ShipMoveSystem());
         state.addInstance(new TargetSystem());
+        state.addInstance(new FishingSystem());
         esm.addState("ingame", state);
 
         engine.addSystem(new AudioSystem(), 1);

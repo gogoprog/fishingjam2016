@@ -2,7 +2,7 @@ package components;
 
 import gengine.math.*;
 
-class Fisher
+class Fishes
 {
     public function new()
     {

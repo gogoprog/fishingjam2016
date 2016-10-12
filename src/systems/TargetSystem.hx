@@ -20,7 +20,7 @@ class TargetSystem extends ListIteratingSystem<TargetNode>
     public override function addToEngine(engine_:Engine)
     {
         engine = engine_;
-        
+
         super.addToEngine(engine);
     }
 
