@@ -34,30 +34,36 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
 
         node.ship.icon.get(StaticSprite2D).setAlpha(0);
 
-        if(node.ship.targetPosition == null)
+        for(fishes in fishesList)
         {
-            for(fishes in fishesList)
+            var distance = Maths.getVector3DistanceSquared(fishes.entity.position, node.entity.position);
+            if(distance < closestDistance)
             {
-                var distance = Maths.getVector3DistanceSquared(fishes.entity.position, node.entity.position);
-                if(distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closest = fishes;
-                }
+                closestDistance = distance;
+                closest = fishes;
             }
+        }
 
-            if(closest != null && closestDistance < 192 * 192)
+        if(closest != null && closestDistance < 256 * 256)
+        {
+            if(closestDistance > 96 * 96)
             {
-                if(closestDistance > 96 * 96)
+                if(node.ship.targetPosition == null)
                 {
                     node.ship.sm.changeState("idling");
                     node.ship.targetPosition = closest.entity.position;
                     node.ship.sm.changeState("moving");
                 }
-                else
-                {
-                    node.ship.icon.get(StaticSprite2D).setAlpha(1);
-                }
+            }
+            else
+            {
+                var e = node.ship.icon;
+                var icon:Icon = e.get(Icon);
+                var sprite:StaticSprite2D = e.get(StaticSprite2D);
+
+                icon.time += dt;
+
+                sprite.setAlpha(Math.cos(icon.time * 6) * 0.25 + 0.75);
             }
         }
     }
