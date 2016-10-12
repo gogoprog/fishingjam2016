@@ -92,6 +92,11 @@ class Factory
         e.get(Ship).movingState = sm.createState("moving")
             .add(ShipMove).withInstance(new ShipMove());
 
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+
         return e;
     }
 

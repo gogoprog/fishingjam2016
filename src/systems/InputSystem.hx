@@ -74,7 +74,7 @@ class InputSystem extends System
         {
             var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
-            if(result != null && result.has(Ship))
+            if(result != null && result.has(Ship) && !Session.teams[result.get(Ship).teamIndex].isBot)
             {
                 if(selectedShip == null)
                 {
