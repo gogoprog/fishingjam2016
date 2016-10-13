@@ -40,10 +40,11 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
             for(i in 0...currentPath.length)
             {
-                if(Maths.getVector3DistanceSquared(currentPos, currentPath[i]) > 8 * 8)
+                var d = Maths.getVector3DistanceSquared(currentPos, currentPath[i]);
+
+                if(d > 8 * 8)
                 {
                     nextPos = currentPath[i];
-
                     break;
                 }
             }

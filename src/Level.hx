@@ -106,20 +106,18 @@ class Level
             false
         );
 
-        if(path != null && path.length > 1)
-        {
-            var result = new Array<Vector3>();
+        var result = new Array<Vector3>();
 
+        if(path != null)
+        {
             for(i in 1...path.length - 1)
             {
                 result.push(pathfinderMap.convertCoord(path[i]));
             }
-
-            result.push(to);
-
-            return result;
         }
 
-        return null;
+        result.push(to);
+
+        return result;
     }
 }
