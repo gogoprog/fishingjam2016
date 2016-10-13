@@ -136,7 +136,7 @@ class Factory
         e.add(new RigidBody2D());
         e.add(new CollisionBox2D());
 
-        e.get(RigidBody2D).setBodyType(1);
+        e.get(RigidBody2D).setBodyType(0);
         e.get(RigidBody2D).setMass(0);
         e.get(CollisionBox2D).setSize(new Vector2(Config.tileSize, Config.tileSize));
         e.get(CollisionBox2D).setDensity(1);
@@ -204,6 +204,36 @@ class Factory
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("fishes.png", true));
         e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 0.5));
         e.get(StaticSprite2D).setLayer(2);
+        return e;
+    }
+
+    static public function createBullet(teamIndex:Int)
+    {
+        var e = new Entity();
+
+        e.add(new StaticSprite2D());
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("bullet.png", true));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
+        e.get(StaticSprite2D).setLayer(21);
+        e.add(new Bullet());
+        e.add(new RigidBody2D());
+        e.add(new CollisionCircle2D());
+        e.get(CollisionCircle2D).setRadius(8);
+        e.get(CollisionCircle2D).setDensity(1);
+        e.get(CollisionCircle2D).setFriction(0.5);
+        e.get(CollisionCircle2D).setRestitution(0.1);
+        e.get(CollisionCircle2D).setTrigger(true);
+        e.get(RigidBody2D).setBodyType(2);
+        e.get(RigidBody2D).setMass(1);
+        e.get(RigidBody2D).setLinearDamping(0);
+        e.get(RigidBody2D).setAngularDamping(0);
+        e.get(RigidBody2D).setBullet(true);
+
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+
         return e;
     }
 }
