@@ -86,4 +86,9 @@ class Application
                 esm.changeState(stateName);
             });
     }
+
+    public static function onPhysicsBeginContact2D(name)
+    {
+        trace("",name);
+    }
 }
