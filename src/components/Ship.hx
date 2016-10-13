@@ -13,10 +13,17 @@ class Ship
     public var targetPosition:Vector3;
     public var teamIndex = 0;
 
+    public var team(get, never):Team;
+
     public var icon:Entity;
 
     public function new()
     {
 
+    }
+
+    public function get_team():Team
+    {
+        return Session.teams[teamIndex];
     }
 }

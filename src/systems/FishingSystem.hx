@@ -64,6 +64,12 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
                 icon.time += dt;
 
                 sprite.setAlpha(Math.cos(icon.time * 6) * 0.25 + 0.75);
+
+                if(icon.time > 1.0)
+                {
+                    node.ship.team.fishes += 10;
+                    icon.time = 0;
+                }
             }
         }
     }

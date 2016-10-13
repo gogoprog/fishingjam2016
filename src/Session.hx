@@ -48,5 +48,8 @@ class Session
             e.position = level.getRandomWaterPosition();
             engine.addEntity(e);
         }
+
+        teams[0].fishes = 100;
+        teams[1].fishes = 100;
     }
 }

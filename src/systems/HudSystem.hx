@@ -6,11 +6,16 @@ import js.jquery.JQuery;
 
 class HudSystem extends System
 {
+    static public var instance:HudSystem;
+
     private var engine:Engine;
+
+    public var fishesSpan:JQuery;
 
     public function new()
     {
         super();
+        instance = this;
     }
 
     override public function addToEngine(_engine:Engine)
@@ -18,6 +23,8 @@ class HudSystem extends System
         engine = _engine;
 
         new JQuery("input").change(onChange);
+
+        fishesSpan = new JQuery(".fishes");
     }
 
     override public function update(dt:Float):Void

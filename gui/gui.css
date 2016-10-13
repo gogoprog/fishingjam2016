@@ -93,3 +93,8 @@ div.buttons {
     from { -o-transform:  rotate(0deg) scale(1) skew(1deg) translate(0px); }
     to { -o-transform:  rotate(0deg) scale(1.084) skew(1deg) translate(0px); }
 }
+
+.bghud
+{
+    background-color:rgba(0,0,0,0.5);
+}
