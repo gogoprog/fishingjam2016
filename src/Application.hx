@@ -6,6 +6,7 @@ import gengine.graphics.*;
 import ash.fsm.*;
 
 import systems.*;
+import components.*;
 import js.jquery.*;
 import js.UIPages;
 import js.PagesSet;
@@ -87,8 +88,20 @@ class Application
             });
     }
 
-    public static function onPhysicsBeginContact2D(name)
+    public static function onPhysicsBeginContact2D(entityA:Entity, entityB:Entity)
     {
-        trace("",name);
+        if(entityA.has(Bullet))
+        {
+            engine.updateComplete.addOnce(function() {
+                engine.removeEntity(entityA);
+                });
+        }
+
+        if(entityB.has(Bullet))
+        {
+            engine.updateComplete.addOnce(function() {
+                engine.removeEntity(entityB);
+                });
+        }
     }
 }
