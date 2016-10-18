@@ -85,6 +85,7 @@ class Factory
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
+        e.get(CollisionBox2D).setCategoryBits(1 << (teamIndex+1));
 
         sm.createState("idling");
         sm.changeState("idling");
@@ -223,6 +224,7 @@ class Factory
         e.get(CollisionCircle2D).setFriction(0.5);
         e.get(CollisionCircle2D).setRestitution(0.1);
         e.get(CollisionCircle2D).setTrigger(true);
+        e.get(CollisionCircle2D).setMaskBits(1 << ((1-teamIndex)+1));
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
         e.get(RigidBody2D).setLinearDamping(0);
