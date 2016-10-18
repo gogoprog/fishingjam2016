@@ -33,12 +33,16 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
         if(node.fighter.time > 1)
         {
-            var e = Factory.createBullet(node.ship.teamIndex);
+            if(Std.random(2) == 0)
+            {
+                var e = Factory.createBullet(node.ship.teamIndex);
 
-            e.position = node.entity.position;
-            e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(Math.random() * 2 - 1, Math.random() * 2 - 1));
+                e.position = node.entity.position;
+                e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(Math.random() * 2 - 1, Math.random() * 2 - 1));
 
-            engine.addEntity(e);
+                engine.addEntity(e);
+            }
+
             node.fighter.time = 0;
         }
     }

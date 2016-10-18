@@ -28,6 +28,7 @@ class Application
     {
         var state:EngineState;
         engine = _engine;
+        CollisionManager.engine = _engine;
 
         Gengine.getRenderer().getDefaultZone().setFogColor(new Color(0.1,0.1,0.1,1));
 
@@ -90,18 +91,6 @@ class Application
 
     public static function onPhysicsBeginContact2D(entityA:Entity, entityB:Entity)
     {
-        if(entityA.has(Bullet))
-        {
-            engine.updateComplete.addOnce(function() {
-                engine.removeEntity(entityA);
-                });
-        }
-
-        if(entityB.has(Bullet))
-        {
-            engine.updateComplete.addOnce(function() {
-                engine.removeEntity(entityB);
-                });
-        }
+        CollisionManager.onPhysicsBeginContact2D(entityA, entityB);
     }
 }
