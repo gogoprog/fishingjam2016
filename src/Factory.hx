@@ -229,7 +229,6 @@ class Factory
         e.get(CollisionCircle2D).setDensity(1);
         e.get(CollisionCircle2D).setFriction(0.5);
         e.get(CollisionCircle2D).setRestitution(0.1);
-        //e.get(CollisionCircle2D).setTrigger(true);
 
         e.get(CollisionCircle2D).setCategoryBits(BULLET1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 << (1-teamIndex));

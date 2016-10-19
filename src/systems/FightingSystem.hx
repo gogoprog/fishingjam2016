@@ -33,13 +33,30 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
         if(node.fighter.time > 1)
         {
-            if(Std.random(2) == 0)
+            var closest:ShipNode = null;
+            var closestDistance = Math.POSITIVE_INFINITY;
+            var teamIndex = node.ship.teamIndex;
+
+            for(ship in allShips)
+            {
+                if(ship.ship.teamIndex != teamIndex)
+                {
+                    var distance = Maths.getVector3DistanceSquared(ship.entity.position, node.entity.position);
+                    if(distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closest = ship;
+                    }
+                }
+            }
+
+            if(closest != null && closestDistance < 256 * 256)
             {
                 var e = Factory.createBullet(node.ship.teamIndex);
-
                 e.position = node.entity.position;
-                e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(Math.random() * 2 - 1, Math.random() * 2 - 1));
+                var delta = closest.entity.position - e.position;
 
+                e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
                 engine.addEntity(e);
             }
 

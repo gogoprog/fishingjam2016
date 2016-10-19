@@ -14,7 +14,6 @@ class CollisionManager
 
     public inline static function onPhysicsBeginContact2D(entityA:Entity, entityB:Entity)
     {
-        /*
         if(entityA != null && entityA.has(Bullet))
         {
             engine.updateComplete.addOnce(function() {
@@ -31,7 +30,7 @@ class CollisionManager
                 });
 
             onBulletHit(entityB, entityA);
-        }*/
+        }
     }
 
     public inline static function onBulletHit(bullet:Entity, other:Entity)
