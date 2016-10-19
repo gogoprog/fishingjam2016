@@ -16,25 +16,21 @@ class CollisionManager
     {
         if(entityA != null && entityA.has(Bullet))
         {
-            engine.updateComplete.addOnce(function() {
-                engine.removeEntity(entityA);
-                });
-
             onBulletHit(entityA, entityB);
         }
 
         if(entityB != null && entityB.has(Bullet))
         {
-            engine.updateComplete.addOnce(function() {
-                engine.removeEntity(entityB);
-                });
-
             onBulletHit(entityB, entityA);
         }
     }
 
     public inline static function onBulletHit(bullet:Entity, other:Entity)
     {
+        engine.updateComplete.addOnce(function() {
+            engine.removeEntity(bullet);
+        });
+
         if(other != null)
         {
             /*if(other.has(Ship) && )

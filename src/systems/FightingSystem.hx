@@ -50,7 +50,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 }
             }
 
-            if(closest != null && closestDistance < 256 * 256)
+            if(closest != null && closestDistance < 312 * 312)
             {
                 var e = Factory.createBullet(node.ship.teamIndex);
                 e.position = node.entity.position;
