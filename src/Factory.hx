@@ -256,7 +256,7 @@ class Factory
         e.add(new RigidBody2D());
         e.add(new CollisionCircle2D());
 
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("spacestation.png", true));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("spacestation" + teamIndex + ".png", true));
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-256, -256), new Vector2(256, 256)));
         e.get(StaticSprite2D).setLayer(20);
         e.get(Building).teamIndex = teamIndex;
@@ -266,15 +266,6 @@ class Factory
         e.get(CollisionCircle2D).setMaskBits(TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
         e.get(RigidBody2D).setBodyType(0);
         e.get(RigidBody2D).setMass(1);
-
-        if(teamIndex == 0)
-        {
-            e.get(StaticSprite2D).setColor(new Color(1.0, 0.0, 0.0, 1));
-        }
-        else
-        {
-            e.get(StaticSprite2D).setColor(new Color(0.1, 0.8, 0.1, 1));
-        }
 
         return e;
     }
