@@ -8,6 +8,11 @@ import haxe.ds.Vector;
 
 class Factory
 {
+    static private var WORLD = 0x0001;
+    static private var TEAM1 = 0x0002;
+    static private var TEAM2 = 0x0004;
+    static private var BULLET1 = 0x0008;
+    static private var BULLET2 = 0x0016;
     static private var pool:Array<Entity> = new Array<Entity>();
     static private var waterSprites = new Map<WaterPart, Dynamic>();
 
@@ -85,7 +90,8 @@ class Factory
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
-        e.get(CollisionBox2D).setCategoryBits(1 << (teamIndex+1));
+        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
 
         sm.createState("idling");
         sm.changeState("idling");
@@ -223,8 +229,11 @@ class Factory
         e.get(CollisionCircle2D).setDensity(1);
         e.get(CollisionCircle2D).setFriction(0.5);
         e.get(CollisionCircle2D).setRestitution(0.1);
-        e.get(CollisionCircle2D).setTrigger(true);
-        e.get(CollisionCircle2D).setMaskBits(1 << ((1-teamIndex)+1));
+        //e.get(CollisionCircle2D).setTrigger(true);
+
+        e.get(CollisionCircle2D).setCategoryBits(BULLET1 << teamIndex);
+        e.get(CollisionCircle2D).setMaskBits(TEAM1 << (1-teamIndex));
+
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
         e.get(RigidBody2D).setLinearDamping(0);

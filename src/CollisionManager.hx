@@ -14,13 +14,14 @@ class CollisionManager
 
     public inline static function onPhysicsBeginContact2D(entityA:Entity, entityB:Entity)
     {
+        /*
         if(entityA != null && entityA.has(Bullet))
         {
             engine.updateComplete.addOnce(function() {
                 engine.removeEntity(entityA);
                 });
 
-            onBulletHit(entityB);
+            onBulletHit(entityA, entityB);
         }
 
         if(entityB != null && entityB.has(Bullet))
@@ -29,20 +30,20 @@ class CollisionManager
                 engine.removeEntity(entityB);
                 });
 
-            onBulletHit(entityA);
-        }
+            onBulletHit(entityB, entityA);
+        }*/
     }
 
-    public inline static function onBulletHit(other:Entity)
+    public inline static function onBulletHit(bullet:Entity, other:Entity)
     {
         if(other != null)
         {
-            if(other.has(Bullet))
+            /*if(other.has(Ship) && )
             {
                 engine.updateComplete.addOnce(function() {
                     engine.removeEntity(other);
                     });
-            }
+            }*/
         }
     }
 }
