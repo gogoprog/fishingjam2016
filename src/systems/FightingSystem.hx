@@ -13,6 +13,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 {
     private var points = new Array<Entity>();
     private var allShips:NodeList<ShipNode>;
+    private var allBuildings:NodeList<BuildingNode>;
     private var engine:Engine;
 
     public function new()
@@ -25,6 +26,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
         engine = engine_;
         super.addToEngine(engine);
         allShips = engine.getNodeList(ShipNode);
+        allBuildings = engine.getNodeList(BuildingNode);
     }
 
     private function updateNode(node:FighterNode, dt:Float):Void
@@ -33,7 +35,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
         if(node.fighter.time > 1)
         {
-            var closest:ShipNode = null;
+            var closest:Entity = null;
             var closestDistance = Math.POSITIVE_INFINITY;
             var teamIndex = node.ship.teamIndex;
 
@@ -41,20 +43,33 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
             {
                 if(ship.ship.teamIndex != teamIndex)
                 {
-                    var distance = Maths.getVector3DistanceSquared(ship.entity.position, node.entity.position);
+                    var distance = Maths.getVector3Distance(ship.entity.position, node.entity.position);
                     if(distance < closestDistance)
                     {
                         closestDistance = distance;
-                        closest = ship;
+                        closest = ship.entity;
                     }
                 }
             }
 
-            if(closest != null && closestDistance < 312 * 312)
+            for(building in allBuildings)
+            {
+                if(building.building.teamIndex != teamIndex)
+                {
+                    var distance = Maths.getVector3Distance(building.entity.position, node.entity.position);
+                    if(distance - building.building.radius < closestDistance)
+                    {
+                        closestDistance = distance - building.building.radius;
+                        closest = building.entity;
+                    }
+                }
+            }
+
+            if(closest != null && closestDistance < 312)
             {
                 var e = Factory.createBullet(node.ship.teamIndex);
                 e.position = node.entity.position;
-                var delta = closest.entity.position - e.position;
+                var delta = closest.position - e.position;
 
                 e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
                 engine.addEntity(e);

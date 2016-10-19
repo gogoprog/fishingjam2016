@@ -40,6 +40,11 @@ class Session
                 e.setRotation2D(Std.random(360));
                 engine.addEntity(e);
             }
+
+            var e = Factory.createBuilding(p);
+            e.position = level.getRandomWaterPosition();
+            e.setRotation2D(Std.random(360));
+            engine.addEntity(e);
         }
 
         for(i in 0...10)

@@ -230,7 +230,7 @@ class Factory
         e.get(CollisionCircle2D).setFriction(0.5);
         e.get(CollisionCircle2D).setRestitution(0.1);
 
-        e.get(CollisionCircle2D).setCategoryBits(BULLET1 << teamIndex);
+        e.get(CollisionCircle2D).setCategoryBits(TEAM1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 << (1-teamIndex));
 
         e.get(RigidBody2D).setBodyType(2);
@@ -242,6 +242,38 @@ class Factory
         if(teamIndex == 1)
         {
             e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+
+        return e;
+    }
+
+    static public function createBuilding(teamIndex:Int)
+    {
+        var e = new Entity();
+
+        e.add(new StaticSprite2D());
+        e.add(new Building());
+        e.add(new RigidBody2D());
+        e.add(new CollisionCircle2D());
+
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("spacestation.png", true));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-256, -256), new Vector2(256, 256)));
+        e.get(StaticSprite2D).setLayer(20);
+        e.get(Building).teamIndex = teamIndex;
+        e.get(Building).radius = 200;
+        e.get(CollisionCircle2D).setRadius(200);
+        e.get(CollisionCircle2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionCircle2D).setMaskBits(TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
+        e.get(RigidBody2D).setBodyType(0);
+        e.get(RigidBody2D).setMass(1);
+
+        if(teamIndex == 0)
+        {
+            e.get(StaticSprite2D).setColor(new Color(1.0, 0.0, 0.0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(0.1, 0.8, 0.1, 1));
         }
 
         return e;
