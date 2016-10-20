@@ -17,7 +17,10 @@ class Team
 
         if(!isBot)
         {
-            HudSystem.instance.fishesSpan.html("" + amount);
+            if(HudSystem.instance.fishesSpan != null)
+            {
+                HudSystem.instance.fishesSpan.html("" + amount);
+            }
         }
 
         return amount;

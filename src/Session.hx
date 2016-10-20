@@ -40,12 +40,17 @@ class Session
                 e.setRotation2D(Std.random(360));
                 engine.addEntity(e);
             }
-
-            var e = Factory.createBuilding(p);
-            e.position = level.getRandomWaterPosition();
-            e.setRotation2D(Std.random(360));
-            engine.addEntity(e);
         }
+
+        var e = Factory.createBuilding(0);
+        e.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, 3, 10);
+        e.setRotation2D(Std.random(360));
+        engine.addEntity(e);
+
+        var e = Factory.createBuilding(1);
+        e.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, Config.mapSize - 10, Config.mapSize - 3);
+        e.setRotation2D(Std.random(360));
+        engine.addEntity(e);
 
         for(i in 0...10)
         {

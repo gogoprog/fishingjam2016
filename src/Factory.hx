@@ -230,7 +230,7 @@ class Factory
         e.get(CollisionCircle2D).setFriction(0.5);
         e.get(CollisionCircle2D).setRestitution(0.1);
 
-        e.get(CollisionCircle2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionCircle2D).setCategoryBits(BULLET1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 << (1-teamIndex));
 
         e.get(RigidBody2D).setBodyType(2);

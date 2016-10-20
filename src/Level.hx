@@ -96,6 +96,20 @@ class Level
         }
     }
 
+    public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int):Vector3
+    {
+        while(true)
+        {
+            var x = minX + Std.random(maxX - minX);
+            var y = minY + Std.random(maxY - minY);
+
+            if(isWaterTile(x, y))
+            {
+                return new Vector3(x * Config.tileSize - offset.x, y * Config.tileSize - offset.y, 0);
+            }
+        }
+    }
+
     public function createPath(from:Vector3, to:Vector3):Array<Vector3>
     {
         var path = pathfinder.createPath(
