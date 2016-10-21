@@ -26,8 +26,9 @@ class IconSystem extends ListIteratingSystem<IconNode>
     private function updateNode(node:IconNode, dt:Float):Void
     {
         var ppos = node.entity.parent.position;
+        var offset = node.icon.offset;
 
-        node.entity.setWorldPosition(new Vector3(ppos.x + 48, ppos.y + 48, 0));
+        node.entity.setWorldPosition(new Vector3(ppos.x + offset.x, ppos.y + offset.y, 0));
 
         node.entity.setWorldRotation2D(0);
     }
