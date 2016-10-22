@@ -39,80 +39,105 @@ class InputSystem extends System
     {
         var input = Gengine.getInput();
         var mousePosition = input.getMousePosition();
-        var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
-        var mouseWorldPosition:Vector3 = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
-
-        if(input.getScancodePress(41))
+        if(mousePosition.y < 570)
         {
-            Gengine.exit();
-        }
+            var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
+            var mouseWorldPosition:Vector3 = cameraEntity.get(Camera).screenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
 
-        if(input.getMouseButtonPress(1 << 1))
-        {
-            startMousePosition = new Vector2(mousePosition.x, mousePosition.y);
-            startCameraPosition = cameraEntity.position;
-        }
-
-        if(input.getMouseButtonDown(1 << 1))
-        {
-            var delta = new Vector2(mousePosition.x - startMousePosition.x, mousePosition.y - startMousePosition.y);
-
-            cameraEntity.position = new Vector3(startCameraPosition.x - delta.x / zoom, startCameraPosition.y + delta.y / zoom, 0);
-        }
-
-        var deltaWheel = input.getMouseMoveWheel();
-
-        if(deltaWheel != 0)
-        {
-            zoom += deltaWheel * 0.1;
-            zoom = Math.max(zoom, 0.1);
-            zoom = Math.min(zoom, 1.8);
-            cameraEntity.get(Camera).setZoom(zoom);
-        }
-
-        if(input.getMouseButtonPress(1))
-        {
-            var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
-
-            if(result != null && result.has(Ship) && !Session.teams[result.get(Ship).teamIndex].isBot)
+            if(input.getScancodePress(41))
             {
-                if(selectedShip == null)
-                {
-                    engine.addEntity(selectCursor);
-                }
-
-                selectedShip = result;
-
-                AudioSystem.instance.playSound("click");
+                Gengine.exit();
             }
-            else
+
+            if(input.getMouseButtonPress(1 << 1))
             {
-                if(selectedShip != null)
-                {
-                    engine.removeEntity(selectCursor);
-                    selectedShip = null;
-                }
+                startMousePosition = new Vector2(mousePosition.x, mousePosition.y);
+                startCameraPosition = cameraEntity.position;
             }
-        }
 
-        if(selectedShip != null)
-        {
-            if(input.getMouseButtonPress(1 << 2))
+            if(input.getMouseButtonDown(1 << 1))
             {
-                if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
+                var delta = new Vector2(mousePosition.x - startMousePosition.x, mousePosition.y - startMousePosition.y);
+
+                cameraEntity.position = new Vector3(startCameraPosition.x - delta.x / zoom, startCameraPosition.y + delta.y / zoom, 0);
+            }
+
+            var deltaWheel = input.getMouseMoveWheel();
+
+            if(deltaWheel != 0)
+            {
+                zoom += deltaWheel * 0.1;
+                zoom = Math.max(zoom, 0.1);
+                zoom = Math.min(zoom, 1.8);
+                cameraEntity.get(Camera).setZoom(zoom);
+            }
+
+            if(input.getMouseButtonPress(1))
+            {
+                var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+
+                if(result != null && result.has(Ship) && !Session.teams[result.get(Ship).teamIndex].isBot)
                 {
-                    selectedShip.get(Ship).sm.changeState("idling");
+                    if(selectedShip == null)
+                    {
+                        engine.addEntity(selectCursor);
+                    }
 
-                    selectedShip.get(Ship).targetPosition = mouseWorldPosition;
-                    selectedShip.get(Ship).sm.changeState("moving");
+                    selectedShip = result;
 
-                    engine.addEntity(Factory.createTarget(mouseWorldPosition));
-
-                    AudioSystem.instance.playSound("move", selectedShip.position);
+                    AudioSystem.instance.playSound("click");
+                }
+                else
+                {
+                    if(selectedShip != null)
+                    {
+                        engine.removeEntity(selectCursor);
+                        selectedShip = null;
+                    }
                 }
             }
 
-            selectCursor.position = selectedShip.position;
+            if(selectedShip != null)
+            {
+                if(input.getMouseButtonPress(1 << 2))
+                {
+                    if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
+                    {
+                        selectedShip.get(Ship).sm.changeState("idling");
+
+                        selectedShip.get(Ship).targetPosition = mouseWorldPosition;
+                        selectedShip.get(Ship).sm.changeState("moving");
+
+                        engine.addEntity(Factory.createTarget(mouseWorldPosition));
+
+                        AudioSystem.instance.playSound("move", selectedShip.position);
+                    }
+                }
+
+                selectCursor.position = selectedShip.position;
+            }
         }
+
+        var camPos = cameraEntity.position;
+        var camZoom = cameraEntity.get(Camera).getZoom();
+
+        if(input.getScancodeDown(26))
+        {
+            camPos.y += (750 * dt) / camZoom;
+        }
+        if(input.getScancodeDown(22))
+        {
+            camPos.y -= (750 * dt) / camZoom;
+        }
+        if(input.getScancodeDown(7))
+        {
+            camPos.x += (750 * dt) / camZoom;
+        }
+        if(input.getScancodeDown(4))
+        {
+            camPos.x -= (750 * dt) / camZoom;
+        }
+
+        cameraEntity.position = camPos;
     }
 }
