@@ -1,0 +1,21 @@
+
+.leftPanel {
+    width:180px;
+    height:180px;
+    bottom:0;
+    left:0;
+}
+
+.centerPanel {
+    width:80%;
+    height:160px;
+    bottom:0;
+    left:10%;
+}
+
+.rightPanel {
+    width:180px;
+    height:180px;
+    bottom:0;
+    right:0;
+}
