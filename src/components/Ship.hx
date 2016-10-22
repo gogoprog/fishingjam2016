@@ -12,8 +12,8 @@ class Ship
     public var movingState:EntityState;
     public var targetPosition:Vector3;
     public var teamIndex = 0;
-    public var life = 100.0;
-    public var maxLife = 100.0;
+    public var life:Float = 100.0;
+    public var maxLife:Float = 100.0;
 
     public var team(get, never):Team;
 
