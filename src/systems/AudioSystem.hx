@@ -10,6 +10,8 @@ import haxe.ds.Vector;
 
 class AudioSystem extends System
 {
+    static public var instance:AudioSystem;
+
     private var engine:Engine;
     private var sounds = new Map<String, Dynamic>();
     private var soundSources:Vector<SoundSource>;
@@ -24,9 +26,12 @@ class AudioSystem extends System
     {
         super();
 
-        add("pop");
-        add("deny");
-        add("match");
+        add("click");
+        add("move");
+        add("laser");
+        add("impact");
+
+        instance = this;
     }
 
     override public function addToEngine(_engine:Engine)
@@ -44,9 +49,11 @@ class AudioSystem extends System
         }
     }
 
-    public function playSound(sound:String)
+    public function playSound(sound:String, ?gain = 1.0)
     {
-        soundSources[nextSoundSourceIndex++].play(sounds[sound]);
+        var ss = soundSources[nextSoundSourceIndex++];
+        ss.setGain(gain);
+        ss.play(sounds[sound]);
         nextSoundSourceIndex %= soundSources.length;
     }
 }

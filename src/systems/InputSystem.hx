@@ -82,6 +82,8 @@ class InputSystem extends System
                 }
 
                 selectedShip = result;
+
+                AudioSystem.instance.playSound("click");
             }
             else
             {
@@ -105,6 +107,8 @@ class InputSystem extends System
                     selectedShip.get(Ship).sm.changeState("moving");
 
                     engine.addEntity(Factory.createTarget(mouseWorldPosition));
+
+                    AudioSystem.instance.playSound("move");
                 }
             }
 

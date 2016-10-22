@@ -42,6 +42,8 @@ class CollisionManager
                 ship.healthBar.setScale(new Vector3(ratio, 1, 1));
                 ship.healthBar.get(StaticSprite2D).setColor(new Color(1 - ratio, ratio, 0, 1));
 
+                AudioSystem.instance.playSound("impact");
+
                 if(ship.life == 0)
                 {
                     ship.sm.changeState("dying");
