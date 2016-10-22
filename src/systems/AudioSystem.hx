@@ -16,13 +16,14 @@ class AudioSystem extends System
     private var sounds = new Map<String, Dynamic>();
     private var soundSources:Vector<SoundSource>;
     private var nextSoundSourceIndex = 0;
+    private var cameraEntity:Entity;
 
     private function add(name)
     {
         sounds[name] = Gengine.getResourceCache().getSound(name + ".wav", true);
     }
 
-    public function new()
+    public function new(cameraEntity_:Entity)
     {
         super();
 
@@ -30,6 +31,8 @@ class AudioSystem extends System
         add("move");
         add("laser");
         add("impact");
+
+        cameraEntity = cameraEntity_;
 
         instance = this;
     }
@@ -49,10 +52,19 @@ class AudioSystem extends System
         }
     }
 
-    public function playSound(sound:String, ?gain = 1.0)
+    public function playSound(sound:String, ?position:Vector3 = null)
     {
         var ss = soundSources[nextSoundSourceIndex++];
-        ss.setGain(gain);
+        if(position != null)
+        {
+            //ss.setGain(gain);
+            ss.setPanning((position.x - cameraEntity.position.x) / 1024);
+        }
+        else
+        {
+            ss.setGain(1.0);
+            ss.setPanning(0.0);
+        }
         ss.play(sounds[sound]);
         nextSoundSourceIndex %= soundSources.length;
     }

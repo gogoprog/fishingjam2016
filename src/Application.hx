@@ -63,7 +63,7 @@ class Application
         state.addInstance(new IconSystem());
         esm.addState("ingame", state);
 
-        engine.addSystem(new AudioSystem(), 1);
+        engine.addSystem(new AudioSystem(cameraEntity), 1);
 
         esm.changeState("menu");
 

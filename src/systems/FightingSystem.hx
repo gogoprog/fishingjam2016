@@ -74,7 +74,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
                 engine.addEntity(e);
 
-                AudioSystem.instance.playSound("laser");
+                AudioSystem.instance.playSound("laser", e.position);
             }
 
             node.fighter.time = 0;
