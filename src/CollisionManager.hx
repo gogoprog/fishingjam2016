@@ -35,18 +35,23 @@ class CollisionManager
         {
             if(other.has(Ship))
             {
-                var ship:Ship = other.get(Ship);
-                ship.life -= bullet.get(Bullet).damage;
-                ship.life = Math.max(0, ship.life);
-                var ratio = ship.life / ship.maxLife;
-                ship.healthBar.setScale(new Vector3(ratio, 1, 1));
-                ship.healthBar.get(StaticSprite2D).setColor(new Color(1 - ratio, ratio, 0, 1));
-
                 AudioSystem.instance.playSound("impact", bullet.position);
 
-                if(ship.life == 0)
+                var ship:Ship = other.get(Ship);
+
+                if(ship.life > 0)
                 {
-                    ship.sm.changeState("dying");
+                    ship.life -= bullet.get(Bullet).damage;
+                    ship.life = Math.max(0, ship.life);
+                    var ratio = ship.life / ship.maxLife;
+                    ship.healthBar.setScale(new Vector3(ratio, 1, 1));
+                    ship.healthBar.get(StaticSprite2D).setColor(new Color(1 - ratio, ratio, 0, 1));
+
+                    if(ship.life == 0)
+                    {
+                        ship.sm.changeState("dying");
+                        AudioSystem.instance.playSound("explosion", bullet.position);
+                    }
                 }
             }
         }

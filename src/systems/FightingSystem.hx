@@ -31,6 +31,11 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
     private function updateNode(node:FighterNode, dt:Float):Void
     {
+        if(node.ship.life <= 0)
+        {
+            return;
+        }
+
         node.fighter.time += dt;
 
         if(node.fighter.time > 1)
@@ -41,7 +46,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
             for(ship in allShips)
             {
-                if(ship.ship.teamIndex != teamIndex)
+                if(ship.ship.teamIndex != teamIndex && ship.ship.life > 0)
                 {
                     var distance = Maths.getVector3Distance(ship.entity.position, node.entity.position);
                     if(distance < closestDistance)
@@ -54,7 +59,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
             for(building in allBuildings)
             {
-                if(building.building.teamIndex != teamIndex)
+                if(building.building.teamIndex != teamIndex  && building.building.life > 0)
                 {
                     var distance = Maths.getVector3Distance(building.entity.position, node.entity.position);
                     if(distance - building.building.radius < closestDistance)

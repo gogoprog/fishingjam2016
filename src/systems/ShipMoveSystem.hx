@@ -29,6 +29,11 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
     private function updateNode(node:ShipMoveNode, dt:Float):Void
     {
+        if(node.ship.life <= 0)
+        {
+            return;
+        }
+
         var currentPath = Session.level.createPath(node.entity.position, node.ship.targetPosition);
 
         node.move.currentPath = currentPath;
