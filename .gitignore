@@ -4,3 +4,4 @@ callgrind*
 packed-*
 vgcore*
 gengine
+/undefined
