@@ -108,7 +108,7 @@ class InputSystem extends System
 
                     engine.addEntity(Factory.createTarget(mouseWorldPosition));
 
-                    AudioSystem.instance.playSound("move");
+                    AudioSystem.instance.playSound("move", selectedShip.position);
                 }
             }
 

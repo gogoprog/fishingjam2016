@@ -57,8 +57,20 @@ class AudioSystem extends System
         var ss = soundSources[nextSoundSourceIndex++];
         if(position != null)
         {
-            //ss.setGain(gain);
-            ss.setPanning((position.x - cameraEntity.position.x) / 1024);
+            var zoom = cameraEntity.get(Camera).getZoom();
+            var camPos = cameraEntity.position;
+            var distance = Maths.getVector3Distance(position, camPos);
+
+            if(distance > 1000/zoom)
+            {
+                ss.setGain(zoom * ((1000 / zoom) / distance));
+            }
+            else
+            {
+                ss.setGain(zoom);
+            }
+
+            ss.setPanning((position.x - camPos.x) / (1024 / zoom));
         }
         else
         {
