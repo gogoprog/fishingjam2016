@@ -23,6 +23,7 @@ class MenuSystem extends System
     override public function addToEngine(_engine:Engine)
     {
         engine = _engine;
+        AudioSystem.instance.playMenuMusic();
     }
 
     override public function update(dt:Float):Void

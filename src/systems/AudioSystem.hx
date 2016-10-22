@@ -89,9 +89,16 @@ class AudioSystem extends System
         nextSoundSourceIndex %= soundSources.length;
     }
 
-    public function playMusic()
+    public function playGameMusic()
     {
         var s = Gengine.getResourceCache().getSound("World-of-Automatons_Looping.ogg", true);
+        s.setLooped(true);
+        musicSource.play(s);
+    }
+
+    public function playMenuMusic()
+    {
+        var s = Gengine.getResourceCache().getSound("Action-Rhythm-5.ogg", true);
         s.setLooped(true);
         musicSource.play(s);
     }

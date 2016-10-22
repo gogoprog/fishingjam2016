@@ -63,6 +63,6 @@ class Session
         teams[0].fishes = 100;
         teams[1].fishes = 100;
 
-        AudioSystem.instance.playMusic();
+        AudioSystem.instance.playGameMusic();
     }
 }
