@@ -65,6 +65,7 @@ class AudioSystem extends System
             ss.setGain(1.0);
             ss.setPanning(0.0);
         }
+
         ss.play(sounds[sound]);
         nextSoundSourceIndex %= soundSources.length;
     }

@@ -24,7 +24,7 @@ class MapGenerator
 
     static public function generate()
     {
-        engine.removeAllEntities();
+        //engine.removeAllEntities();
 
         var size = Config.mapSize;
         var background = Factory.createBackground(new Vector2(size * Config.tileSize, size * Config.tileSize));
