@@ -1,6 +1,7 @@
 package nodes;
 
 import gengine.components.*;
+import gengine.math.*;
 import gengine.*;
 import components.*;
 

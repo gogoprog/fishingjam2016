@@ -104,6 +104,13 @@ class Factory
             e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         }
 
+        var bgBar = createBar(33);
+        bgBar.setParent(e);
+
+        e.get(Ship).healthBar = createBar(34);
+        e.get(Ship).healthBar.setParent(e);
+        e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+
         return e;
     }
 
@@ -163,7 +170,22 @@ class Factory
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D(icon, true));
         e.get(StaticSprite2D).setLayer(32);
 
-        e.position = new Vector3(64 - 16, 64 - 16, 0);
+        return e;
+    }
+
+    static public function createBar(layer:Int)
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.add(new Icon());
+
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -4), new Vector2(32, 4)));
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("white.png", true));
+        e.get(StaticSprite2D).setLayer(layer);
+        e.get(StaticSprite2D).setColor(new Color(0, 0, 0, 1));
+
+
+        e.get(Icon).offset = new Vector2(0, 56);
 
         return e;
     }
