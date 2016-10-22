@@ -11,7 +11,7 @@ body {
 
 @font-face {
     font-family: mainFont;
-    src: url("todo.ttf");
+    src: url("/gui/AldotheApache.ttf");
 }
 
 #body {
