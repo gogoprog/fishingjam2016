@@ -2,6 +2,7 @@ import gengine.math.*;
 import gengine.Engine;
 import components.*;
 import haxe.ds.Vector;
+import systems.AudioSystem;
 
 class Session
 {
@@ -61,5 +62,7 @@ class Session
 
         teams[0].fishes = 100;
         teams[1].fishes = 100;
+
+        AudioSystem.instance.playMusic();
     }
 }

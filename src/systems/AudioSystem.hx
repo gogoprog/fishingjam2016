@@ -15,6 +15,7 @@ class AudioSystem extends System
     private var engine:Engine;
     private var sounds = new Map<String, Dynamic>();
     private var soundSources:Vector<SoundSource>;
+    private var musicSource:SoundSource;
     private var nextSoundSourceIndex = 0;
     private var cameraEntity:Entity;
 
@@ -50,6 +51,12 @@ class AudioSystem extends System
             e.add(soundSources[i]);
             engine.addEntity(e);
         }
+
+        var e = new Entity();
+        musicSource = new SoundSource();
+        musicSource.setSoundType("Music");
+        musicSource.setGain(0.5);
+        e.add(musicSource);
     }
 
     public function playSound(sound:String, ?position:Vector3 = null)
@@ -80,5 +87,12 @@ class AudioSystem extends System
 
         ss.play(sounds[sound]);
         nextSoundSourceIndex %= soundSources.length;
+    }
+
+    public function playMusic()
+    {
+        var s = Gengine.getResourceCache().getSound("World-of-Automatons_Looping.ogg", true);
+        s.setLooped(true);
+        musicSource.play(s);
     }
 }
