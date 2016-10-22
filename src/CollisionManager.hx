@@ -38,7 +38,7 @@ class CollisionManager
                 var ship = other.get(Ship);
                 ship.life -= bullet.get(Bullet).damage;
                 var ratio = ship.life / ship.maxLife;
-                ship.healthBar.scale = new Vector3(ratio, 1, 1);
+                ship.healthBar.setScale(new Vector3(ratio, 1, 1));
                 ship.healthBar.get(StaticSprite2D).setColor(new Color(1 - ratio, ratio, 0, 1));
             }
         }
