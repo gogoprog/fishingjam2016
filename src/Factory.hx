@@ -176,19 +176,18 @@ class Factory
         return e;
     }
 
-    static public function createBar(layer:Int)
+    static public function createBar(layer:Int, ?halfWidth = 32, ?offsetY = 56)
     {
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.add(new Icon());
 
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -4), new Vector2(32, 4)));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-halfWidth, -4), new Vector2(halfWidth, 4)));
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("white.png", true));
         e.get(StaticSprite2D).setLayer(layer);
         e.get(StaticSprite2D).setColor(new Color(0, 0, 0, 1));
 
-
-        e.get(Icon).offset = new Vector2(0, 56);
+        e.get(Icon).offset = new Vector2(0, offsetY);
 
         return e;
     }
@@ -291,6 +290,13 @@ class Factory
         e.get(CollisionCircle2D).setMaskBits(TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
         e.get(RigidBody2D).setBodyType(0);
         e.get(RigidBody2D).setMass(1);
+
+        var bgBar = createBar(33);
+        bgBar.setParent(e);
+
+        e.get(Building).healthBar = createBar(34, 170, 200);
+        e.get(Building).healthBar.setParent(e);
+        e.get(Building).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
 
         return e;
     }

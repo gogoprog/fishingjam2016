@@ -33,10 +33,10 @@ class CollisionManager
 
         if(other != null)
         {
+            AudioSystem.instance.playSound("impact", bullet.position);
+
             if(other.has(Ship))
             {
-                AudioSystem.instance.playSound("impact", bullet.position);
-
                 var ship:Ship = other.get(Ship);
 
                 if(ship.life > 0)
@@ -50,6 +50,25 @@ class CollisionManager
                     if(ship.life == 0)
                     {
                         ship.sm.changeState("dying");
+                        AudioSystem.instance.playSound("explosion", bullet.position);
+                    }
+                }
+            }
+            else if(other.has(Building))
+            {
+                var building:Building = other.get(Building);
+
+                if(building.life > 0)
+                {
+                    building.life -= bullet.get(Bullet).damage;
+                    building.life = Math.max(0, building.life);
+                    var ratio = building.life / building.maxLife;
+                    building.healthBar.setScale(new Vector3(ratio, 1, 1));
+                    building.healthBar.get(StaticSprite2D).setColor(new Color(1 - ratio, ratio, 0, 1));
+
+                    if(building.life == 0)
+                    {
+                        //building.sm.changeState("dying");
                         AudioSystem.instance.playSound("explosion", bullet.position);
                     }
                 }

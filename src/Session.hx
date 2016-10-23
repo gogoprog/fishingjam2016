@@ -9,6 +9,7 @@ class Session
     static public var level:Level;
     static private var engine:Engine;
     static public var teams = new Vector<Team>(2);
+    static public var player:Team;
 
     static public function init(_engine:Engine)
     {
@@ -18,13 +19,14 @@ class Session
         teams[1] = new Team();
         teams[0].isBot = false;
         teams[1].isBot = true;
+        player = teams[0];
     }
 
     static public function start()
     {
         MapGenerator.generate();
 
-        for(p in 0...2)
+        /*for(p in 0...2)
         {
             for(i in 0...5)
             {
@@ -41,17 +43,17 @@ class Session
                 e.setRotation2D(Std.random(360));
                 engine.addEntity(e);
             }
-        }
+        }*/
 
-        var e = Factory.createBuilding(0);
-        e.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, 3, 10);
-        e.setRotation2D(Std.random(360));
-        engine.addEntity(e);
+        teams[0].home = Factory.createBuilding(0);
+        teams[0].home.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, 3, 10);
+        teams[0].home.setRotation2D(Std.random(360));
+        engine.addEntity(teams[0].home);
 
-        var e = Factory.createBuilding(1);
-        e.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, Config.mapSize - 10, Config.mapSize - 3);
-        e.setRotation2D(Std.random(360));
-        engine.addEntity(e);
+        teams[1].home = Factory.createBuilding(1);
+        teams[1].home.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, Config.mapSize - 10, Config.mapSize - 3);
+        teams[1].home.setRotation2D(Std.random(360));
+        engine.addEntity(teams[1].home);
 
         for(i in 0...10)
         {
