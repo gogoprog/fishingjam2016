@@ -30,8 +30,13 @@ class HudSystem extends System
 
         new JQuery(".buildFisher").click(function(e)
         {
-            var t = new Task(TaskType.BuildFisher);
-            t.duration = 2;
+            var t = Task.tasks["buildFisher"];
+            Session.player.home.get(Building).tasks.push(t);
+        });
+
+        new JQuery(".buildFighter").click(function(e)
+        {
+            var t = Task.tasks["buildFighter"];
             Session.player.home.get(Building).tasks.push(t);
         });
     }

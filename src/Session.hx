@@ -3,6 +3,7 @@ import gengine.Engine;
 import components.*;
 import haxe.ds.Vector;
 import systems.AudioSystem;
+import Task;
 
 class Session
 {
@@ -20,6 +21,19 @@ class Session
         teams[0].isBot = false;
         teams[1].isBot = true;
         player = teams[0];
+
+        var t;
+        var taskMap = Task.tasks;
+
+        t = new Task(TaskType.BuildFisher);
+        t.duration = 2;
+        t.cost = 20;
+        taskMap["buildFisher"] = t;
+
+        t = new Task(TaskType.BuildFighter);
+        t.duration = 2;
+        t.cost = 20;
+        taskMap["buildFighter"] = t;
     }
 
     static public function start()

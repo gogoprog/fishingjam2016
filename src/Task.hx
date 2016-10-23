@@ -7,7 +7,8 @@ enum TaskType
 
 class Task
 {
-    public var cost:Float;
+    static public var tasks = new Map<String, Task>();
+    public var cost:Int;
     public var duration:Float;
     public var type:TaskType;
 

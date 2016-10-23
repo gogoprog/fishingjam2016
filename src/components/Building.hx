@@ -5,6 +5,7 @@ import gengine.*;
 class Building
 {
     public var teamIndex = 0;
+    public var team(get, never):Team;
     public var radius = 0.0;
     public var life = 100.0;
     public var maxLife = 100.0;
@@ -18,5 +19,10 @@ class Building
 
     public function new()
     {
+    }
+
+    public function get_team():Team
+    {
+        return Session.teams[teamIndex];
     }
 }

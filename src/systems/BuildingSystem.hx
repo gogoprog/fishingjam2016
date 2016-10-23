@@ -26,7 +26,6 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
     private function updateNode(node:BuildingNode, dt:Float):Void
     {
         var b = node.building;
-
         if(b.currentTask != null)
         {
             var t = b.currentTask;
@@ -41,10 +40,16 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
         }
         else if(b.tasks.length > 0)
         {
-            b.currentTask = b.tasks.shift();
-            b.time = 0;
-            b.taskStatus = 0.0;
-            trace("building", b.currentTask.type);
+            var t = b.tasks[0];
+
+            if(t.cost <= b.team.fishes)
+            {
+                b.currentTask = b.tasks.shift();
+                b.time = 0;
+                b.taskStatus = 0.0;
+                b.team.fishes -= t.cost;
+                trace("building", t.type);
+            }
         }
     }
 
