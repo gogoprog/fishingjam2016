@@ -11,6 +11,11 @@ class Building
 
     public var healthBar:Entity;
 
+    public var taskStatus = 0.0;
+    public var time = 0.0;
+    public var tasks = new Array<Task>();
+    public var currentTask:Task;
+
     public function new()
     {
     }
