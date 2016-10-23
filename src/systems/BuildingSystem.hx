@@ -27,7 +27,7 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
     {
         var b = node.building;
 
-        if(b.currentTask != null`)
+        if(b.currentTask != null)
         {
             var t = b.currentTask;
             b.time += dt;
@@ -36,7 +36,15 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
             if(b.taskStatus >= 1.0)
             {
                 onTaskCompleted(b.currentTask);
+                b.currentTask = null;
             }
+        }
+        else if(b.tasks.length > 0)
+        {
+            b.currentTask = b.tasks.shift();
+            b.time = 0;
+            b.taskStatus = 0.0;
+            trace("building", b.currentTask.type);
         }
     }
 
@@ -46,5 +54,15 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
     private function onNodeRemoved(node:BuildingNode)
     {
+    }
+
+    private function onTaskCompleted(task:Task)
+    {
+        trace("onTaskCompleted", task.type);
+        switch(task.type)
+        {
+            case BuildFisher:
+            case BuildFighter:
+        }
     }
 }

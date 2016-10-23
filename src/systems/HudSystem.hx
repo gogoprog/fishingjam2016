@@ -1,8 +1,10 @@
 package systems;
 
 import gengine.*;
+import components.*;
 import ash.systems.*;
 import js.jquery.JQuery;
+import Task;
 
 class HudSystem extends System
 {
@@ -25,6 +27,13 @@ class HudSystem extends System
         new JQuery("input").change(onChange);
 
         fishesSpan = new JQuery(".fishes");
+
+        new JQuery(".buildFisher").click(function(e)
+        {
+            var t = new Task(TaskType.BuildFisher);
+            t.duration = 2;
+            Session.player.home.get(Building).tasks.push(t);
+        });
     }
 
     override public function update(dt:Float):Void

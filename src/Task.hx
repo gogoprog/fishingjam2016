@@ -1,7 +1,8 @@
 
 enum TaskType
 {
-    Build(what:Class<Dynamic>);
+    BuildFisher;
+    BuildFighter;
 }
 
 class Task
