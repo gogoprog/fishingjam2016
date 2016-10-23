@@ -16,8 +16,8 @@ class Session
     {
         engine = _engine;
 
-        teams[0] = new Team();
-        teams[1] = new Team();
+        teams[0] = new Team(0);
+        teams[1] = new Team(1);
         teams[0].isBot = false;
         teams[1].isBot = true;
         player = teams[0];
@@ -76,8 +76,8 @@ class Session
             engine.addEntity(e);
         }
 
-        teams[0].fishes = 100;
-        teams[1].fishes = 100;
+        teams[0].fishes = 1000;
+        teams[1].fishes = 1000;
 
         AudioSystem.instance.playGameMusic();
     }

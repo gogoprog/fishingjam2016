@@ -57,7 +57,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
             if(nextPos != null)
             {
                 var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
-                var v = 100.0;
+                var v = 70.0;
 
                 if(nextPos == currentPath[currentPath.length - 1])
                 {

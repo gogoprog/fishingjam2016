@@ -34,7 +34,7 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
             if(b.taskStatus >= 1.0)
             {
-                onTaskCompleted(b.currentTask);
+                onTaskCompleted(b.currentTask, b.team);
                 b.currentTask = null;
             }
         }
@@ -48,7 +48,6 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
                 b.time = 0;
                 b.taskStatus = 0.0;
                 b.team.fishes -= t.cost;
-                trace("building", t.type);
             }
         }
     }
@@ -61,13 +60,18 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
     {
     }
 
-    private function onTaskCompleted(task:Task)
+    private function onTaskCompleted(task:Task, team:Team)
     {
-        trace("onTaskCompleted", task.type);
         switch(task.type)
         {
             case BuildFisher:
+                var e = Factory.createFisher(team.index);
+                e.position = team.home.position;
+                engine.addEntity(e);
             case BuildFighter:
+                var e = Factory.createFighter(team.index);
+                e.position = team.home.position;
+                engine.addEntity(e);
         }
     }
 }

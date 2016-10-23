@@ -6,13 +6,14 @@ class Team
 {
     public var isBot:Bool;
     public var fishes(get, set):Int;
+    public var index:Int;
     private var _fishes = 100;
 
     public var home:Entity;
 
-    public function new()
+    public function new(i:Int)
     {
-
+        index = i;
     }
 
     public function set_fishes(amount:Int):Int
