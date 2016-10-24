@@ -36,6 +36,17 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
             return;
         }
 
+        if(node.fighter.target != null)
+        {
+            if((node.fighter.target.has(Ship) && node.fighter.target.get(Ship).life >= 0) || (node.fighter.target.has(Building) && node.fighter.target.get(Building).life >= 0))
+            {
+                node.ship.sm.changeState("idling");
+
+                node.ship.targetPosition = node.fighter.target.position;
+                node.ship.sm.changeState("moving");
+            }
+        }
+
         node.fighter.time += dt;
 
         if(node.fighter.time > 1)
@@ -67,6 +78,17 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                         closestDistance = distance - building.building.radius;
                         closest = building.entity;
                     }
+                }
+            }
+
+            if(node.fighter.target != null)
+            {
+                var distance =  Maths.getVector3Distance(node.fighter.target.position, node.entity.position);
+
+                if(distance < 312)
+                {
+                    closest = node.fighter.target;
+                    closestDistance = distance;
                 }
             }
 

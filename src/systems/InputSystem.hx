@@ -76,16 +76,19 @@ class InputSystem extends System
             {
                 var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
-                if(result != null && result.has(Ship) && !Session.teams[result.get(Ship).teamIndex].isBot)
+                if(result != null && result.has(Ship))
                 {
-                    if(selectedShip == null)
+                    if(!Session.teams[result.get(Ship).teamIndex].isBot)
                     {
-                        engine.addEntity(selectCursor);
+                        if(selectedShip == null)
+                        {
+                            engine.addEntity(selectCursor);
+                        }
+
+                        selectedShip = result;
+
+                        AudioSystem.instance.playSound("click");
                     }
-
-                    selectedShip = result;
-
-                    AudioSystem.instance.playSound("click");
                 }
                 else
                 {
@@ -101,16 +104,28 @@ class InputSystem extends System
             {
                 if(input.getMouseButtonPress(1 << 2))
                 {
-                    if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
+                    var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+
+                    if(result != null && ((result.has(Ship) && Session.teams[result.get(Ship).teamIndex].isBot) || (result.has(Building) && Session.teams[result.get(Building).teamIndex].isBot)) && selectedShip.has(Fighter))
+                    {
+                        selectedShip.get(Fighter).target = result;
+                        engine.addEntity(Factory.createTarget(result.position, new Color(1, 0, 0, 1)));
+                    }
+                    else if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
                     {
                         selectedShip.get(Ship).sm.changeState("idling");
 
                         selectedShip.get(Ship).targetPosition = mouseWorldPosition;
                         selectedShip.get(Ship).sm.changeState("moving");
 
-                        engine.addEntity(Factory.createTarget(mouseWorldPosition));
+                        engine.addEntity(Factory.createTarget(mouseWorldPosition, new Color(0, 1, 0, 1)));
 
                         AudioSystem.instance.playSound("move", selectedShip.position);
+
+                        if(selectedShip.has(Fighter))
+                        {
+                            selectedShip.get(Fighter).target = null;
+                        }
                     }
                 }
 

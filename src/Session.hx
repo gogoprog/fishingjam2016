@@ -80,5 +80,8 @@ class Session
         teams[1].fishes = 1000;
 
         AudioSystem.instance.playGameMusic();
+
+        var t = Task.tasks["buildFisher"];
+        teams[1].home.get(Building).tasks.push(t);
     }
 }

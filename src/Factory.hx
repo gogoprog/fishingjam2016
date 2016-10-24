@@ -213,14 +213,14 @@ class Factory
         return e;
     }
 
-    static public function createTarget(position:Vector3)
+    static public function createTarget(position:Vector3, color:Color)
     {
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.add(new Target());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
-        e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(StaticSprite2D).setColor(color);
         e.get(StaticSprite2D).setLayer(10);
         e.position = position;
         return e;
