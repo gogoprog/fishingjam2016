@@ -81,9 +81,20 @@ class InputSystem extends System
                         if(!input.getScancodeDown(225))
                         {
                             unselectAll();
-                        }
+                            selectShip(result);
 
-                        selectShip(result);
+                        }
+                        else
+                        {
+                            if(selectedShips.indexOf(result) != -1)
+                            {
+                                unselectShip(result);
+                            }
+                            else
+                            {
+                                selectShip(result);
+                            }
+                        }
 
                         AudioSystem.instance.playSound("click");
                     }
@@ -174,6 +185,8 @@ class InputSystem extends System
 
     private function unselectShip(e:Entity)
     {
+        selectedShips.remove(e);
+        engine.removeEntity(selectCursors[selectCursors.length - 1]);
     }
 
     private function unselectAll()
