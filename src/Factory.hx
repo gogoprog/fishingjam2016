@@ -291,7 +291,7 @@ class Factory
         e.get(RigidBody2D).setBodyType(0);
         e.get(RigidBody2D).setMass(1);
 
-        var bgBar = createBar(33);
+        var bgBar = createBar(33, 170, 200);
         bgBar.setParent(e);
 
         e.get(Building).healthBar = createBar(34, 170, 200);
