@@ -139,12 +139,12 @@ class InputSystem extends System
                         }
                     }
                 }
-
-                for(i in 0...selectedShips.length)
-                {
-                    selectCursors[i].position = selectedShips[i].position;
-                }
             }
+        }
+
+        for(i in 0...selectedShips.length)
+        {
+            selectCursors[i].position = selectedShips[i].position;
         }
 
         var camPos = cameraEntity.position;

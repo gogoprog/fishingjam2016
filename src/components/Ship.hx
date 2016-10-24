@@ -14,6 +14,7 @@ class Ship
     public var teamIndex = 0;
     public var life:Float = 100.0;
     public var maxLife:Float = 100.0;
+    public var speed = 400.0;
 
     public var team(get, never):Team;
 

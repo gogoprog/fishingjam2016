@@ -57,11 +57,11 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
             if(nextPos != null)
             {
                 var velo = new Vector2(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
-                var v = 70.0;
+                var v = node.ship.speed;
 
                 if(nextPos == currentPath[currentPath.length - 1])
                 {
-                    v = Math.min(70, Maths.getVector3Distance(nextPos, currentPos));
+                    v = Math.min(node.ship.speed, Maths.getVector3Distance(nextPos, currentPos));
                 }
 
                 velo = Maths.getNormalizedVector2(velo) * v;
@@ -70,8 +70,6 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
                 node.entity.setRotation2D(a*180/Math.PI - 90);
 
                 node.body.setLinearVelocity(velo);
-
-                node.body.applyForceToCenter(velo, true);
                 node.body.setFixedRotation(true);
 
                 /*for(i in 0...currentPath.length)
