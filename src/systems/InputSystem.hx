@@ -18,16 +18,14 @@ class InputSystem extends System
     private var startMousePosition:Vector2;
     private var startCameraPosition:Vector3;
     private var zoom = 1.0;
-    private var selectedShip:Entity;
-    private var selectCursor:Entity;
+    private var selectedShips = new Array<Entity>();
+    private var selectCursors = new Array<Entity>();
 
     public function new(cameraEntity_:Entity, sceneEntity_:Entity)
     {
         super();
         cameraEntity = cameraEntity_;
         sceneEntity = sceneEntity_;
-
-        selectCursor = Factory.createSelectCursor();
     }
 
     override public function addToEngine(_engine:Engine)
@@ -80,56 +78,61 @@ class InputSystem extends System
                 {
                     if(!Session.teams[result.get(Ship).teamIndex].isBot)
                     {
-                        if(selectedShip == null)
+                        if(!input.getScancodeDown(225))
                         {
-                            engine.addEntity(selectCursor);
+                            unselectAll();
                         }
 
-                        selectedShip = result;
+                        selectShip(result);
 
                         AudioSystem.instance.playSound("click");
                     }
                 }
                 else
                 {
-                    if(selectedShip != null)
-                    {
-                        engine.removeEntity(selectCursor);
-                        selectedShip = null;
-                    }
+                    unselectAll();
                 }
             }
 
-            if(selectedShip != null)
+            if(selectedShips.length > 0)
             {
                 if(input.getMouseButtonPress(1 << 2))
                 {
                     var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
 
-                    if(result != null && ((result.has(Ship) && Session.teams[result.get(Ship).teamIndex].isBot) || (result.has(Building) && Session.teams[result.get(Building).teamIndex].isBot)) && selectedShip.has(Fighter))
+                    if(result != null && ((result.has(Ship) && Session.teams[result.get(Ship).teamIndex].isBot) || (result.has(Building) && Session.teams[result.get(Building).teamIndex].isBot)) && haveSelectedShips(Fighter))
                     {
-                        selectedShip.get(Fighter).target = result;
+                        for(selectedShip in selectedShips)
+                        {
+                            selectedShip.get(Fighter).target = result;
+                        }
                         engine.addEntity(Factory.createTarget(result.position, new Color(1, 0, 0, 1)));
                     }
                     else if(Session.level.isWaterPosition(mouseWorldPosition.x, mouseWorldPosition.y))
                     {
-                        selectedShip.get(Ship).sm.changeState("idling");
-
-                        selectedShip.get(Ship).targetPosition = mouseWorldPosition;
-                        selectedShip.get(Ship).sm.changeState("moving");
-
-                        engine.addEntity(Factory.createTarget(mouseWorldPosition, new Color(0, 1, 0, 1)));
-
-                        AudioSystem.instance.playSound("move", selectedShip.position);
-
-                        if(selectedShip.has(Fighter))
+                        for(selectedShip in selectedShips)
                         {
-                            selectedShip.get(Fighter).target = null;
+                            selectedShip.get(Ship).sm.changeState("idling");
+
+                            selectedShip.get(Ship).targetPosition = mouseWorldPosition;
+                            selectedShip.get(Ship).sm.changeState("moving");
+
+                            engine.addEntity(Factory.createTarget(mouseWorldPosition, new Color(0, 1, 0, 1)));
+
+                            AudioSystem.instance.playSound("move", selectedShip.position);
+
+                            if(selectedShip.has(Fighter))
+                            {
+                                selectedShip.get(Fighter).target = null;
+                            }
                         }
                     }
                 }
 
-                selectCursor.position = selectedShip.position;
+                for(i in 0...selectedShips.length)
+                {
+                    selectCursors[i].position = selectedShips[i].position;
+                }
             }
         }
 
@@ -154,5 +157,45 @@ class InputSystem extends System
         }
 
         cameraEntity.position = camPos;
+    }
+
+    private function selectShip(e:Entity)
+    {
+        selectedShips.push(e);
+
+        if(selectCursors.length < selectedShips.length)
+        {
+            selectCursors.push(Factory.createSelectCursor());
+        }
+
+        var i = selectedShips.length - 1;
+        engine.addEntity(selectCursors[i]);
+    }
+
+    private function unselectShip(e:Entity)
+    {
+    }
+
+    private function unselectAll()
+    {
+        for(i in 0...selectedShips.length)
+        {
+            engine.removeEntity(selectCursors[i]);
+        }
+
+        selectedShips = new Array<Entity>();
+    }
+
+    private function haveSelectedShips(c:Class<Dynamic>)
+    {
+        for(s in selectedShips)
+        {
+            if(!s.has(c))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
