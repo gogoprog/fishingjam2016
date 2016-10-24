@@ -61,7 +61,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
                 if(nextPos == currentPath[currentPath.length - 1])
                 {
-                    v = Maths.getVector3Distance(nextPos, currentPos);
+                    v = Math.min(70, Maths.getVector3Distance(nextPos, currentPos));
                 }
 
                 velo = Maths.getNormalizedVector2(velo) * v;
