@@ -9,6 +9,7 @@ import components.*;
 import nodes.*;
 import gengine.math.*;
 import haxe.ds.Vector;
+import ash.core.NodeList;
 
 class InputSystem extends System
 {
@@ -17,9 +18,12 @@ class InputSystem extends System
     private var sceneEntity:Entity;
     private var startMousePosition:Vector2;
     private var startCameraPosition:Vector3;
+    private var startSelectPosition:Vector3;
     private var zoom = 1.0;
     private var selectedShips = new Array<Entity>();
     private var selectCursors = new Array<Entity>();
+    private var selectQuad:Entity;
+    private var allShips:NodeList<ShipNode>;
 
     public function new(cameraEntity_:Entity, sceneEntity_:Entity)
     {
@@ -31,12 +35,18 @@ class InputSystem extends System
     override public function addToEngine(_engine:Engine)
     {
         engine = _engine;
+        selectQuad = Factory.createSelectCursor();
+        engine.addEntity(selectQuad);
+        allShips = engine.getNodeList(ShipNode);
     }
 
     override public function update(dt:Float):Void
     {
         var input = Gengine.getInput();
         var mousePosition = input.getMousePosition();
+
+        selectQuad.position = new Vector3(-1000000, 0, 0);
+
         if(mousePosition.y < 570)
         {
             var mouseScreenPosition = new Vector2(mousePosition.x / 1024, mousePosition.y / 768);
@@ -72,37 +82,22 @@ class InputSystem extends System
 
             if(input.getMouseButtonPress(1))
             {
-                var result:Entity = sceneEntity.get(PhysicsWorld2D).getEntity(new Vector2(mouseWorldPosition.x, mouseWorldPosition.y));
+                startSelectPosition = mouseWorldPosition;
+            }
+            else if(input.getMouseButtonDown(1))
+            {
+                var centerPos = (startSelectPosition + mouseWorldPosition) * 0.5;
+                var size = mouseWorldPosition - startSelectPosition;
 
-                if(result != null && result.has(Ship))
-                {
-                    if(!Session.teams[result.get(Ship).teamIndex].isBot)
-                    {
-                        if(!input.getScancodeDown(225))
-                        {
-                            unselectAll();
-                            selectShip(result);
-
-                        }
-                        else
-                        {
-                            if(selectedShips.indexOf(result) != -1)
-                            {
-                                unselectShip(result);
-                            }
-                            else
-                            {
-                                selectShip(result);
-                            }
-                        }
-
-                        AudioSystem.instance.playSound("click");
-                    }
-                }
-                else
-                {
-                    unselectAll();
-                }
+                selectQuad.position = centerPos;
+                selectQuad.scale = new Vector3(size.x / 128, size.y / 128, 1);
+            }
+            else if(startSelectPosition != null)
+            {
+                var centerPos = (startSelectPosition + mouseWorldPosition) * 0.5;
+                var size = mouseWorldPosition - startSelectPosition;
+                selectShipsInQuad(centerPos, size);
+                startSelectPosition = null;
             }
 
             if(selectedShips.length > 0)
@@ -180,13 +175,14 @@ class InputSystem extends System
         }
 
         var i = selectedShips.length - 1;
+
         engine.addEntity(selectCursors[i]);
     }
 
     private function unselectShip(e:Entity)
     {
         selectedShips.remove(e);
-        engine.removeEntity(selectCursors[selectCursors.length - 1]);
+        engine.removeEntity(selectCursors[selectedShips.length]);
     }
 
     private function unselectAll()
@@ -210,5 +206,49 @@ class InputSystem extends System
         }
 
         return true;
+    }
+
+    private function selectShipsInQuad(center:Vector3, size:Vector3)
+    {
+        var input = Gengine.getInput();
+
+        size.x = Math.abs(size.x * 0.5);
+        size.y = Math.abs(size.y * 0.5);
+
+        var min = center - size;
+        var max = center + size;
+        var otherSize = new Vector3(64, 64, 0);
+
+        if(!input.getScancodeDown(225))
+        {
+            unselectAll();
+        }
+
+        for(ship in allShips)
+        {
+            if(!Session.teams[ship.ship.teamIndex].isBot)
+            {
+                var pos = ship.entity.position;
+                var omin = pos - otherSize;
+                var omax = pos + otherSize;
+
+                if(!(omax.x < min.x || omin.x > max.x || omax.y < min.y || omin.y > max.y))
+                {
+                    if(selectedShips.indexOf(ship.entity) != -1)
+                    {
+                        unselectShip(ship.entity);
+                    }
+                    else
+                    {
+                        selectShip(ship.entity);
+                    }
+                }
+            }
+        }
+
+        if(selectedShips.length > 0)
+        {
+            AudioSystem.instance.playSound("click");
+        }
     }
 }
