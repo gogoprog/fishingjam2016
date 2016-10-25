@@ -167,6 +167,11 @@ class InputSystem extends System
 
     private function selectShip(e:Entity)
     {
+        if(e.get(Ship).life <= 0)
+        {
+            return;
+        }
+
         selectedShips.push(e);
 
         if(selectCursors.length < selectedShips.length)

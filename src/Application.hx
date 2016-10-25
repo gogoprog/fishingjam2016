@@ -62,6 +62,7 @@ class Application
         state.addInstance(new BuildingSystem());
         state.addInstance(new BulletSystem());
         state.addInstance(new IconSystem());
+        state.addInstance(new BotSystem());
         esm.addState("ingame", state);
 
         engine.addSystem(new AudioSystem(cameraEntity), 1);
