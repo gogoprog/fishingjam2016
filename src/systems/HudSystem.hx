@@ -13,6 +13,8 @@ class HudSystem extends System
     private var engine:Engine;
 
     public var fishesSpan:JQuery;
+    public var buildBar:JQuery;
+    public var queue:JQuery;
 
     public function new()
     {
@@ -27,18 +29,27 @@ class HudSystem extends System
         new JQuery("input").change(onChange);
 
         fishesSpan = new JQuery(".fishes");
+        buildBar = new JQuery(".bar");
+        queue = new JQuery(".queue");
 
         new JQuery(".buildFisher").click(function(e)
         {
             var t = Task.tasks["buildFisher"];
-            Session.player.home.get(Building).tasks.push(t);
+            var tasks:Array<Task> = Session.player.home.get(Building).tasks;
+            tasks.push(t);
+            updateQueue(tasks);
         });
 
         new JQuery(".buildFighter").click(function(e)
         {
             var t = Task.tasks["buildFighter"];
-            Session.player.home.get(Building).tasks.push(t);
+            var tasks:Array<Task> = Session.player.home.get(Building).tasks;
+            tasks.push(t);
+            updateQueue(tasks);
         });
+
+        updateBuildBar(0.0);
+        updateQueue([]);
     }
 
     override public function update(dt:Float):Void
@@ -65,5 +76,26 @@ class HudSystem extends System
         MapGenerator.frequency = freq;
         MapGenerator.octaves = octaves;
         MapGenerator.threshold = threshold;
+    }
+
+    public function updateBuildBar(f:Float)
+    {
+        buildBar.css("width", (f * 100) + "%");
+    }
+
+    public function updateQueue(list:Array<Task>)
+    {
+        var content = "";
+        for(i in 0...list.length)
+        {
+            if(i>0)
+            {
+                content += ", ";
+            }
+
+            content += list[i].name;
+        }
+
+        queue.text(content);
     }
 }

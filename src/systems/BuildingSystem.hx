@@ -32,10 +32,22 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
             b.time += dt;
             b.taskStatus = b.time / t.duration;
 
+            if(!b.team.isBot)
+            {
+                HudSystem.instance.updateBuildBar(b.taskStatus);
+            }
+
             if(b.taskStatus >= 1.0)
             {
                 onTaskCompleted(b.currentTask, b.team);
                 b.currentTask = null;
+                b.tasks.shift();
+
+                if(!b.team.isBot)
+                {
+                    HudSystem.instance.updateBuildBar(0.0);
+                    HudSystem.instance.updateQueue(b.tasks);
+                }
             }
         }
         else if(b.tasks.length > 0)
@@ -44,7 +56,7 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
             if(t.cost <= b.team.fishes)
             {
-                b.currentTask = b.tasks.shift();
+                b.currentTask = b.tasks[0];
                 b.time = 0;
                 b.taskStatus = 0.0;
                 b.team.fishes -= t.cost;

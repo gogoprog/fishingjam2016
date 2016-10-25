@@ -1,6 +1,7 @@
 import gengine.math.*;
 import gengine.Engine;
 import components.*;
+import systems.*;
 import haxe.ds.Vector;
 import systems.AudioSystem;
 import Task;
@@ -28,11 +29,13 @@ class Session
         t = new Task(TaskType.BuildFisher);
         t.duration = 2;
         t.cost = 20;
+        t.name = "Fisher";
         taskMap["buildFisher"] = t;
 
         t = new Task(TaskType.BuildFighter);
         t.duration = 2;
         t.cost = 20;
+        t.name = "Fighter";
         taskMap["buildFighter"] = t;
     }
 

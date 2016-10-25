@@ -27,3 +27,27 @@
 .rightPanel.disabled button {
     opacity:0.4;
 }
+
+.bgBar {
+    display:inline-block;
+    width:80%;
+    height:12px;
+    background-color:#aaa5a5;
+    border:1px solid black;
+}
+
+.bar {
+    position:relative;
+    left:0;
+    top:0;
+    height:12px;
+    width:50%;
+    background-color:#34302f;
+}
+
+.queue {
+    color:black;
+    display:inline-block;
+    width:80%;
+    text-align:left;
+}
