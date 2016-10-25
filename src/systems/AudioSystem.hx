@@ -58,7 +58,7 @@ class AudioSystem extends System
         var e = new Entity();
         musicSource = new SoundSource();
         musicSource.setSoundType("Music");
-        musicSource.setGain(0.5);
+        musicSource.setGain(0.4);
         e.add(musicSource);
     }
 

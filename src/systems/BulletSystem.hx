@@ -30,7 +30,7 @@ class BulletSystem extends ListIteratingSystem<BulletNode>
 
     private function onNodeAdded(node:BulletNode)
     {
-        node.body.setLinearVelocity(node.bullet.direction * 100);
+        node.body.setLinearVelocity(node.bullet.direction * 400);
     }
 
     private function onNodeRemoved(node:BulletNode)

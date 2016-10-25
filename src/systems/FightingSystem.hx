@@ -40,7 +40,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
         if(node.fighter.target != null)
         {
-            if((node.fighter.target.has(Ship) && node.fighter.target.get(Ship).life >= 0) || (node.fighter.target.has(Building) && node.fighter.target.get(Building).life >= 0))
+            if((node.fighter.target.has(Ship) && node.fighter.target.get(Ship).life > 0) || (node.fighter.target.has(Building) && node.fighter.target.get(Building).life > 0))
             {
                 targetDistance =  Maths.getVector3Distance(node.fighter.target.position, node.entity.position);
 
