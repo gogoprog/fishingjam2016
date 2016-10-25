@@ -38,6 +38,7 @@ class HudSystem extends System
             var tasks:Array<Task> = Session.player.home.get(Building).tasks;
             tasks.push(t);
             updateQueue(tasks);
+            AudioSystem.instance.playSound("smooth_click");
         });
 
         new JQuery(".buildFighter").click(function(e)
@@ -46,6 +47,7 @@ class HudSystem extends System
             var tasks:Array<Task> = Session.player.home.get(Building).tasks;
             tasks.push(t);
             updateQueue(tasks);
+            AudioSystem.instance.playSound("smooth_click");
         });
 
         updateBuildBar(0.0);

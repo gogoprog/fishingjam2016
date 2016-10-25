@@ -45,6 +45,8 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
                 if(!b.team.isBot)
                 {
+                    AudioSystem.instance.playSound("completed");
+
                     HudSystem.instance.updateBuildBar(0.0);
                     HudSystem.instance.updateQueue(b.tasks);
                 }

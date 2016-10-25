@@ -33,6 +33,8 @@ class AudioSystem extends System
         add("laser");
         add("impact");
         add("explosion");
+        add("smooth_click");
+        add("completed");
 
         cameraEntity = cameraEntity_;
 
