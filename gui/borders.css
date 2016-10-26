@@ -1,8 +1,9 @@
 .panel {
     position:absolute;
+    z-index:0;
 }
 
-.panel:before{
+.panel::before{
     content:"";
     background-color: rgba(153, 153, 153, 1);
     background-clip:content-box;
