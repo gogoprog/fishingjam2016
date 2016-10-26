@@ -74,12 +74,20 @@ class InputSystem extends System
 
             if(deltaWheel != 0)
             {
+                var previousZoom = zoom;
+
                 deltaWheel = Std.int(deltaWheel / Math.abs(deltaWheel));
 
-                zoom += deltaWheel * 0.05;
-                zoom = Math.max(zoom, 0.05);
-                zoom = Math.min(zoom, 1.8);
+                zoom += deltaWheel * 0.1;
+                zoom = Math.max(zoom, 0.1);
+                zoom = Math.min(zoom, 1.7);
                 cameraEntity.get(Camera).setZoom(zoom);
+
+                var deltaPos = mouseWorldPosition - cameraEntity.position;
+
+                deltaPos *= previousZoom / zoom;
+
+                cameraEntity.position = mouseWorldPosition - deltaPos;
             }
 
             if(input.getMouseButtonPress(1))
