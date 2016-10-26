@@ -121,6 +121,7 @@ class InputSystem extends System
                         for(selectedShip in selectedShips)
                         {
                             selectedShip.get(Fighter).target = result;
+                            AudioSystem.instance.playSound("move", selectedShip.position);
                         }
                         engine.addEntity(Factory.createTarget(result.position, new Color(1, 0, 0, 1)));
                     }

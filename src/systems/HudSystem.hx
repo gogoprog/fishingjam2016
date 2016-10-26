@@ -50,6 +50,15 @@ class HudSystem extends System
             AudioSystem.instance.playSound("smooth_click");
         });
 
+        new JQuery(".buildSlowFighter").click(function(e)
+        {
+            var t = Task.tasks["buildSlowFighter"];
+            var tasks:Array<Task> = Session.player.home.get(Building).tasks;
+            tasks.push(t);
+            updateQueue(tasks);
+            AudioSystem.instance.playSound("smooth_click");
+        });
+
         updateBuildBar(0.0);
         updateQueue([]);
         fishesSpan.text(Session.player.fishes);

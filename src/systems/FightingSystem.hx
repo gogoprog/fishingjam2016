@@ -44,7 +44,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
             {
                 targetDistance =  Maths.getVector3Distance(node.fighter.target.position, node.entity.position);
 
-                if(targetDistance > 312)
+                if(targetDistance > node.fighter.range)
                 {
                     node.ship.sm.changeState("idling");
 
@@ -56,7 +56,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
         node.fighter.time += dt;
 
-        if(node.fighter.time > 1)
+        if(node.fighter.time > node.fighter.shootInterval)
         {
             var closest:Entity = null;
             var closestDistance = Math.POSITIVE_INFINITY;
@@ -90,7 +90,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
             if(node.fighter.target != null)
             {
-                if(targetDistance < 312)
+                if(targetDistance < node.fighter.range)
                 {
                     closest = node.fighter.target;
                     closestDistance = targetDistance;
@@ -99,16 +99,17 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 }
             }
 
-            if(closest != null && closestDistance < 312)
+            if(closest != null && closestDistance < node.fighter.range)
             {
                 var e = Factory.createBullet(node.ship.teamIndex);
                 e.position = node.entity.position;
                 var delta = closest.position - e.position;
-
-                e.get(Bullet).direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
+                var bullet = e.get(Bullet);
+                bullet.direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
+                bullet.damage = node.fighter.damage;
                 engine.addEntity(e);
 
-                AudioSystem.instance.playSound("laser", e.position);
+                AudioSystem.instance.playSound(node.fighter.shootSound, e.position);
             }
 
             node.fighter.time = 0;

@@ -86,6 +86,10 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
                 var e = Factory.createFighter(team.index);
                 e.position = team.home.position;
                 engine.addEntity(e);
+            case BuildSlowFighter:
+                var e = Factory.createSlowFighter(team.index);
+                e.position = team.home.position;
+                engine.addEntity(e);
         }
     }
 }

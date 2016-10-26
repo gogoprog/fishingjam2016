@@ -3,6 +3,7 @@ enum TaskType
 {
     BuildFisher;
     BuildFighter;
+    BuildSlowFighter;
 }
 
 class Task

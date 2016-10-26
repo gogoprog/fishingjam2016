@@ -35,8 +35,14 @@ class Session
         t = new Task(TaskType.BuildFighter);
         t.duration = 2;
         t.cost = 20;
-        t.name = "Fighter";
+        t.name = "FastFighter";
         taskMap["buildFighter"] = t;
+
+        t = new Task(TaskType.BuildSlowFighter);
+        t.duration = 4;
+        t.cost = 100;
+        t.name = "SlowFighter";
+        taskMap["buildSlowFighter"] = t;
     }
 
     static public function start()

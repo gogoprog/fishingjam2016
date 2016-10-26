@@ -133,9 +133,27 @@ class Factory
     {
         var e = createShip(teamIndex);
         e.add(new Fighter());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-48, -64), new Vector2(48, 64)));
-        e.get(CollisionBox2D).setSize(new Vector2(96, 128));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
+        e.get(CollisionBox2D).setSize(new Vector2(64, 96));
+        e.get(Fighter).damage = 5;
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
 
+        return e;
+    }
+
+    static public function createSlowFighter(teamIndex:Int)
+    {
+        var e = createShip(teamIndex);
+        e.add(new Fighter());
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -80), new Vector2(64, 80)));
+        e.get(CollisionBox2D).setSize(new Vector2(128, 160));
+        e.get(Ship).speed = 50;
+        e.get(Ship).life = 300;
+        e.get(Ship).maxLife = 300;
+        e.get(Fighter).damage = 30;
+        e.get(Fighter).shootInterval = 3;
+        e.get(Fighter).range = 640;
+        e.get(Fighter).shootSound = "canon";
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
 
         return e;

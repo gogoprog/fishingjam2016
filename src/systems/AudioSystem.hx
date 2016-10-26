@@ -35,6 +35,7 @@ class AudioSystem extends System
         add("explosion");
         add("smooth_click");
         add("completed");
+        add("canon");
 
         cameraEntity = cameraEntity_;
 
