@@ -52,6 +52,7 @@ class HudSystem extends System
 
         updateBuildBar(0.0);
         updateQueue([]);
+        fishesSpan.text(Session.player.fishes);
     }
 
     override public function update(dt:Float):Void
@@ -88,14 +89,42 @@ class HudSystem extends System
     public function updateQueue(list:Array<Task>)
     {
         var content = "";
+        var previous = "";
+        var mult = 1;
         for(i in 0...list.length)
         {
-            if(i>0)
+            var name = list[i].name;
+
+            if(previous == name)
             {
-                content += ", ";
+                ++mult;
+            }
+            else
+            {
+                if(mult > 1)
+                {
+                    content += " x" + mult;
+                }
+
+                mult = 1;
             }
 
-            content += list[i].name;
+            if(previous != name)
+            {
+                if(i>0)
+                {
+                    content += ", ";
+                }
+
+                content += list[i].name;
+            }
+
+            previous = name;
+        }
+
+        if(mult > 1)
+        {
+            content += " x" + mult;
         }
 
         queue.text(content);

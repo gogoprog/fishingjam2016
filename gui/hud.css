@@ -50,6 +50,8 @@
     display:inline-block;
     width:80%;
     text-align:left;
+    height:16px;
+    overflow:hidden;
 }
 
 .fishes {
