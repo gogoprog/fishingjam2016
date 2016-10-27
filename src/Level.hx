@@ -42,9 +42,9 @@ class Level
     {
         var hsize = Std.int(_size / 2);
 
-        for(i in x - hsize ... x + hsize)
+        for(i in x - hsize ... x + hsize + 1)
         {
-            for(j in y - hsize ... y + hsize)
+            for(j in y - hsize ... y + hsize + 1)
             {
                 data[j * size + i] = value;
             }
@@ -121,9 +121,9 @@ class Level
 
             var good = true;
 
-            for(i in x - hsize ... x + hsize)
+            for(i in x - hsize ... x + hsize + 1)
             {
-                for(j in y - hsize ... y + hsize)
+                for(j in y - hsize ... y + hsize + 1)
                 {
                     if(!isWaterTile(i, j))
                     {
