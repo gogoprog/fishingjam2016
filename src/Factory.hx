@@ -145,8 +145,8 @@ class Factory
     {
         var e = createShip(teamIndex);
         e.add(new Fighter());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -80), new Vector2(64, 80)));
-        e.get(CollisionBox2D).setSize(new Vector2(128, 160));
+        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
+        e.get(CollisionBox2D).setSize(new Vector2(120, 160));
         e.get(Ship).speed = 50;
         e.get(Ship).life = 300;
         e.get(Ship).maxLife = 300;

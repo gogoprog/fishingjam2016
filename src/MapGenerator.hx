@@ -24,8 +24,6 @@ class MapGenerator
 
     static public function generate()
     {
-        //engine.removeAllEntities();
-
         var size = Config.mapSize;
         var background = Factory.createBackground(new Vector2(size * Config.tileSize, size * Config.tileSize));
         var halfSize = new Vector2(size * Config.tileSize * 0.5, size * Config.tileSize * 0.5);
@@ -35,25 +33,40 @@ class MapGenerator
 
         Session.level = level;
 
-        level.init(size);
-
-        var perlin = new Perlin();
-
-        var offset = new IntVector2(Std.random(10000), Std.random(10000));
-
-        for(x in 0...Std.int(size/2))
+        while(true)
         {
-            for(y in 0...Std.int(size/2))
-            {
-                var c = perlin.OctavePerlin(x + offset.x, y + offset.y, 0.1, octaves, persistence, frequency);
+            trace("Generating level...");
+            level.init(size);
 
-                if(c < threshold)
+            var perlin = new Perlin();
+
+            var offset = new IntVector2(Std.random(10000), Std.random(10000));
+
+            for(x in 0...Std.int(size/2))
+            {
+                for(y in 0...Std.int(size/2))
                 {
-                    level.setTile(x*2, y*2, TileType.Ground);
-                    level.setTile(x*2+1, y*2, TileType.Ground);
-                    level.setTile(x*2+1, y*2+1, TileType.Ground);
-                    level.setTile(x*2, y*2+1, TileType.Ground);
+                    var c = perlin.OctavePerlin(x + offset.x, y + offset.y, 0.1, octaves, persistence, frequency);
+
+                    if(c < threshold)
+                    {
+                        level.setTile(x*2, y*2, TileType.Ground);
+                        level.setTile(x*2+1, y*2, TileType.Ground);
+                        level.setTile(x*2+1, y*2+1, TileType.Ground);
+                        level.setTile(x*2, y*2+1, TileType.Ground);
+                    }
                 }
+            }
+
+            level.startPositions[0] = level.getRandomWaterPositionWith(5, Config.mapSize - 5, 3, 10, 10);
+            level.startPositions[1] = level.getRandomWaterPositionWith(5, Config.mapSize - 5, Config.mapSize - 10, Config.mapSize - 3, 10);
+
+            level.init2();
+
+            if(level.isReachable(level.startPositions[0], level.startPositions[1]))
+            {
+                trace("Done!");
+                break;
             }
         }
 
@@ -153,8 +166,6 @@ class MapGenerator
                 }
             }
         }
-
-        level.init2();
     }
 
     static private function randFunc():Float

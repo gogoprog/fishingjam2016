@@ -47,6 +47,8 @@ class Session
 
     static public function start()
     {
+        engine.removeAllEntities();
+
         MapGenerator.generate();
 
         /*for(p in 0...2)
@@ -69,12 +71,12 @@ class Session
         }*/
 
         teams[0].home = Factory.createBuilding(0);
-        teams[0].home.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, 3, 10);
+        teams[0].home.position = level.startPositions[0];
         teams[0].home.setRotation2D(Std.random(360));
         engine.addEntity(teams[0].home);
 
         teams[1].home = Factory.createBuilding(1);
-        teams[1].home.position = level.getRandomWaterPositionWith(5, Config.mapSize - 5, Config.mapSize - 10, Config.mapSize - 3);
+        teams[1].home.position = level.startPositions[1];
         teams[1].home.setRotation2D(Std.random(360));
         engine.addEntity(teams[1].home);
 

@@ -10,6 +10,7 @@ class Level
     public var pathfinderMap:PathfinderMap;
     public var offset:Vector2;
     public var halfSize:Vector2;
+    public var startPositions = new Vector<Vector3>(2);
 
     public function new()
     {
@@ -96,18 +97,36 @@ class Level
         }
     }
 
-    public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int):Vector3
+    public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int, size:Int):Vector3
     {
-        while(true)
+        for(n in 0...1000)
         {
             var x = minX + Std.random(maxX - minX);
             var y = minY + Std.random(maxY - minY);
 
-            if(isWaterTile(x, y))
+            var hsize = Std.int(size / 2);
+
+            var good = true;
+
+            for(i in x - hsize ... x + hsize)
+            {
+                for(j in y - hsize ... y + hsize)
+                {
+                    if(!isWaterTile(i, j))
+                    {
+                        good = false;
+                        break;
+                    }
+                }
+            }
+
+            if(good)
             {
                 return new Vector3(x * Config.tileSize - offset.x, y * Config.tileSize - offset.y, 0);
             }
         }
+
+        return null;
     }
 
     public function createPath(from:Vector3, to:Vector3):Array<Vector3>
@@ -133,5 +152,18 @@ class Level
         result.push(to);
 
         return result;
+    }
+
+    public function isReachable(from:Vector3, to:Vector3):Bool
+    {
+        var path = pathfinder.createPath(
+            pathfinderMap.getCoordinate(from.x, from.y),
+            pathfinderMap.getCoordinate(to.x, to.y),
+            EHeuristic.PRODUCT,
+            false,
+            false
+        );
+
+        return path != null;
     }
 }
