@@ -63,12 +63,19 @@ class MapGenerator
 
             level.init2();
 
-            if(level.isReachable(level.startPositions[0], level.startPositions[1]))
+            if(level.startPositions[0] != null && level.startPositions[1] != null && level.isReachable(level.startPositions[0], level.startPositions[1]))
             {
                 trace("Done!");
                 break;
             }
         }
+
+        trace(level.startPositions[0]);
+        trace(level.startPositions[1]);
+        var c = level.pathfinderMap.getCoordinate(level.startPositions[0].x, level.startPositions[0].y);
+        level.setTiles(c.x, c.y, TileType.None, 2);
+        c = level.pathfinderMap.getCoordinate(level.startPositions[1].x, level.startPositions[1].y);
+        level.setTiles(c.x, c.y, TileType.None, 2);
 
         for(x in -1...size+1)
         {

@@ -38,6 +38,19 @@ class Level
         data[y * size + x] = value;
     }
 
+    public function setTiles(x, y, value:TileType, _size:Int)
+    {
+        var hsize = Std.int(_size / 2);
+
+        for(i in x - hsize ... x + hsize)
+        {
+            for(j in y - hsize ... y + hsize)
+            {
+                data[j * size + i] = value;
+            }
+        }
+    }
+
     public function getTile(x, y)
     {
         return data[y * size + x];
@@ -97,14 +110,14 @@ class Level
         }
     }
 
-    public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int, size:Int):Vector3
+    public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int, _size:Int):Vector3
     {
         for(n in 0...1000)
         {
             var x = minX + Std.random(maxX - minX);
             var y = minY + Std.random(maxY - minY);
 
-            var hsize = Std.int(size / 2);
+            var hsize = Std.int(_size / 2);
 
             var good = true;
 
