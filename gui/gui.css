@@ -98,3 +98,13 @@ div.buttons {
 {
     background-color:rgba(0,0,0,0.5);
 }
+
+.loading {
+    font-size: 128px;
+}
+
+.loading span{
+    position:absolute;
+    right:20;
+    bottom:10;
+}

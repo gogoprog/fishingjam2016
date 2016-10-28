@@ -8,6 +8,7 @@ import js.jquery.JQuery;
 class MenuSystem extends System
 {
     private var engine:Engine;
+    private var mustStart = false;
 
     public function new()
     {
@@ -34,13 +35,20 @@ class MenuSystem extends System
         {
             Gengine.exit();
         }
+
+        if(mustStart)
+        {
+            Application.changeState("ingame");
+            Application.pages.showPage(".hud");
+            Session.start();
+        }
     }
 
     private function onStartClick(event)
     {
-        Application.changeState("ingame");
-        Application.pages.showPage(".hud");
-        Session.start();
+        var that = this;
+        Application.pages.showPage(".loading");
+        untyped __js__("setTimeout(function() { that.mustStart = true; }, 100);");
     }
 
     private function onQuitClick(event)
