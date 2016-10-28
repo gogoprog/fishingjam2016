@@ -76,20 +76,23 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
     private function onTaskCompleted(task:Task, team:Team)
     {
+        var e:Entity;
+
         switch(task.type)
         {
             case BuildFisher:
-                var e = Factory.createFisher(team.index);
-                e.position = team.home.position;
-                engine.addEntity(e);
+                e = Factory.createFisher(team.index);
             case BuildFighter:
-                var e = Factory.createFighter(team.index);
-                e.position = team.home.position;
-                engine.addEntity(e);
+                e = Factory.createFighter(team.index);
             case BuildSlowFighter:
-                var e = Factory.createSlowFighter(team.index);
-                e.position = team.home.position;
-                engine.addEntity(e);
+                e = Factory.createSlowFighter(team.index);
+        }
+
+        if(e != null)
+        {
+            var angle = Math.random() * 2 * Math.PI;
+            e.position = team.home.position + new Vector3(- Math.sin(angle), Math.cos(angle), 0) * 200;
+            engine.addEntity(e);
         }
     }
 }
