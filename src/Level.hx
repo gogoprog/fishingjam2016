@@ -110,6 +110,14 @@ class Level
         }
     }
 
+    public function getTilePosition(pos:Vector3):Coordinate
+    {
+        var i = (pos.x + offset.x) / Config.tileSize;
+        var j = (pos.y + offset.y) / Config.tileSize;
+
+        return new Coordinate(Math.floor(i), Math.floor(j));
+    }
+
     public function getRandomWaterPositionWith(minX:Int, maxX:Int, minY:Int, maxY:Int, _size:Int):Vector3
     {
         for(n in 0...1000)

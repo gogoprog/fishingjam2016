@@ -70,10 +70,12 @@ class MapGenerator
             }
         }
 
-        var c = level.pathfinderMap.getCoordinate(level.startPositions[0].x, level.startPositions[0].y);
-        level.setTiles(c.x * 2, c.y * 2, TileType.None, 8);
-        c = level.pathfinderMap.getCoordinate(level.startPositions[1].x, level.startPositions[1].y);
-        level.setTiles(c.x * 2, c.y * 2, TileType.None, 8);
+        var c = level.getTilePosition(level.startPositions[0]);
+        level.setTiles(c.x, c.y, TileType.Building, 4);
+        c = level.getTilePosition(level.startPositions[1]);
+        level.setTiles(c.x, c.y, TileType.Building, 4);
+
+        level.init2();
 
         for(x in -1...size+1)
         {
@@ -167,6 +169,10 @@ class MapGenerator
                         var e = Factory.createInvisibleObstacle();
                         e.position = new Vector3(x * Config.tileSize - halfSize.x + Config.tileSize / 2, y * Config.tileSize - halfSize.y + Config.tileSize / 2, 0);
                         engine.addEntity(e);
+                    }
+
+                    case TileType.Building:
+                    {
                     }
                 }
             }

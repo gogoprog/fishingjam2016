@@ -303,7 +303,7 @@ class Factory
         e.get(StaticSprite2D).setLayer(20);
         e.get(Building).teamIndex = teamIndex;
         e.get(Building).radius = 200;
-        e.get(CollisionCircle2D).setRadius(200);
+        e.get(CollisionCircle2D).setRadius(160);
         e.get(CollisionCircle2D).setCategoryBits(TEAM1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
         e.get(RigidBody2D).setBodyType(0);
