@@ -41,6 +41,7 @@ class MenuSystem extends System
             Application.changeState("ingame");
             Application.pages.showPage(".hud");
             Session.start();
+            mustStart = false;
         }
     }
 
