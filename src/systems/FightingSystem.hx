@@ -107,6 +107,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 var bullet = e.get(Bullet);
                 bullet.direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
                 bullet.damage = node.fighter.damage;
+                bullet.duration = node.fighter.range / bullet.speed + 0.1;
                 engine.addEntity(e);
 
                 AudioSystem.instance.playSound(node.fighter.shootSound, e.position);

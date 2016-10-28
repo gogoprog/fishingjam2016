@@ -25,12 +25,17 @@ class BulletSystem extends ListIteratingSystem<BulletNode>
 
     private function updateNode(node:BulletNode, dt:Float):Void
     {
+        node.bullet.time += dt;
 
+        if(node.bullet.time >= node.bullet.duration)
+        {
+            engine.removeEntity(node.entity);
+        }
     }
 
     private function onNodeAdded(node:BulletNode)
     {
-        node.body.setLinearVelocity(node.bullet.direction * 400);
+        node.body.setLinearVelocity(node.bullet.direction * node.bullet.speed);
     }
 
     private function onNodeRemoved(node:BulletNode)
