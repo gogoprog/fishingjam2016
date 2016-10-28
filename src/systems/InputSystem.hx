@@ -110,6 +110,16 @@ class InputSystem extends System
                 startSelectPosition = null;
             }
 
+            var i = selectedShips.length - 1;
+            while(i >= 0)
+            {
+                if(selectedShips[i].get(Ship).life <= 0)
+                {
+                    unselectShip(selectedShips[i]);
+                }
+                --i;
+            }
+
             if(selectedShips.length > 0)
             {
                 if(input.getMouseButtonPress(1 << 2))

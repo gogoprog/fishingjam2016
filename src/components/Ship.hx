@@ -20,6 +20,7 @@ class Ship
 
     public var icon:Entity;
     public var healthBar:Entity;
+    public var bgBar:Entity;
 
     public function new()
     {

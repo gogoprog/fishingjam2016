@@ -49,6 +49,7 @@ class CollisionManager
 
                     if(ship.life == 0)
                     {
+                        ship.bgBar.get(StaticSprite2D).setAlpha(0);
                         ship.sm.changeState("dying");
                         AudioSystem.instance.playSound("explosion", bullet.position);
                     }

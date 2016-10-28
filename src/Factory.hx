@@ -104,8 +104,8 @@ class Factory
             e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         }
 
-        var bgBar = createBar(33);
-        bgBar.setParent(e);
+        e.get(Ship).bgBar = createBar(33);
+        e.get(Ship).bgBar.setParent(e);
 
         e.get(Ship).healthBar = createBar(34);
         e.get(Ship).healthBar.setParent(e);
