@@ -111,8 +111,8 @@ class Factory
         e.get(Ship).healthBar.setParent(e);
         e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
 
-        e.get(Ship).movingState = sm.createState("dying");
-            //.add(Sink).withInstance(new Sink());
+        e.get(Ship).movingState = sm.createState("dying")
+            .add(Sink).withInstance(new Sink());
 
         return e;
     }
