@@ -213,6 +213,19 @@ class Factory
         return e;
     }
 
+    static public function createFog()
+    {
+        var e = new Entity();
+        e.add(new StaticSprite2D());
+        e.add(new Fog());
+
+        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("fog.png", true));
+        e.get(StaticSprite2D).setLayer(60);
+        e.get(StaticSprite2D).setColor(new Color(0.1, 0.1, 0.1, 1));
+
+        return e;
+    }
+
     static public function createSelectCursor()
     {
         var e = new Entity();

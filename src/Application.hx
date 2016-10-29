@@ -64,6 +64,7 @@ class Application
         state.addInstance(new IconSystem());
         state.addInstance(new BotSystem());
         state.addInstance(new SinkingSystem());
+        state.addInstance(new FogSystem());
         esm.addState("ingame", state);
 
         engine.addSystem(new AudioSystem(cameraEntity), 1);

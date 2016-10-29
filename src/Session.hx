@@ -94,5 +94,7 @@ class Session
 
         var t = Task.tasks["buildFisher"];
         teams[1].home.get(Building).tasks.push(t);
+
+        engine.addEntity(Factory.createFog());
     }
 }
