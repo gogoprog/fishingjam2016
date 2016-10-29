@@ -17,8 +17,30 @@ class MenuSystem extends System
 
     public function init()
     {
-        new JQuery(".startButton").click(onStartClick);
-        new JQuery(".quitButton").click(onQuitClick);
+        var that = this;
+
+        new JQuery(".startButton1").click(function(e){
+            Application.pages.showPage(".loading");
+            Config.mapSize = 128;
+            untyped __js__("setTimeout(function() { that.mustStart = true; }, 100);");
+        });
+
+        new JQuery(".startButton2").click(function(e){
+            Application.pages.showPage(".loading");
+            Config.mapSize = 96;
+            untyped __js__("setTimeout(function() { that.mustStart = true; }, 100);");
+        });
+
+        new JQuery(".startButton3").click(function(e){
+            Application.pages.showPage(".loading");
+            Config.mapSize = 64;
+            untyped __js__("setTimeout(function() { that.mustStart = true; }, 100);");
+        });
+
+
+        new JQuery(".quitButton").click(function(e){
+            Gengine.exit();
+        });
     }
 
     override public function addToEngine(_engine:Engine)
@@ -43,17 +65,5 @@ class MenuSystem extends System
             Session.start();
             mustStart = false;
         }
-    }
-
-    private function onStartClick(event)
-    {
-        var that = this;
-        Application.pages.showPage(".loading");
-        untyped __js__("setTimeout(function() { that.mustStart = true; }, 100);");
-    }
-
-    private function onQuitClick(event)
-    {
-        Gengine.exit();
     }
 }

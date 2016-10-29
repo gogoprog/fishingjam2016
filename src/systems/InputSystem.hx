@@ -38,6 +38,8 @@ class InputSystem extends System
         selectQuad = Factory.createSelectCursor();
         engine.addEntity(selectQuad);
         allShips = engine.getNodeList(ShipNode);
+
+        cameraEntity.position = Session.player.home.position;
     }
 
     override public function update(dt:Float):Void
@@ -181,6 +183,11 @@ class InputSystem extends System
         if(input.getScancodeDown(4))
         {
             camPos.x -= (750 * dt) / camZoom;
+        }
+
+        if(input.getScancodePress(44))
+        {
+            camPos = Session.player.home.position;
         }
 
         cameraEntity.position = camPos;

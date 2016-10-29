@@ -73,7 +73,7 @@ class HudSystem extends System
             Gengine.exit();
         }
 
-        if(input.getScancodePress(44))
+        if(input.getScancodePress(62))
         {
             Session.start();
         }
