@@ -15,6 +15,7 @@ class HudSystem extends System
     public var fishesSpan:JQuery;
     public var buildBar:JQuery;
     public var queue:JQuery;
+    public var currentBuild:JQuery;
 
     public function new()
     {
@@ -31,6 +32,7 @@ class HudSystem extends System
         fishesSpan = new JQuery(".fishes");
         buildBar = new JQuery(".bar");
         queue = new JQuery(".queue");
+        currentBuild = new JQuery(".currentBuild");
 
         new JQuery(".buildFisher").click(function(e)
         {
@@ -56,6 +58,19 @@ class HudSystem extends System
             var tasks:Array<Task> = Session.player.home.get(Building).tasks;
             tasks.push(t);
             updateQueue(tasks);
+            AudioSystem.instance.playSound("smooth_click");
+        });
+
+        new JQuery(".removeTask").click(function(e)
+        {
+            var tasks:Array<Task> = Session.player.home.get(Building).tasks;
+
+            if(tasks.length > 0)
+            {
+                tasks.shift();
+                updateQueue(tasks);
+            }
+
             AudioSystem.instance.playSound("smooth_click");
         });
 
@@ -93,6 +108,11 @@ class HudSystem extends System
     public function updateBuildBar(f:Float)
     {
         buildBar.css("width", (f * 100) + "%");
+    }
+
+    public function updateCurrentBuild(name:String)
+    {
+        currentBuild.text(name);
     }
 
     public function updateQueue(list:Array<Task>)

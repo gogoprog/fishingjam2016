@@ -30,6 +30,12 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
         {
             var t = b.currentTask;
             b.time += dt;
+
+            if(!node.building.team.isBot && Gengine.getInput().getScancodePress(58))
+            {
+                b.time = t.duration;
+            }
+
             b.taskStatus = b.time / t.duration;
 
             if(!b.team.isBot)
@@ -41,14 +47,12 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
             {
                 onTaskCompleted(b.currentTask, b.team);
                 b.currentTask = null;
-                b.tasks.shift();
 
                 if(!b.team.isBot)
                 {
-                    AudioSystem.instance.playSound("completed");
-
+                    HudSystem.instance.updateCurrentBuild("/");
                     HudSystem.instance.updateBuildBar(0.0);
-                    HudSystem.instance.updateQueue(b.tasks);
+                    AudioSystem.instance.playSound("completed");
                 }
             }
         }
@@ -58,10 +62,16 @@ class BuildingSystem extends ListIteratingSystem<BuildingNode>
 
             if(t.cost <= b.team.fishes)
             {
-                b.currentTask = b.tasks[0];
+                b.currentTask = b.tasks.shift();
                 b.time = 0;
                 b.taskStatus = 0.0;
                 b.team.fishes -= t.cost;
+
+                if(!b.team.isBot)
+                {
+                    HudSystem.instance.updateCurrentBuild(b.currentTask.name);
+                    HudSystem.instance.updateQueue(b.tasks);
+                }
             }
         }
     }
