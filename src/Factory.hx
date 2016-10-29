@@ -255,8 +255,10 @@ class Factory
 
         e.add(new AnimatedSprite2D(Gengine.getResourceCache().getAnimationSet2D('fishes.scml', true), "move"));
         e.get(AnimatedSprite2D).setLayer(2);
-        e.get(AnimatedSprite2D).setColor(new Color(1, 1, 1, 0.4));
+        e.get(AnimatedSprite2D).setColor(new Color(1, 1, 1, 0.5));
         e.get(AnimatedSprite2D).setSpeed(0.5);
+
+        e.scale = new Vector3(1.2, 1.2, 1);
 
         return e;
     }
