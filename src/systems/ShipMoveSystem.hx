@@ -34,6 +34,15 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
             return;
         }
 
+        node.move.time += dt;
+
+        if(node.move.time < 0.5)
+        {
+            return;
+        }
+
+        node.move.time = 0;
+
         var currentPath = Session.level.createPath(node.entity.position, node.ship.targetPosition);
 
         node.move.currentPath = currentPath;
@@ -91,6 +100,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
     private function onNodeAdded(node:ShipMoveNode)
     {
+        node.move.time = 0;
     }
 
     private function onNodeRemoved(node:ShipMoveNode)

@@ -35,13 +35,13 @@ class Session
         t = new Task(TaskType.BuildFighter);
         t.duration = 5;
         t.cost = 200;
-        t.name = "FastFighter";
+        t.name = "Fast-Fighter";
         taskMap["buildFighter"] = t;
 
         t = new Task(TaskType.BuildSlowFighter);
         t.duration = 10;
         t.cost = 500;
-        t.name = "SlowFighter";
+        t.name = "Slow-Fighter";
         taskMap["buildSlowFighter"] = t;
     }
 
