@@ -100,7 +100,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
     private function onNodeAdded(node:ShipMoveNode)
     {
-        node.move.time = 0;
+        node.move.time = 10;
     }
 
     private function onNodeRemoved(node:ShipMoveNode)
