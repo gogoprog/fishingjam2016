@@ -27,20 +27,20 @@ class Session
         var taskMap = Task.tasks;
 
         t = new Task(TaskType.BuildFisher);
-        t.duration = 2;
-        t.cost = 20;
+        t.duration = 6;
+        t.cost = 200;
         t.name = "Fisher";
         taskMap["buildFisher"] = t;
 
         t = new Task(TaskType.BuildFighter);
-        t.duration = 2;
-        t.cost = 20;
+        t.duration = 5;
+        t.cost = 200;
         t.name = "FastFighter";
         taskMap["buildFighter"] = t;
 
         t = new Task(TaskType.BuildSlowFighter);
-        t.duration = 4;
-        t.cost = 100;
+        t.duration = 10;
+        t.cost = 500;
         t.name = "SlowFighter";
         taskMap["buildSlowFighter"] = t;
     }

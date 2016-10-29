@@ -125,6 +125,7 @@ class Factory
 
         e.get(Ship).icon = createIcon("iconFishing.png");
         e.get(Ship).icon.setParent(e);
+        e.get(Ship).speed = 100;
 
         return e;
     }
@@ -135,8 +136,10 @@ class Factory
         e.add(new Fighter());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
         e.get(CollisionBox2D).setSize(new Vector2(64, 96));
-        e.get(Fighter).damage = 5;
+        e.get(Fighter).damage = 2;
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
+        e.get(Ship).speed = 350;
+        e.get(Fighter).shootInterval = 0.5;
 
         return e;
     }
