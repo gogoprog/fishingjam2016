@@ -43,6 +43,10 @@ body {
     bottom: 100px;
 }
 
+.menu, .loading {
+    background-image: url("/gui/bg.jpg");
+}
+
 .bghud
 {
     background-color:rgba(0,0,0,0.5);
@@ -68,10 +72,10 @@ body {
 .menu .howto {
     font-size: 16px;
     position:absolute;
-    border: 1px solid grey;
     left:100px;
     top:300px;
     width:400px;
     height:auto;
     padding:20px;
+    color:black;
 }
