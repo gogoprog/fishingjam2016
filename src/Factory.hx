@@ -252,10 +252,12 @@ class Factory
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.add(new Fishes());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("fishes.png", true));
-        e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 0.5));
-        e.get(StaticSprite2D).setLayer(2);
+
+        e.add(new AnimatedSprite2D(Gengine.getResourceCache().getAnimationSet2D('fishes.scml', true), "move"));
+        e.get(AnimatedSprite2D).setLayer(2);
+        e.get(AnimatedSprite2D).setColor(new Color(1, 1, 1, 0.4));
+        e.get(AnimatedSprite2D).setSpeed(0.5);
+
         return e;
     }
 

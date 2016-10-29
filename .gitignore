@@ -5,3 +5,4 @@ packed-*
 vgcore*
 gengine
 /undefined
+*.autosave.scml
