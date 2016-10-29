@@ -71,6 +71,19 @@ class CollisionManager
                     {
                         //building.sm.changeState("dying");
                         AudioSystem.instance.playSound("explosion", bullet.position);
+
+                        var e = Factory.createExplosion();
+                        e.position = other.position;
+                        engine.addEntity(e);
+
+                        if(building.team.isBot)
+                        {
+                            HudSystem.instance.showResult("MISSION ACCOMPLISHED");
+                        }
+                        else
+                        {
+                            HudSystem.instance.showResult("MISSION FAILED");
+                        }
                     }
                 }
             }

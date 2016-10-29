@@ -46,7 +46,7 @@ class AudioSystem extends System
     {
         engine = _engine;
 
-        soundSources = new Vector<SoundSource>(8);
+        soundSources = new Vector<SoundSource>(32);
 
         for(i in 0...soundSources.length)
         {

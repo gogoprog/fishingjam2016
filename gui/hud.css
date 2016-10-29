@@ -75,3 +75,15 @@
     font-size:10px;
     margin-left:20px;
 }
+
+.result {
+    display:block;
+    position:absolute;
+    font-size:60px;
+    width:700px;
+    height:100px;
+    margin:auto;
+    right:0;
+    left:0;
+    top:40%;
+}

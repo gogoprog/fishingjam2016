@@ -339,4 +339,14 @@ class Factory
 
         return e;
     }
+
+    static public function createExplosion()
+    {
+        var e = new Entity();
+        e.add(new ParticleEmitter2D());
+        var particleEmitter2D:ParticleEmitter2D = e.get(ParticleEmitter2D);
+        particleEmitter2D.setEffect(Gengine.getResourceCache().getParticleEffect2D("sun.pex", true));
+        particleEmitter2D.setLayer(22);
+        return e;
+    }
 }

@@ -77,6 +77,8 @@ class HudSystem extends System
         updateBuildBar(0.0);
         updateQueue([]);
         fishesSpan.text(Session.player.fishes);
+
+        new JQuery(".result").hide();
     }
 
     override public function update(dt:Float):Void
@@ -91,6 +93,11 @@ class HudSystem extends System
         if(input.getScancodePress(62))
         {
             Session.start();
+        }
+
+        if(input.getScancodePress(59))
+        {
+            Session.player.fishes += 10000;
         }
     }
 
@@ -157,5 +164,12 @@ class HudSystem extends System
         }
 
         queue.text(content);
+    }
+
+    public function showResult(result)
+    {
+        var div = new JQuery(".result");
+        div.text(result);
+        div.show();
     }
 }
