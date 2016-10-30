@@ -84,7 +84,7 @@ class Factory
         return e;
     }
 
-    static public function createShip(teamIndex:Int)
+    static public function createShip()
     {
         var e:Entity;
         var sm:EntityStateMachine;
@@ -96,7 +96,6 @@ class Factory
         e.get(StaticSprite2D).setLayer(20);
         e.add(new Ship());
         e.get(Ship).sm = sm;
-        e.get(Ship).teamIndex = teamIndex;
         e.add(new RigidBody2D());
         e.add(new CollisionBox2D());
         e.get(RigidBody2D).setBodyType(2);
@@ -123,18 +122,6 @@ class Factory
 
         sm.changeState("idling");
 
-        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
-        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
-
-        if(teamIndex == 1)
-        {
-            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
-        }
-        else
-        {
-            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
-        }
-
         return e;
     }
 
@@ -149,7 +136,7 @@ class Factory
         }
         else
         {
-            e = createShip(teamIndex);
+            e = createShip();
             e.add(new Pool("fisher"));
             e.add(new Fisher());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
@@ -161,8 +148,24 @@ class Factory
             e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
         }
 
+        e.get(Ship).teamIndex = teamIndex;
+        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
+
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
+        }
+
         e.get(Ship).speed = 100;
-        e.get(Ship).life = 50;
+        e.get(Ship).life = 150;
+        e.get(Ship).maxLife = 150;
+        e.get(Ship).bgBar.get(StaticSprite2D).setAlpha(1);
+        e.get(Ship).sm.changeState("idling");
 
         return e;
     }
@@ -178,7 +181,7 @@ class Factory
         }
         else
         {
-            e = createShip(teamIndex);
+            e = createShip();
             e.add(new Pool("fighter"));
             e.add(new Fighter());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
@@ -186,13 +189,28 @@ class Factory
             e.get(CollisionBox2D).setSize(new Vector2(64, 96));
             e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
             e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+            e.get(Fighter).shootInterval = 0.5;
+            e.get(Fighter).damage = 3;
         }
 
-        e.get(Ship).speed = 350;
-        e.get(Fighter).shootInterval = 0.5;
-        e.get(Fighter).damage = 3;
+        e.get(Ship).teamIndex = teamIndex;
+        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
 
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
+        }
+
+        e.get(Ship).speed = 300;
+        e.get(Ship).life = 50;
+        e.get(Ship).maxLife = 50;
         e.get(Ship).sm.changeState("idling");
+        e.get(Ship).bgBar.get(StaticSprite2D).setAlpha(1);
 
         return e;
     }
@@ -208,7 +226,7 @@ class Factory
         }
         else
         {
-            e = createShip(teamIndex);
+            e = createShip();
             e.add(new Pool("slowFighter"));
             e.add(new Fighter());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
@@ -216,14 +234,29 @@ class Factory
             e.get(CollisionBox2D).setSize(new Vector2(120, 160));
             e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
             e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+            e.get(Ship).speed = 50;
+            e.get(Fighter).damage = 30;
+            e.get(Fighter).shootInterval = 2;
+            e.get(Fighter).range = 640;
         }
 
-        e.get(Ship).speed = 50;
-        e.get(Ship).life = 300;
-        e.get(Ship).maxLife = 300;
-        e.get(Fighter).damage = 30;
-        e.get(Fighter).shootInterval = 2;
-        e.get(Fighter).range = 640;
+        e.get(Ship).teamIndex = teamIndex;
+        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
+
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
+        }
+
+        e.get(Ship).life = 500;
+        e.get(Ship).maxLife = 500;
+        e.get(Ship).bgBar.get(StaticSprite2D).setAlpha(1);
+
         e.get(Fighter).shootSound = "canon";
 
         e.get(Ship).sm.changeState("idling");

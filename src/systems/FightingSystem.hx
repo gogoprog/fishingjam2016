@@ -99,18 +99,30 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 }
             }
 
-            if(closest != null && closestDistance < node.fighter.range)
+            if(closest != null)
             {
-                var e = Factory.createBullet(node.ship.teamIndex);
-                e.position = node.entity.position;
-                var delta = closest.position - e.position;
-                var bullet = e.get(Bullet);
-                bullet.direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
-                bullet.damage = node.fighter.damage;
-                bullet.duration = node.fighter.range / bullet.speed + 0.1;
-                engine.addEntity(e);
+                if(closestDistance < node.fighter.range)
+                {
+                    var e = Factory.createBullet(node.ship.teamIndex);
+                    e.position = node.entity.position;
+                    var delta = closest.position - e.position;
+                    var bullet = e.get(Bullet);
+                    bullet.direction = Maths.getNormalizedVector2(new Vector2(delta.x, delta.y));
+                    bullet.damage = node.fighter.damage;
+                    bullet.duration = node.fighter.range / bullet.speed + 0.1;
+                    engine.addEntity(e);
 
-                AudioSystem.instance.playSound(node.fighter.shootSound, e.position);
+                    AudioSystem.instance.playSound(node.fighter.shootSound, e.position);
+                }
+                else if(closestDistance < 640 || (node.ship.team.isBot && closestDistance < 1200))
+                {
+                    if(node.ship.targetPosition == null)
+                    {
+                        node.ship.sm.changeState("idling");
+                        node.ship.targetPosition = (closest.position + node.entity.position) * 0.5;
+                        node.ship.sm.changeState("moving");
+                    }
+                }
             }
 
             node.fighter.time = 0;
