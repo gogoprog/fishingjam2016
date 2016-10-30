@@ -69,6 +69,8 @@ class BotSystem extends System
         if(time > 3)
         {
             var n = 0;
+            var money = team.fishes;
+
             for(node in allFishers)
             {
                 if(node.ship.team.isBot && node.ship.life > 0)
@@ -82,10 +84,21 @@ class BotSystem extends System
             }
 
             time = 0.0;
-
-            var t = Task.tasks["buildFighter"];
             var tasks:Array<Task> = team.home.get(Building).tasks;
-            tasks.push(t);
+
+            if(tasks.length == 0)
+            {
+                if(money > 1000)
+                {
+                    var t = Task.tasks["buildSlowFighter"];
+                    tasks.push(t);
+                }
+                else
+                {
+                    var t = Task.tasks["buildFighter"];
+                    tasks.push(t);
+                }
+            }
         }
     }
 }
