@@ -114,7 +114,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
 
                     AudioSystem.instance.playSound(node.fighter.shootSound, e.position);
                 }
-                else if(closestDistance < 640 || (node.ship.team.isBot && closestDistance < 1200))
+                else if(closestDistance < 640 || (node.ship.team.isBot && closestDistance < 1500))
                 {
                     if(node.ship.targetPosition == null || node.ship.team.isBot)
                     {
