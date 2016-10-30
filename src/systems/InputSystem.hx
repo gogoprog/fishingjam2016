@@ -96,7 +96,7 @@ class InputSystem extends System
             {
                 startSelectPosition = mouseWorldPosition;
             }
-            else if(input.getMouseButtonDown(1))
+            else if(input.getMouseButtonDown(1) && startSelectPosition != null)
             {
                 var centerPos = (startSelectPosition + mouseWorldPosition) * 0.5;
                 var size = mouseWorldPosition - startSelectPosition;

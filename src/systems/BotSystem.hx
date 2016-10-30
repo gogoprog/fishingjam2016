@@ -46,7 +46,7 @@ class BotSystem extends System
                 var aDistance = Maths.getVector3DistanceSquared(homePosition, a.entity.position);
                 var bDistance = Maths.getVector3DistanceSquared(homePosition, b.entity.position);
 
-                return Std.int(bDistance - aDistance);
+                return Std.int(aDistance - bDistance);
             }
         );
 
@@ -68,13 +68,16 @@ class BotSystem extends System
 
         if(time > 3)
         {
-            var fishers = new Array<FisherNode>();
-
+            var n = 0;
             for(node in allFishers)
             {
                 if(node.ship.team.isBot && node.ship.life > 0)
                 {
-                    fishers.push(node);
+                    node.ship.sm.changeState("idling");
+
+                    node.ship.targetPosition = sortedFishes[n].entity.position;
+                    node.ship.sm.changeState("moving");
+                    n++;
                 }
             }
 
