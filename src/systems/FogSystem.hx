@@ -56,13 +56,17 @@ class FogSystem extends ListIteratingSystem<FogNode>
                 highest = homeY;
             }
 
-            node.entity.position = new Vector3(0,  highest + Session.level.size * Config.tileSize * 0.5 + 800, 0);
+            node.entity.position = new Vector3(0, highest + Session.level.size * Config.tileSize * 0.5 + 800, 0);
         }
     }
 
     private function onNodeAdded(node:FogNode)
     {
         node.entity.scale = new Vector3(Session.level.size * Config.tileSize / 512, Session.level.size * Config.tileSize / 512, 1);
+
+        node.fog.targetValue = node.fog.currentValue = Session.player.home.position.y;
+
+        node.entity.position = new Vector3(0, node.fog.currentValue + Session.level.size * Config.tileSize * 0.5 + 800, 0);
     }
 
     private function onNodeRemoved(node:FogNode)
