@@ -6,7 +6,7 @@ body {
 
 @font-face {
     font-family: mainFont;
-    src: url("/gui/AldotheApache.ttf");
+    src: url("AldotheApache.ttf");
 }
 
 #body {
@@ -44,7 +44,7 @@ body {
 }
 
 .menu, .loading {
-    background-image: url("/gui/bg.jpg");
+    background-image: url("bg.jpg");
 }
 
 .bghud
