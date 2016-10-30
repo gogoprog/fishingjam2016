@@ -35,6 +35,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
         }
 
         node.move.time += dt;
+        node.move.totalTime += dt;
 
         if(node.move.time < 0.5)
         {
@@ -75,6 +76,14 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
 
                 velo = Maths.getNormalizedVector2(velo) * v;
 
+                if(node.move.totalTime > 3)
+                {
+                    /*velo.x += (Math.random() - 0.5) * 100;
+                    velo.y += (Math.random() - 0.5) * 100;
+                    node.move.totalTime = 0;
+                    trace("Antistuck!");*/
+                }
+
                 var a = Math.atan2(velo.y, velo.x);
                 node.entity.setRotation2D(a*180/Math.PI - 90);
 
@@ -101,6 +110,7 @@ class ShipMoveSystem extends ListIteratingSystem<ShipMoveNode>
     private function onNodeAdded(node:ShipMoveNode)
     {
         node.move.time = 10;
+        node.move.totalTime = 0;
     }
 
     private function onNodeRemoved(node:ShipMoveNode)
