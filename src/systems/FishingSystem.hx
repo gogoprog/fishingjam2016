@@ -44,7 +44,7 @@ class FishingSystem extends ListIteratingSystem<FisherNode>
             }
         }
 
-        if(closest != null && closestDistance < 256 * 256)
+        if(closest != null && (node.ship.team.isBot || closestDistance < 256 * 256))
         {
             if(closestDistance > 96 * 96)
             {

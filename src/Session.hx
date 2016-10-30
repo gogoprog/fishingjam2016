@@ -92,9 +92,6 @@ class Session
 
         AudioSystem.instance.playGameMusic();
 
-        var t = Task.tasks["buildFisher"];
-        teams[1].home.get(Building).tasks.push(t);
-
         var e = Factory.createFog();
         e.name = "fog";
         engine.addEntity(e);
