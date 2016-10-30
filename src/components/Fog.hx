@@ -7,6 +7,8 @@ class Fog
     public var time = 100.0;
     public var targetValue = 0.0;
     public var currentValue = 0.0;
+    public var fromValue = 0.0;
+    public var currentFactor = 0.0;
 
     public function new()
     {

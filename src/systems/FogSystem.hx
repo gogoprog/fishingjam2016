@@ -29,13 +29,14 @@ class FogSystem extends ListIteratingSystem<FogNode>
 
     private function updateNode(node:FogNode, dt:Float):Void
     {
-        node.fog.time += dt;
+        var fog = node.fog;
+        fog.time += dt;
 
-        if(node.fog.time > 1)
+        if(fog.time > 1)
         {
             var highest = Math.NEGATIVE_INFINITY;
 
-            node.fog.time = 0;
+            fog.time = 0;
 
             for(ship in allShips)
             {
@@ -56,7 +57,18 @@ class FogSystem extends ListIteratingSystem<FogNode>
                 highest = homeY;
             }
 
-            node.entity.position = new Vector3(0, highest + Session.level.size * Config.tileSize * 0.5 + 800, 0);
+            fog.fromValue = fog.currentValue;
+            fog.targetValue = highest;
+            fog.currentFactor = 0;
+        }
+
+        if(fog.currentFactor < 1)
+        {
+            fog.currentFactor += dt;
+            fog.currentFactor = Math.min(fog.currentFactor, 1);
+
+            fog.currentValue = fog.fromValue + (fog.targetValue - fog.fromValue) * fog.currentFactor;
+            node.entity.position = new Vector3(0, fog.currentValue + Session.level.size * Config.tileSize * 0.5 + 800, 0);
         }
     }
 
@@ -64,7 +76,7 @@ class FogSystem extends ListIteratingSystem<FogNode>
     {
         node.entity.scale = new Vector3(Session.level.size * Config.tileSize / 512, Session.level.size * Config.tileSize / 512, 1);
 
-        node.fog.targetValue = node.fog.currentValue = Session.player.home.position.y;
+        node.fog.fromValue = node.fog.targetValue = node.fog.currentValue = Session.player.home.position.y;
 
         node.entity.position = new Vector3(0, node.fog.currentValue + Session.level.size * Config.tileSize * 0.5 + 800, 0);
     }
