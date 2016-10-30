@@ -11,6 +11,7 @@ class BotSystem extends System
 {
     private var engine:Engine;
     private var time = 0.0;
+    private var timeBuild = 0.0;
     private var team:Team;
     private var fishesList:NodeList<FishesNode>;
     private var allShips:NodeList<ShipNode>;
@@ -68,8 +69,9 @@ class BotSystem extends System
 
         if(time > 3)
         {
+            time = 0.0;
+
             var n = 0;
-            var money = team.fishes;
 
             for(node in allFishers)
             {
@@ -82,21 +84,60 @@ class BotSystem extends System
                     n++;
                 }
             }
+        }
 
-            time = 0.0;
+        timeBuild += dt;
+
+        if(timeBuild > 10)
+        {
+            timeBuild = 0;
+
             var tasks:Array<Task> = team.home.get(Building).tasks;
+            var fisherCount = 0;
+            var fighterCount = 0;
 
-            if(tasks.length == 0)
+            for(node in allShips)
             {
-                if(money > 1000)
+                if(node.ship.team.isBot && node.ship.life > 0)
                 {
-                    var t = Task.tasks["buildSlowFighter"];
-                    tasks.push(t);
+                    if(node.entity.has(Fisher))
+                    {
+                        fisherCount++;
+                    }
+                    else
+                    {
+                        fighterCount++;
+                    }
                 }
-                else
+            }
+
+            fisherCount = Std.int(Math.max(1, fisherCount));
+            var ratio:Float = fighterCount / fisherCount;
+
+            if(ratio > 5)
+            {
+                var t = Task.tasks["buildFisher"];
+                tasks.push(t);
+            }
+
+            if(tasks.length < 2)
+            {
+                var money = team.fishes;
+
+                while(money > 1000)
                 {
-                    var t = Task.tasks["buildFighter"];
-                    tasks.push(t);
+                    if(Std.random(10) < 2)
+                    {
+                        var t = Task.tasks["buildSlowFighter"];
+                        tasks.push(t);
+                        money -= t.cost;
+                    }
+                    else
+                    {
+                        var t = Task.tasks["buildFighter"];
+                        tasks.push(t);
+                        money -= t.cost;
+                    }
                 }
             }
         }
