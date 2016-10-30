@@ -124,7 +124,7 @@ class BotSystem extends System
             {
                 var money = team.fishes;
 
-                while(money > 1000)
+                while(money > 500)
                 {
                     if(Std.random(10) < 2)
                     {

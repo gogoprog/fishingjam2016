@@ -116,7 +116,7 @@ class FightingSystem extends ListIteratingSystem<FighterNode>
                 }
                 else if(closestDistance < 640 || (node.ship.team.isBot && closestDistance < 1200))
                 {
-                    if(node.ship.targetPosition == null)
+                    if(node.ship.targetPosition == null || node.ship.team.isBot)
                     {
                         node.ship.sm.changeState("idling");
                         node.ship.targetPosition = (closest.position + node.entity.position) * 0.5;
