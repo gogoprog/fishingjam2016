@@ -69,6 +69,7 @@ class Application
 
         engine.addSystem(new AudioSystem(cameraEntity), 1);
         engine.addSystem(new AutoRemoveSystem(), 2);
+        engine.addSystem(new PoolSystem(), 3);
 
         esm.changeState("menu");
 

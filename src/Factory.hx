@@ -13,11 +13,18 @@ class Factory
     static private var TEAM2 = 0x0004;
     static private var BULLET1 = 0x0008;
     static private var BULLET2 = 0x0016;
-    static private var pool:Array<Entity> = new Array<Entity>();
+    static private var poolMap:Map<String, Array<Entity>> = new Map<String, Array<Entity>>();
     static private var waterSprites = new Map<WaterPart, Dynamic>();
+    static private var explosionEffect;
 
     static public function init()
     {
+        poolMap["bullet"] = new Array<Entity>();
+        poolMap["target"] = new Array<Entity>();
+        poolMap["explosion"] = new Array<Entity>();
+
+        explosionEffect = Gengine.getResourceCache().getParticleEffect2D("sun.pex", true);
+
         waterSprites[WaterPart.Full] = Gengine.getResourceCache().getSprite2D("mapTile_017.png", true);
         waterSprites[WaterPart.S] = Gengine.getResourceCache().getSprite2D("mapTile_032.png", true);
         waterSprites[WaterPart.SW] = Gengine.getResourceCache().getSprite2D("mapTile_031.png", true);
@@ -31,6 +38,11 @@ class Factory
         waterSprites[WaterPart.HoleSW] = Gengine.getResourceCache().getSprite2D("mapTile_005.png", true);
         waterSprites[WaterPart.HoleNE] = Gengine.getResourceCache().getSprite2D("mapTile_019.png", true);
         waterSprites[WaterPart.HoleNW] = Gengine.getResourceCache().getSprite2D("mapTile_020.png", true);
+    }
+
+    static public function addToPool(name:String, e:Entity)
+    {
+        poolMap[name].push(e);
     }
 
     static public function createBackground(size:Vector2)
@@ -250,13 +262,28 @@ class Factory
 
     static public function createTarget(position:Vector3, color:Color)
     {
-        var e = new Entity();
-        e.add(new StaticSprite2D());
-        e.add(new Target());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
+        var pool = poolMap["target"];
+        var e:Entity;
+
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = new Entity();
+            e.add(new Pool("target"));
+            e.add(new StaticSprite2D());
+            e.add(new Target());
+            e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
+            e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
+            e.get(StaticSprite2D).setLayer(10);
+        }
+
         e.get(StaticSprite2D).setColor(color);
-        e.get(StaticSprite2D).setLayer(10);
+        e.get(StaticSprite2D).setAlpha(1);
+
+        e.scale = new Vector3(1, 1, 1);
         e.position = position;
         return e;
     }
@@ -279,32 +306,47 @@ class Factory
 
     static public function createBullet(teamIndex:Int)
     {
-        var e = new Entity();
+        var pool = poolMap["bullet"];
+        var e:Entity;
 
-        e.add(new StaticSprite2D());
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("bullet.png", true));
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
-        e.get(StaticSprite2D).setLayer(21);
-        e.add(new Bullet());
-        e.add(new RigidBody2D());
-        e.add(new CollisionCircle2D());
-        e.get(CollisionCircle2D).setRadius(8);
-        e.get(CollisionCircle2D).setDensity(1);
-        e.get(CollisionCircle2D).setFriction(0.5);
-        e.get(CollisionCircle2D).setRestitution(0.1);
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = new Entity();
+            e.add(new Pool("bullet"));
+            e.add(new StaticSprite2D());
+            e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("bullet.png", true));
+            e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
+            e.get(StaticSprite2D).setLayer(21);
+            e.add(new Bullet());
+            e.add(new RigidBody2D());
+            e.add(new CollisionCircle2D());
+            e.get(CollisionCircle2D).setRadius(8);
+            e.get(CollisionCircle2D).setDensity(1);
+            e.get(CollisionCircle2D).setFriction(0.5);
+            e.get(CollisionCircle2D).setRestitution(0.1);
+            e.get(RigidBody2D).setBodyType(2);
+            e.get(RigidBody2D).setMass(1);
+            e.get(RigidBody2D).setLinearDamping(0);
+            e.get(RigidBody2D).setAngularDamping(0);
+            e.get(RigidBody2D).setBullet(true);
+        }
 
         e.get(CollisionCircle2D).setCategoryBits(BULLET1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 << (1-teamIndex));
-
-        e.get(RigidBody2D).setBodyType(2);
-        e.get(RigidBody2D).setMass(1);
-        e.get(RigidBody2D).setLinearDamping(0);
-        e.get(RigidBody2D).setAngularDamping(0);
-        e.get(RigidBody2D).setBullet(true);
+        e.get(Bullet).time = 0;
 
         if(teamIndex == 1)
         {
             e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
+
         }
 
         return e;
@@ -342,12 +384,25 @@ class Factory
 
     static public function createExplosion()
     {
-        var e = new Entity();
-        e.add(new ParticleEmitter2D());
-        e.add(new AutoRemove());
-        var particleEmitter2D:ParticleEmitter2D = e.get(ParticleEmitter2D);
-        particleEmitter2D.setEffect(Gengine.getResourceCache().getParticleEffect2D("sun.pex", true));
-        particleEmitter2D.setLayer(22);
+        var pool = poolMap["explosion"];
+        var e:Entity;
+
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = new Entity();
+            e.add(new Pool("explosion"));
+            e.add(new ParticleEmitter2D());
+            e.add(new AutoRemove());
+            var particleEmitter2D:ParticleEmitter2D = e.get(ParticleEmitter2D);
+            particleEmitter2D.setLayer(22);
+        }
+
+        e.get(ParticleEmitter2D).setEffect(explosionEffect);
+
         return e;
     }
 }
