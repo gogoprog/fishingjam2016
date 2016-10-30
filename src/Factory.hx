@@ -344,6 +344,7 @@ class Factory
     {
         var e = new Entity();
         e.add(new ParticleEmitter2D());
+        e.add(new AutoRemove());
         var particleEmitter2D:ParticleEmitter2D = e.get(ParticleEmitter2D);
         particleEmitter2D.setEffect(Gengine.getResourceCache().getParticleEffect2D("sun.pex", true));
         particleEmitter2D.setLayer(22);

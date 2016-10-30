@@ -35,6 +35,11 @@ class CollisionManager
         {
             AudioSystem.instance.playSound("impact", bullet.position);
 
+            var e = Factory.createExplosion();
+            e.position = bullet.position;
+            e.scale = new Vector3(0.2, 0.2, 1);
+            engine.addEntity(e);
+
             if(other.has(Ship))
             {
                 var ship:Ship = other.get(Ship);
@@ -69,11 +74,12 @@ class CollisionManager
 
                     if(building.life == 0)
                     {
-                        //building.sm.changeState("dying");
                         AudioSystem.instance.playSound("explosion", bullet.position);
 
                         var e = Factory.createExplosion();
                         e.position = other.position;
+                        e.scale = new Vector3(1.5, 1.5, 1);
+                        e.get(AutoRemove).duration = 2;
                         engine.addEntity(e);
 
                         if(building.team.isBot)
