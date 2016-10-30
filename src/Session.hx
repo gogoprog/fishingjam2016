@@ -80,7 +80,7 @@ class Session
         teams[1].home.setRotation2D(Std.random(360));
         engine.addEntity(teams[1].home);
 
-        for(i in 0...10)
+        for(i in 0...Std.int(Config.mapSize / 5))
         {
             var e = Factory.createFishes();
             e.position = level.getRandomWaterPosition();
@@ -95,6 +95,8 @@ class Session
         var t = Task.tasks["buildFisher"];
         teams[1].home.get(Building).tasks.push(t);
 
-        engine.addEntity(Factory.createFog());
+        var e = Factory.createFog();
+        e.name = "fog";
+        engine.addEntity(e);
     }
 }

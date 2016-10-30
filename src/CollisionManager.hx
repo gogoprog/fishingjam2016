@@ -79,7 +79,7 @@ class CollisionManager
                         var e = Factory.createExplosion();
                         e.position = other.position;
                         e.scale = new Vector3(1.5, 1.5, 1);
-                        e.get(AutoRemove).duration = 2;
+                        e.get(AutoRemove).duration = 10;
                         engine.addEntity(e);
 
                         if(building.team.isBot)

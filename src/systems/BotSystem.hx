@@ -25,13 +25,13 @@ class BotSystem extends System
     {
         time += dt;
 
-        if(time > 3)
+        if(time > 1)
         {
+            time = 0.0;
+
             var t = Task.tasks["buildFighter"];
             var tasks:Array<Task> = team.home.get(Building).tasks;
             tasks.push(t);
-
-            time = 0.0;
         }
     }
 }

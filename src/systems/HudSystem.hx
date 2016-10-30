@@ -99,6 +99,11 @@ class HudSystem extends System
         {
             Session.player.fishes += 10000;
         }
+
+        if(input.getScancodePress(60))
+        {
+            engine.removeEntity(engine.getEntityByName("fog"));
+        }
     }
 
     private function onChange(event)
