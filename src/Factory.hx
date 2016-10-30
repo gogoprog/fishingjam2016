@@ -497,6 +497,7 @@ class Factory
         }
 
         e.get(ParticleEmitter2D).setEffect(explosionEffect2);
+        e.get(ParticleEmitter2D).setMaxParticles(0);
         e.get(ParticleEmitter2D).setEffect(explosionEffect);
 
         return e;
