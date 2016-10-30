@@ -22,6 +22,9 @@ class Factory
         poolMap["bullet"] = new Array<Entity>();
         poolMap["target"] = new Array<Entity>();
         poolMap["explosion"] = new Array<Entity>();
+        poolMap["fighter"] = new Array<Entity>();
+        poolMap["fisher"] = new Array<Entity>();
+        poolMap["slowFighter"] = new Array<Entity>();
 
         explosionEffect = Gengine.getResourceCache().getParticleEffect2D("sun.pex", true);
 
@@ -43,6 +46,7 @@ class Factory
     static public function addToPool(name:String, e:Entity)
     {
         poolMap[name].push(e);
+        e.position = new Vector3(-1000000, 0, 0);
     }
 
     static public function createBackground(size:Vector2)
@@ -82,19 +86,19 @@ class Factory
 
     static public function createShip(teamIndex:Int)
     {
-        var e = new Entity();
-        var sm = new EntityStateMachine(e);
+        var e:Entity;
+        var sm:EntityStateMachine;
+
+        e = new Entity();
+        sm = new EntityStateMachine(e);
 
         e.add(new StaticSprite2D());
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -64), new Vector2(32, 64)));
         e.get(StaticSprite2D).setLayer(20);
         e.add(new Ship());
         e.get(Ship).sm = sm;
         e.get(Ship).teamIndex = teamIndex;
         e.add(new RigidBody2D());
         e.add(new CollisionBox2D());
-        e.get(CollisionBox2D).setSize(new Vector2(64, 128));
         e.get(RigidBody2D).setBodyType(2);
         e.get(RigidBody2D).setMass(1);
         e.get(RigidBody2D).setLinearDamping(0.5);
@@ -102,41 +106,61 @@ class Factory
         e.get(CollisionBox2D).setDensity(1);
         e.get(CollisionBox2D).setFriction(0.5);
         e.get(CollisionBox2D).setRestitution(0.1);
-        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
-        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
 
         sm.createState("idling");
-        sm.changeState("idling");
 
         e.get(Ship).movingState = sm.createState("moving")
             .add(ShipMove).withInstance(new ShipMove());
-
-        if(teamIndex == 1)
-        {
-            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
-        }
 
         e.get(Ship).bgBar = createBar(33);
         e.get(Ship).bgBar.setParent(e);
 
         e.get(Ship).healthBar = createBar(34);
         e.get(Ship).healthBar.setParent(e);
-        e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
 
         e.get(Ship).movingState = sm.createState("dying")
             .add(Sink).withInstance(new Sink());
+
+        sm.changeState("idling");
+
+        e.get(CollisionBox2D).setCategoryBits(TEAM1 << teamIndex);
+        e.get(CollisionBox2D).setMaskBits(WORLD | TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
+
+        if(teamIndex == 1)
+        {
+            e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        }
+        else
+        {
+            e.get(StaticSprite2D).setColor(new Color(1, 1, 1, 1));
+        }
 
         return e;
     }
 
     static public function createFisher(teamIndex:Int)
     {
-        var e = createShip(teamIndex);
-        e.add(new Fisher());
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
+        var pool = poolMap["fisher"];
+        var e:Entity;
 
-        e.get(Ship).icon = createIcon("iconFishing.png");
-        e.get(Ship).icon.setParent(e);
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = createShip(teamIndex);
+            e.add(new Pool("fisher"));
+            e.add(new Fisher());
+            e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
+            e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -64), new Vector2(32, 64)));
+            e.get(CollisionBox2D).setSize(new Vector2(64, 128));
+            e.get(Ship).icon = createIcon("iconFishing.png");
+            e.get(Ship).icon.setParent(e);
+            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+        }
+
         e.get(Ship).speed = 100;
         e.get(Ship).life = 50;
 
@@ -145,24 +169,55 @@ class Factory
 
     static public function createFighter(teamIndex:Int)
     {
-        var e = createShip(teamIndex);
-        e.add(new Fighter());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
-        e.get(CollisionBox2D).setSize(new Vector2(64, 96));
-        e.get(Fighter).damage = 3;
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
+        var pool = poolMap["fighter"];
+        var e:Entity;
+
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = createShip(teamIndex);
+            e.add(new Pool("fighter"));
+            e.add(new Fighter());
+            e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
+            e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
+            e.get(CollisionBox2D).setSize(new Vector2(64, 96));
+            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+        }
+
         e.get(Ship).speed = 350;
         e.get(Fighter).shootInterval = 0.5;
+        e.get(Fighter).damage = 3;
+
+        e.get(Ship).sm.changeState("idling");
 
         return e;
     }
 
     static public function createSlowFighter(teamIndex:Int)
     {
-        var e = createShip(teamIndex);
-        e.add(new Fighter());
-        e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
-        e.get(CollisionBox2D).setSize(new Vector2(120, 160));
+        var pool = poolMap["slowFighter"];
+        var e:Entity;
+
+        if(pool.length > 0)
+        {
+            e = pool.shift();
+        }
+        else
+        {
+            e = createShip(teamIndex);
+            e.add(new Pool("slowFighter"));
+            e.add(new Fighter());
+            e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
+            e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
+            e.get(CollisionBox2D).setSize(new Vector2(120, 160));
+            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+        }
+
         e.get(Ship).speed = 50;
         e.get(Ship).life = 300;
         e.get(Ship).maxLife = 300;
@@ -170,7 +225,8 @@ class Factory
         e.get(Fighter).shootInterval = 2;
         e.get(Fighter).range = 640;
         e.get(Fighter).shootSound = "canon";
-        e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
+
+        e.get(Ship).sm.changeState("idling");
 
         return e;
     }

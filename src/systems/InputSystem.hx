@@ -190,6 +190,14 @@ class InputSystem extends System
             camPos = Session.player.home.position;
         }
 
+        if(input.getScancodePress(61))
+        {
+            for(s in selectedShips)
+            {
+                engine.removeEntity(s);
+            }
+        }
+
         cameraEntity.position = camPos;
     }
 
