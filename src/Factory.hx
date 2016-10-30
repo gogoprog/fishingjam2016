@@ -214,6 +214,8 @@ class Factory
         e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
 
+        e.get(Fighter).target = null;
+
         return e;
     }
 
@@ -262,6 +264,8 @@ class Factory
         e.get(Ship).sm.changeState("idling");
         e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
+
+        e.get(Fighter).target = null;
 
         return e;
     }
