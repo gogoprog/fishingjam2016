@@ -236,6 +236,7 @@ class Factory
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
             e.get(CollisionBox2D).setSize(new Vector2(120, 160));
+            e.get(RigidBody2D).setMass(10);
             e.get(Ship).speed = 50;
             e.get(Fighter).damage = 30;
             e.get(Fighter).shootInterval = 2;
@@ -465,7 +466,7 @@ class Factory
         e.get(CollisionCircle2D).setCategoryBits(TEAM1 << teamIndex);
         e.get(CollisionCircle2D).setMaskBits(TEAM1 | TEAM2 | (BULLET1 << (1-teamIndex)));
         e.get(RigidBody2D).setBodyType(0);
-        e.get(RigidBody2D).setMass(1);
+        e.get(RigidBody2D).setMass(100);
 
         var bgBar = createBar(33, 170, 200);
         bgBar.setParent(e);

@@ -39,6 +39,7 @@ class SinkingSystem extends ListIteratingSystem<SinkNode>
 
     private function onNodeAdded(node:SinkNode)
     {
+        node.sink.time = 0.0;
     }
 
     private function onNodeRemoved(node:SinkNode)
