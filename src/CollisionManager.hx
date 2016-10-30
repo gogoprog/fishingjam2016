@@ -38,6 +38,7 @@ class CollisionManager
             var e = Factory.createExplosion();
             e.position = bullet.position;
             e.scale = new Vector3(0.2, 0.2, 1);
+            e.get(AutoRemove).duration = 0.5;
             engine.addEntity(e);
 
             if(other.has(Ship))

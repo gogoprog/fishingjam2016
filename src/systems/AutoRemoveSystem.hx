@@ -35,6 +35,7 @@ class AutoRemoveSystem extends ListIteratingSystem<AutoRemoveNode>
 
     private function onNodeAdded(node:AutoRemoveNode)
     {
+        node.autoRemove.time = 0;
     }
 
     private function onNodeRemoved(node:AutoRemoveNode)

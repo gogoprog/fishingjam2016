@@ -16,6 +16,7 @@ class Factory
     static private var poolMap:Map<String, Array<Entity>> = new Map<String, Array<Entity>>();
     static private var waterSprites = new Map<WaterPart, Dynamic>();
     static private var explosionEffect;
+    static private var explosionEffect2;
 
     static public function init()
     {
@@ -27,6 +28,7 @@ class Factory
         poolMap["slowFighter"] = new Array<Entity>();
 
         explosionEffect = Gengine.getResourceCache().getParticleEffect2D("sun.pex", true);
+        explosionEffect2 = Gengine.getResourceCache().getParticleEffect2D("sun2.pex", true);
 
         waterSprites[WaterPart.Full] = Gengine.getResourceCache().getSprite2D("mapTile_017.png", true);
         waterSprites[WaterPart.S] = Gengine.getResourceCache().getSprite2D("mapTile_032.png", true);
@@ -144,8 +146,6 @@ class Factory
             e.get(CollisionBox2D).setSize(new Vector2(64, 128));
             e.get(Ship).icon = createIcon("iconFishing.png");
             e.get(Ship).icon.setParent(e);
-            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
-            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
         }
 
         e.get(Ship).teamIndex = teamIndex;
@@ -166,6 +166,8 @@ class Factory
         e.get(Ship).maxLife = 150;
         e.get(Ship).bgBar.get(StaticSprite2D).setAlpha(1);
         e.get(Ship).sm.changeState("idling");
+        e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
 
         return e;
     }
@@ -187,8 +189,6 @@ class Factory
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
             e.get(CollisionBox2D).setSize(new Vector2(64, 96));
-            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
-            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
             e.get(Fighter).shootInterval = 0.5;
             e.get(Fighter).damage = 3;
         }
@@ -211,6 +211,8 @@ class Factory
         e.get(Ship).maxLife = 50;
         e.get(Ship).sm.changeState("idling");
         e.get(Ship).bgBar.get(StaticSprite2D).setAlpha(1);
+        e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
 
         return e;
     }
@@ -232,8 +234,6 @@ class Factory
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
             e.get(CollisionBox2D).setSize(new Vector2(120, 160));
-            e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
-            e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
             e.get(Ship).speed = 50;
             e.get(Fighter).damage = 30;
             e.get(Fighter).shootInterval = 2;
@@ -260,6 +260,8 @@ class Factory
         e.get(Fighter).shootSound = "canon";
 
         e.get(Ship).sm.changeState("idling");
+        e.get(Ship).healthBar.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
+        e.get(Ship).healthBar.setScale(new Vector3(1, 1, 1));
 
         return e;
     }
@@ -490,6 +492,7 @@ class Factory
             particleEmitter2D.setLayer(22);
         }
 
+        e.get(ParticleEmitter2D).setEffect(explosionEffect2);
         e.get(ParticleEmitter2D).setEffect(explosionEffect);
 
         return e;
