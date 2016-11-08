@@ -56,7 +56,9 @@ class Factory
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-size.x/2, -size.y/2), new Vector2(size.x/2, size.y/2)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setTextureRect(new Rect(new Vector2(0, 0), new Vector2(size.x/64, size.y/64)));
+        e.get(StaticSprite2D).setUseTextureRect(true);
         var sprite = Gengine.getResourceCache().getSprite2D("mapTile_188.png", true);
         sprite.getTexture().setAddressMode(0, 1);
         sprite.getTexture().setAddressMode(1, 1);
@@ -81,6 +83,7 @@ class Factory
         e.add(new StaticSprite2D());
         e.add(new Tile());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setSprite(waterSprites[type]);
         e.get(StaticSprite2D).setLayer(1);
         return e;
@@ -143,6 +146,7 @@ class Factory
             e.add(new Fisher());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -64), new Vector2(32, 64)));
+            e.get(StaticSprite2D).setUseDrawRect(true);
             e.get(CollisionBox2D).setSize(new Vector2(64, 128));
             e.get(Ship).icon = createIcon("iconFishing.png");
             e.get(Ship).icon.setParent(e);
@@ -188,6 +192,7 @@ class Factory
             e.add(new Fighter());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("smallorange.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -48), new Vector2(32, 48)));
+            e.get(StaticSprite2D).setUseDrawRect(true);
             e.get(CollisionBox2D).setSize(new Vector2(64, 96));
             e.get(Fighter).shootInterval = 0.5;
             e.get(Fighter).damage = 3;
@@ -235,6 +240,7 @@ class Factory
             e.add(new Fighter());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("orangeship3.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-60, -80), new Vector2(60, 80)));
+            e.get(StaticSprite2D).setUseDrawRect(true);
             e.get(CollisionBox2D).setSize(new Vector2(120, 160));
             e.get(RigidBody2D).setMass(10);
             e.get(Ship).speed = 50;
@@ -300,6 +306,7 @@ class Factory
         e.add(new Icon());
 
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D(icon, true));
         e.get(StaticSprite2D).setLayer(32);
 
@@ -313,6 +320,7 @@ class Factory
         e.add(new Icon());
 
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-halfWidth, -4), new Vector2(halfWidth, 4)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("white.png", true));
         e.get(StaticSprite2D).setLayer(layer);
         e.get(StaticSprite2D).setColor(new Color(0, 0, 0, 1));
@@ -340,6 +348,7 @@ class Factory
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
         e.get(StaticSprite2D).setLayer(10);
         return e;
@@ -350,6 +359,7 @@ class Factory
         var e = new Entity();
         e.add(new StaticSprite2D());
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-32, -32), new Vector2(32, 32)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
         e.get(StaticSprite2D).setColor(new Color(0, 1, 0, 1));
         e.get(StaticSprite2D).setLayer(10);
@@ -372,6 +382,7 @@ class Factory
             e.add(new StaticSprite2D());
             e.add(new Target());
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-64, -64), new Vector2(64, 64)));
+            e.get(StaticSprite2D).setUseDrawRect(true);
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("select.png", true));
             e.get(StaticSprite2D).setLayer(10);
         }
@@ -416,6 +427,7 @@ class Factory
             e.add(new StaticSprite2D());
             e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("bullet.png", true));
             e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-16, -16), new Vector2(16, 16)));
+            e.get(StaticSprite2D).setUseDrawRect(true);
             e.get(StaticSprite2D).setLayer(21);
             e.add(new Bullet());
             e.add(new RigidBody2D());
@@ -459,6 +471,7 @@ class Factory
 
         e.get(StaticSprite2D).setSprite(Gengine.getResourceCache().getSprite2D("spacestation" + teamIndex + ".png", true));
         e.get(StaticSprite2D).setDrawRect(new Rect(new Vector2(-256, -256), new Vector2(256, 256)));
+        e.get(StaticSprite2D).setUseDrawRect(true);
         e.get(StaticSprite2D).setLayer(20);
         e.get(Building).teamIndex = teamIndex;
         e.get(Building).radius = 200;
